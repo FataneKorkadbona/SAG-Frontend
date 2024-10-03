@@ -1,0 +1,50 @@
+h1 {
+  color: yellow;
+  font-size: 5vw;
+}
+h2 {
+  color: #fff;
+  font-size: 3vw;
+}
+p {
+  color: darkslategray;
+  font-size: 1vw;
+}
+
+.top{
+  color: silver;
+}
+
+.hero__section {
+  padding: 50px;
+  width: 80vw;
+  background-color: #1a1a1a;
+  justify-content: center;
+}
+
+.hero__cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+#hero-card {
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.card__top {
+  height: 100px;
+}
+
+.bottom__first {
+  height: 400px;
+  background-color: #fff;
+}
+.bottom__second {
+  height: 300px;
+  background-color: #fff;
+}
+.bottom__third {
+  height: 200px;
+  background-color: #fff;
+}
