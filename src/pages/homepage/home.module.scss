@@ -1,50 +1,113 @@
 h1 {
-  color: yellow;
-  font-size: 5vw;
+  color: #000;
+  font-size: 64px;
 }
 h2 {
-  color: #fff;
-  font-size: 3vw;
+  color: #000;
+  font-size: 36px;
+  margin-bottom: -20px;
 }
 p {
-  color: darkslategray;
-  font-size: 1vw;
+  color: #000;
+  font-size: 16px;
+  padding: 0 10px 0 10px;
 }
-
-.top{
-  color: silver;
+li {
+  color: #000;
+  font-size: 16px;
+  text-decoration: none;
 }
 
 .hero__section {
-  padding: 50px;
-  width: 80vw;
-  background-color: #1a1a1a;
+  padding: 5px 30px 0 30px;
+  background-image: linear-gradient(#FFFFFF, #FFF7D7);
   justify-content: center;
 }
 
 .hero__cards {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  justify-content: center;
 }
 
-#hero-card {
-  margin-left: 100px;
-  margin-right: 100px;
+#hero_card {
+  padding-right: 40px;
+  padding-left: 40px;
+}
+.card__second {
+  padding-top: 50px;
+}
+.card__third {
+  padding-top: 100px;
 }
 
 .card__top {
-  height: 100px;
+  height: 80px;
+  margin: 5px 10px 30px 10px;
+  background-color: #aaa;
+  border-radius: 8px;
 }
 
 .bottom__first {
-  height: 400px;
-  background-color: #fff;
+  height: 550px;
+  padding-top: 10px;
+  background-color: #FFCC01;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 2px 2px 0 0;
 }
 .bottom__second {
-  height: 300px;
-  background-color: #fff;
+  height: 500px;
+  padding-top: 10px;
+  background-color: #EF7D00;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 2px 2px 0 0;
 }
 .bottom__third {
-  height: 200px;
-  background-color: #fff;
+  height: 450px;
+  padding-top: 10px;
+  background-color:  #E84E0D;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 2px 2px 0 0;
+}
+
+.card__date {
+  margin-top: auto;
+  margin-bottom: -10px;
+}
+.card__votes {
+  margin: 15px;
+}
+
+.info__section {
+  background-color: midnightblue;
+}
+
+.info__card {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  background-color: #FFFFFF;
+
+  margin: 40px 20px 20px 40px;
+  padding: 10px;
+}
+.card__text {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.card__info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
 }
