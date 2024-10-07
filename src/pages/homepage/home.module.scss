@@ -12,11 +12,6 @@ p {
   font-size: 16px;
   padding: 0 10px 0 10px;
 }
-li {
-  color: #000;
-  font-size: 16px;
-  text-decoration: none;
-}
 
 .hero__section {
   padding: 5px 30px 0 30px;
@@ -42,10 +37,27 @@ li {
 }
 
 .card__top {
-  height: 80px;
+  display: flex;
+  flex-direction: column;
   margin: 5px 10px 30px 10px;
+  padding: 2px;
   background-color: #aaa;
   border-radius: 8px;
+}
+
+.no__margin{
+  margin: 0;
+}
+
+.ellipse{
+  border-radius: 50%;
+  border-style: solid;
+  max-width: 100px;
+  width: fit-content;
+  margin: 0;
+  background-color:  #FFF7D7;
+  font-size: 0.7em;
+
 }
 
 .bottom__first {
@@ -88,7 +100,21 @@ li {
 }
 
 .info__section {
-  background-color: midnightblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  padding-top: 50px;
+  background-color: #747bff;
+
+  button {
+    margin-left: 20px;
+    width: fit-content;
+  }
+}
+
+.info__cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .info__card {
@@ -97,17 +123,32 @@ li {
   align-items: start;
   background-color: #FFFFFF;
 
-  margin: 40px 20px 20px 40px;
+  margin: 40px 20px 20px 20px;
   padding: 10px;
 }
 .card__text {
   display: flex;
   flex-direction: column;
   width: 100%;
+  text-align: left;
+
+  h2 {
+    margin-top: -5px;
+    text-decoration-line: underline;
+  }
+  p {
+
+  }
 }
 .card__info {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  margin-top: -10px;
+
+  button {
+    background-color: #fff;
+    color: #000;
+  }
 }
