@@ -1,5 +1,7 @@
 h1 {
   color: #000;
+  text-decoration-line: underline;
+  text-decoration-color: #E84E0D;
   font-size: 64px;
 }
 h2 {
@@ -53,12 +55,11 @@ p {
 .cat__box{
   display: flex;
   flex-direction: row;
-
 }
 
 .category{
   border-radius: 50%;
-  border-style: solid;
+  border: solid 1px #000;
   max-width: 100px;
   width: fit-content;
   margin: 0 5px 5px;
@@ -117,6 +118,34 @@ p {
     margin-left: 20px;
     width: fit-content;
     background-color: #E84E0D;
+  }
+}
+
+.category__window {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  margin: 0 20px 20px 20px;
+  background-color: #F1E1A0;
+  width: 90vw;
+  z-index: 9999;
+
+  button {
+    margin: 10px;
+  }
+}
+
+.window__list {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
+
+  button {
+    margin: 10px;
+    color: #000;
+    border: 1px solid BLACK;
+    background-color: #FFF7D7;
   }
 }
 
