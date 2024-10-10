@@ -112,23 +112,47 @@ p {
   flex-direction: column;
   justify-content: left;
   padding-top: 50px;
+  position: relative;
   background-color: #fff1b6;
 
   button {
     margin-left: 20px;
+    margin-bottom: 5px;
     width: fit-content;
     background-color: #E84E0D;
+    z-index: 2;
+  }
+}
+
+.info__categories {
+  position: relative;
+}
+
+.info__container {
+  position: absolute; /* Position right below info__categories */
+  top: 80px; /* Adjust this value to move it below info__categories */
+  left: 0; /* Adjust as needed */
+  background-color: #fff1b6;
+
+  h2 {
+    margin-bottom: 0;
   }
 }
 
 .category__window {
-  display: flex;
+  display: none; /* Hide by default */
   flex-direction: column;
   justify-content: left;
   margin: 0 20px 20px 20px;
-  background-color: #F1E1A0;
   width: 90vw;
-  z-index: 9999;
+  position: relative;
+  z-index: 100; /* Ensure it is above other elements */
+  background-color: #fff1b6;
+  border: 1px solid #000;
+
+  &.visible {
+    display: flex; /* Show when the 'visible' class is added */
+  }
 
   button {
     margin: 10px;
@@ -150,8 +174,17 @@ p {
 }
 
 .info__cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: row;
+  margin-top: 40px;
+}
+
+.card__list {
+  display: flex;
+  flex-direction: column;
+
+  max-height: 875px;
+  overflow: auto;
 }
 
 .info__card {
@@ -161,7 +194,7 @@ p {
   background-color: #FFFFFF;
   height: fit-content;
 
-  margin: 40px 20px 20px 20px;
+  margin: 0 20px 20px 20px;
   padding: 10px;
 }
 .card__text {
@@ -196,6 +229,7 @@ p {
   button {
     background-color: #fff;
     color: #000;
+    z-index: 2;
     &:hover {
       border-color: #E84E0D;
     }
@@ -208,8 +242,9 @@ p {
   flex-direction: column;
   background-color: #FFFFFF;
   height: fit-content;
+  flex-grow: 1;
 
-  margin: 40px 20px 20px 20px;
+  margin: 0 20px 20px 20px;
   padding: 10px;
 }
 

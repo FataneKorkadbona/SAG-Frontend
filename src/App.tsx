@@ -1,14 +1,16 @@
 import Router from './router.tsx'
+import NavBar from "./NavBar.tsx";
 
-import './App.css'
+import './App.scss'
 
 function App() {
 
-  return (
-    <>
-     <Router />
-    </>
-  )
+    return (
+        <>
+            <NavBar/>
+            <Router/>
+        </>
+    )
 }
 
 export default App
