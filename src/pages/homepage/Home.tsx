@@ -1,9 +1,35 @@
-import { useState } from 'react';
+import {useState, FormEvent, useContext} from 'react';
 import styles from './home.module.scss';
+import ReactModal from 'react-modal';
+import {useMutation} from "@tanstack/react-query";
+import axios from "axios"
+import {useNavigate} from "react-router-dom";
+import {BASE_URL} from "../../main.tsx";
+import { UserContext } from "../../providers.tsx";
+
 
 export default function HomePage() {
 
     const [isCategoryWindowVisible, setCategoryWindowVisible] = useState(false);
+    const [email, setEmail] = useState("");
+    const navigate = useNavigate();
+    const user = useContext(UserContext);
+
+    const loginRequest = useMutation({
+        mutationFn: () =>
+            axios.post(BASE_URL + "/login", {
+                email
+            }),
+        onSuccess: (res) => {
+            user.setUser(res.data);
+            navigate("/");
+        },
+    })
+
+    function handleSubmit(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        loginRequest.mutate();
+    }
 
     const toggleCategoryWindow = () => {
         setCategoryWindowVisible(!isCategoryWindowVisible);
@@ -12,6 +38,11 @@ export default function HomePage() {
     const hideCategoryWindow = () => {
         setCategoryWindowVisible(false);
     };
+
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+
+    const openModal = () => setModalIsOpen(true);
+    const closeModal = () => setModalIsOpen(false);
 
     return (
         <>
@@ -36,7 +67,7 @@ export default function HomePage() {
                                 commodo massa. Duis congue eleifend porta. Praesent vitae elementum tortor. Ut at
                                 neque ac nibh pharetra convallis id porta ligula. Sed maximus iaculis auctor.</p>
                             <p className={styles.card__date}>date-added</p>
-                            <button className={styles.card__votes}>xxx votes</button>
+                            <button className={styles.card__votes} onClick={openModal}>xxx votes</button>
                         </div>
                     </div>
                     <div className={styles.card__first} id={styles.hero_card}>
@@ -44,8 +75,8 @@ export default function HomePage() {
                             <h2 className={styles.no__margin}>title</h2>
                             <div className={styles.cat__box}>
                                 <p className={styles.category}>123456789012345</p>
-                                <p className={styles.category}>Bonmus</p>
-                                <p className={styles.category}>BraBar</p>
+                                <p className={styles.category}>BraBardsadsdadd</p>
+                                <p className={styles.category}>BraBardsadsdadd</p>
                             </div>
                         </div>
                         <div className={styles.bottom__first}>
@@ -56,16 +87,16 @@ export default function HomePage() {
                                 massa. Duis congue eleifend porta. Praesent vitae elementum tortor. Ut at neque ac
                                 nibh pharetra convallis id porta ligula. Sed maximus iaculis auctor.</p>
                             <p className={styles.card__date}>date-added</p>
-                            <button className={styles.card__votes}>xxx votes</button>
+                            <button className={styles.card__votes} onClick={openModal}>xxx votes</button>
                         </div>
                     </div>
                     <div className={styles.card__third} id={styles.hero_card}>
                         <div className={styles.card__top}>
                             <h2 className={styles.no__margin}>title</h2>
                             <div className={styles.cat__box}>
-                                <p className={styles.category}>categories</p>
-                                <p className={styles.category}>caories</p>
-                                <p className={styles.category}>cat</p>
+                                <p className={styles.category}>BraBardsadsdadd</p>
+                                <p className={styles.category}>BraBardsadsdadd</p>
+                                <p className={styles.category}>BraBardsadsdadd</p>
                             </div>
                         </div>
                         <div className={styles.bottom__third}>
@@ -75,7 +106,7 @@ export default function HomePage() {
                                 commodo massa. Duis congue eleifend porta. Praesent vitae elementum tortor. Ut at
                                 neque ac nibh pharetra convallis id porta ligula. Sed maximus iaculis auctor.</p>
                             <p className={styles.card__date}>date-added</p>
-                            <button className={styles.card__votes}>xxx votes</button>
+                            <button className={styles.card__votes} onClick={openModal}>xxx votes</button>
                         </div>
                     </div>
                 </div>
@@ -94,7 +125,7 @@ export default function HomePage() {
                     <h2>Category</h2>
                     <div className={styles.info__cards}>
                         <div className={styles.info__fullcard}>
-                        <div className={styles.fullcard__text}>
+                            <div className={styles.fullcard__text}>
                                 <h2>Title</h2>
                                 <p>Nam quis nulla. Integer malesuada. In in enim a arcu imperdiet malesuada. Sed
                                     vel
@@ -156,7 +187,7 @@ export default function HomePage() {
                                 <p>Category</p>
                             </div>
                             <div className={styles.fullcard__info}>
-                                <button><p>antal</p>Votes</button>
+                                <button onClick={openModal}><p>antal</p>Votes</button>
                                 <p>budget</p>
                             </div>
                         </div>
@@ -1020,10 +1051,36 @@ export default function HomePage() {
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
+
+            <ReactModal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                className={styles.login__container}
+                overlayClassName={styles.overlay}
+            >
+                <button onClick={closeModal}>x</button>
+                <div className={styles.login__content}>
+                    <h1>Log In on (name)</h1>
+                    <form onSubmit={handleSubmit}>
+                    <label htmlFor="enter_email">Enter your school email</label>
+                    <input
+                        type="email"
+                        value={email}
+                        placeholder={"School email"}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <button
+                        type="submit"
+                        disabled={loginRequest.isPending}
+                    >
+                        Log in
+                    </button>7
+                    </form>
+                </div>
+            </ReactModal>
         </>
     )
 }

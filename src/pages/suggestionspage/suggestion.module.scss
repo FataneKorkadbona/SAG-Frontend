@@ -1,0 +1,109 @@
+h1 {
+  text-align: center;
+  text-decoration-color: #000;
+  font-size: 2rem;
+  margin-top: 50px;
+}
+
+.card__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 90vw;
+  background-color: #F1E1A0;
+
+  label {
+    font-size: 1.5rem;
+    color: #000;
+  }
+
+  textarea {
+    resize: none;
+    background-color: #fff;
+    color: #000;
+    font-size: 1rem;
+  }
+}
+
+.suggestions__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 90vw;
+}
+
+.suggestions__left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+
+  color: #000;
+
+  textarea {
+    width: 500px;
+    height: 400px;
+  }
+}
+
+.suggestions__right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
+  margin-bottom: 30px;
+
+  color: #000;
+
+
+  label {
+    text-align: left;
+    width: 500px;
+    margin-top: 30px;
+  }
+
+  textarea {
+    width: 500px;
+    height: 50px;
+    margin-top: 5px;
+  }
+
+  select {
+    width: 500px;
+    height: 50px;
+    margin-top: 5px;
+    background-color: #fff;
+    color: #000;
+    font-size: 1rem;
+    padding: 5px;
+
+    option {
+      background-color: #fff;
+      color: #000;
+    }
+  }
+
+  button {
+    width: 500px;
+    height: 50px;
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 0;
+    margin-top: 30px;
+  }
+}
+
+.countdown {
+  text-align: left;
+  width: 33vw;
+  margin-top: 5px;
+  font-size: 0.9rem;
+  color: #000;
+}
+
+.hidden {
+  display: none;
+}
