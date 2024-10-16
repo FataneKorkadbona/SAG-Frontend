@@ -15,32 +15,37 @@ export default function HomePage() {
     const user = useContext(UserContext);
 
     const loginRequest = useMutation({
-        mutationFn: () => {
+        mutationFn: async () => {
             console.log("Sending email:", email);
-            return axios.post(import.meta.env.VITE_API_URL + "/login", { email }, {
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/login`, { email }, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
+            console.log("Response data:", response.data); // Debugging line to check response data
+            return response.data;
         },
-        onSuccess: (res) => {
-            user.setUser(res.data);
-            navigate("/");
+        onSuccess: (data) => {
+            console.log("Login success data:", data); // Debugging line to check success data
+            if (data.exists) {
+                user.setUser(data.user);
+                localStorage.setItem('token', data.token);
+                alert('Login successful');
+                navigate("/");
+            } else {
+                alert('Email does not exist');
+            }
         },
         onError: (error) => {
             console.error("Login request failed:", error);
+            alert('Login failed');
         }
     });
 
-    function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
-        if (email.trim() === "") {
-            console.error("Email is required");
-            return;
-        }
-        console.log("Form submitted with email:", email);
         loginRequest.mutate();
-    }
+    };
 
     const toggleCategoryWindow = () => {
         setCategoryWindowVisible(!isCategoryWindowVisible);
