@@ -4,7 +4,6 @@ import ReactModal from 'react-modal';
 import {useMutation} from "@tanstack/react-query";
 import axios from "axios"
 import {useNavigate} from "react-router-dom";
-import {BASE_URL} from "../../main.tsx";
 import { UserContext } from "../../providers.tsx";
 
 
@@ -16,18 +15,30 @@ export default function HomePage() {
     const user = useContext(UserContext);
 
     const loginRequest = useMutation({
-        mutationFn: () =>
-            axios.post(BASE_URL + "/login", {
-                email
-            }),
+        mutationFn: () => {
+            console.log("Sending email:", email);
+            return axios.post(import.meta.env.VITE_API_URL + "/login", { email }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
         onSuccess: (res) => {
             user.setUser(res.data);
             navigate("/");
         },
-    })
+        onError: (error) => {
+            console.error("Login request failed:", error);
+        }
+    });
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
+        if (email.trim() === "") {
+            console.error("Email is required");
+            return;
+        }
+        console.log("Form submitted with email:", email);
         loginRequest.mutate();
     }
 
@@ -1065,19 +1076,19 @@ export default function HomePage() {
                 <div className={styles.login__content}>
                     <h1>Log In on (name)</h1>
                     <form onSubmit={handleSubmit}>
-                    <label htmlFor="enter_email">Enter your school email</label>
-                    <input
-                        type="email"
-                        value={email}
-                        placeholder={"School email"}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <button
-                        type="submit"
-                        disabled={loginRequest.isPending}
-                    >
-                        Log in
-                    </button>7
+                        <label htmlFor="enter_email">Enter your school email</label>
+                        <input
+                            type="email"
+                            value={email}
+                            placeholder={"School email"}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <button
+                            type="submit"
+                            disabled={loginRequest.isPending}
+                        >
+                            Log in
+                        </button>
                     </form>
                 </div>
             </ReactModal>
