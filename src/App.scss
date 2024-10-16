@@ -10,11 +10,12 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 1rem;
+  margin-left: -45px;
   background-color: #232323;
   color: white;
   position: fixed;
   top: 0;
-  width: 100%;
+  width: 100vw;
   height: 60px;
   z-index: 1000;
   transition: transform 0.5s ease-in-out;
@@ -24,13 +25,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 100vw;
 }
 
 .navbar__menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-right: 1rem;
 }
 
 #kommun_logo {

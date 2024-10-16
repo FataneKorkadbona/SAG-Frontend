@@ -394,7 +394,7 @@ p {
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1475px) {
   .hero__section {
     display: none;
   }
@@ -402,6 +402,5 @@ p {
   .info__cards {
     display: flex;
     flex-direction: column;
-    margin-top: 40px;
   }
 }
