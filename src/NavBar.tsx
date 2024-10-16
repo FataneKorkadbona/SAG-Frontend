@@ -4,6 +4,7 @@ import './App.scss';
 
 export default function NavBar() {
     const [isAtTop, setIsAtTop] = useState(true);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const location = useLocation();
 
     useEffect(() => {
@@ -11,14 +12,21 @@ export default function NavBar() {
             setIsAtTop(window.scrollY === 0);
         };
 
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
         window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleResize);
+
         return () => {
             window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', handleResize);
         };
     }, []);
 
     // Hide the navbar only on the home screen and when scrolled to the top
-    if (location.pathname === '/' && isAtTop) {
+    if (location.pathname === '/' && isAtTop && windowWidth >= 1475) {
         return null;
     }
 
