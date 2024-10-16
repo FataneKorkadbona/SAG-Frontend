@@ -359,6 +359,14 @@ p {
     text-decoration: none;
   }
 
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
   label {
     color: #000;
     width: 400px;
@@ -399,8 +407,28 @@ p {
     display: none;
   }
 
+  .info__categories {
+    width: 100%;
+  }
+
   .info__cards {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+  }
+  .info__fullcard {
+    display: none;
+  }
+
+  .card__list {
+    display: flex;
+    flex-direction: column;
+
+    max-height: fit-content;
+  }
+  .info__card {
+    width: 90vw;
   }
 }
