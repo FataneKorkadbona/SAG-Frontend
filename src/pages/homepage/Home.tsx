@@ -1,51 +1,10 @@
-import {useState, FormEvent, useContext} from 'react';
+import {useState} from 'react';
 import styles from './home.module.scss';
-import ReactModal from 'react-modal';
-import {useMutation} from "@tanstack/react-query";
-import axios from "axios"
-import {useNavigate} from "react-router-dom";
-import { UserContext } from "../../providers.tsx";
 
 
 export default function HomePage() {
 
     const [isCategoryWindowVisible, setCategoryWindowVisible] = useState(false);
-    const [email, setEmail] = useState("");
-    const navigate = useNavigate();
-    const user = useContext(UserContext);
-
-    const loginRequest = useMutation({
-        mutationFn: async () => {
-            console.log("Sending email:", email);
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/login`, { email }, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            console.log("Response data:", response.data); // Debugging line to check response data
-            return response.data;
-        },
-        onSuccess: (data) => {
-            console.log("Login success data:", data); // Debugging line to check success data
-            if (data.exists) {
-                user.setUser(data.user);
-                localStorage.setItem('token', data.token);
-                alert('Login successful');
-                navigate("/");
-            } else {
-                alert('Email does not exist');
-            }
-        },
-        onError: (error) => {
-            console.error("Login request failed:", error);
-            alert('Login failed');
-        }
-    });
-
-    const handleSubmit = async (event: FormEvent) => {
-        event.preventDefault();
-        loginRequest.mutate();
-    };
 
     const toggleCategoryWindow = () => {
         setCategoryWindowVisible(!isCategoryWindowVisible);
@@ -54,11 +13,6 @@ export default function HomePage() {
     const hideCategoryWindow = () => {
         setCategoryWindowVisible(false);
     };
-
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-
-    const openModal = () => setModalIsOpen(true);
-    const closeModal = () => setModalIsOpen(false);
 
     return (
         <>
@@ -83,7 +37,7 @@ export default function HomePage() {
                                 commodo massa. Duis congue eleifend porta. Praesent vitae elementum tortor. Ut at
                                 neque ac nibh pharetra convallis id porta ligula. Sed maximus iaculis auctor.</p>
                             <p className={styles.card__date}>date-added</p>
-                            <button className={styles.card__votes} onClick={openModal}>xxx votes</button>
+                            <button className={styles.card__votes}>xxx votes</button>
                         </div>
                     </div>
                     <div className={styles.card__first} id={styles.hero_card}>
@@ -103,7 +57,7 @@ export default function HomePage() {
                                 massa. Duis congue eleifend porta. Praesent vitae elementum tortor. Ut at neque ac
                                 nibh pharetra convallis id porta ligula. Sed maximus iaculis auctor.</p>
                             <p className={styles.card__date}>date-added</p>
-                            <button className={styles.card__votes} onClick={openModal}>xxx votes</button>
+                            <button className={styles.card__votes}>xxx votes</button>
                         </div>
                     </div>
                     <div className={styles.card__third} id={styles.hero_card}>
@@ -122,7 +76,7 @@ export default function HomePage() {
                                 commodo massa. Duis congue eleifend porta. Praesent vitae elementum tortor. Ut at
                                 neque ac nibh pharetra convallis id porta ligula. Sed maximus iaculis auctor.</p>
                             <p className={styles.card__date}>date-added</p>
-                            <button className={styles.card__votes} onClick={openModal}>xxx votes</button>
+                            <button className={styles.card__votes}>xxx votes</button>
                         </div>
                     </div>
                 </div>
@@ -203,7 +157,7 @@ export default function HomePage() {
                                 <p>Category</p>
                             </div>
                             <div className={styles.fullcard__info}>
-                                <button onClick={openModal}><p>antal</p>Votes</button>
+                                <button><p>antal</p>Votes</button>
                                 <p>budget</p>
                             </div>
                         </div>
@@ -1070,33 +1024,6 @@ export default function HomePage() {
                     </div>
                 </div>
             </div>
-
-            <ReactModal
-                isOpen={modalIsOpen}
-                onRequestClose={closeModal}
-                className={styles.login__container}
-                overlayClassName={styles.overlay}
-            >
-                <button onClick={closeModal}>x</button>
-                <div className={styles.login__content}>
-                    <h1>Log In on (name)</h1>
-                    <form onSubmit={handleSubmit}>
-                        <label htmlFor="enter_email">Enter your school email</label>
-                        <input
-                            type="email"
-                            value={email}
-                            placeholder={"School email"}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <button
-                            type="submit"
-                            disabled={loginRequest.isPending}
-                        >
-                            Log in
-                        </button>
-                    </form>
-                </div>
-            </ReactModal>
         </>
     )
 }
