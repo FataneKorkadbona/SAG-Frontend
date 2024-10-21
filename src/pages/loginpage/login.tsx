@@ -50,14 +50,7 @@ export default function LoginPage() {
 
     return (
         <>
-            <button onClick={openModal}>Log In</button>
-            <ReactModal
-                isOpen={modalIsOpen}
-                onRequestClose={closeModal}
-                className={styles.login__container}
-                overlayClassName={styles.overlay}
-            >
-                <button onClick={closeModal}>x</button>
+            <div className={styles.login__container}>
                 <div className={styles.login__content}>
                     <h1>Log In</h1>
                     <form onSubmit={handleSubmit}>
@@ -77,7 +70,7 @@ export default function LoginPage() {
                         {errorMessage && <p className={styles.error}>{errorMessage}</p>}
                     </form>
                 </div>
-            </ReactModal>
+            </div>
         </>
     );
 }
