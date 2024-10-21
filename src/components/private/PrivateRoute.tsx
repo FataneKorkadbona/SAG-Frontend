@@ -9,7 +9,7 @@ interface PrivateRouteProps {
 const PrivateRoute = ({ children }: PrivateRouteProps) => {
     const isLoggedIn = Boolean(localStorage.getItem('token')); // Adjust this logic based on your authentication method
 
-    return isLoggedIn ? children : <Navigate to="/" />;
+    return isLoggedIn ? children : <Navigate to="/unathorized" />;
 };
 
 export default PrivateRoute;

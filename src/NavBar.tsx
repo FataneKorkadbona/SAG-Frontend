@@ -64,7 +64,7 @@ export default function NavBar() {
                     )}
                     {!userContext?.user?.isAuthenticated && (
                         <li className="navbar__item">
-                            <img src="/public/karlstad__standin.png" alt="Logo"/>
+                            <img src="/karlstad__standin.png" alt="Logo"/>
                             <Link to="/login" className="navbar__links"> Log In </Link>
                         </li>
                     )}

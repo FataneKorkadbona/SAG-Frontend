@@ -1,12 +1,16 @@
-import {useState} from 'react';
+import  {useState, useContext} from 'react';
 import styles from './home.module.scss';
 import {useNavigate} from "react-router-dom";
+import { HeroCard } from './card.tsx';
+import { UserContext } from '../../providers.tsx';
 
 
 export default function HomePage() {
 
     const [isCategoryWindowVisible, setCategoryWindowVisible] = useState(false);
     const navigate = useNavigate();
+    const user = useContext(UserContext); // Define user using useContext
+
 
     const toggleCategoryWindow = () => {
         setCategoryWindowVisible(!isCategoryWindowVisible);
@@ -17,7 +21,9 @@ export default function HomePage() {
     };
 
     const buttonlogin = () => {
-        navigate("/login");
+        if (!user) {
+            navigate("/login");
+        }
     }
 
     return (
@@ -26,48 +32,37 @@ export default function HomePage() {
             <div className={styles.hero__section}>
                 <h1>category-name</h1>
                 <div className={styles.hero__cards}>
-                    <div className={styles.card__second} id={styles.hero_card}>
-                        <div className={styles.card__top}>
-
-                            <h2 className={styles.no__margin}>title</h2>
-                            <div className={styles.cat__box}>
-                                <p className={styles.category}>category</p>
-                            </div>
-                        </div>
-                        <div className={styles.bottom__second}>
-                            <p>text</p>
-                            <p className={styles.card__date}>date-added</p>
-                            <button className={styles.card__votes} onClick={buttonlogin}>xxx votes</button>
-                        </div>
-                    </div>
-                    <div className={styles.card__first} id={styles.hero_card}>
-                        <div className={styles.card__top}>
-                            <h2 className={styles.no__margin}>title</h2>
-                            <div className={styles.cat__box}>
-                                <p className={styles.category}>category</p>
-                            </div>
-                        </div>
-                        <div className={styles.bottom__first}>
-                            <p>text</p>
-                            <p className={styles.card__date}>date-added</p>
-                            <button className={styles.card__votes} onClick={buttonlogin}>xxx votes</button>
-                        </div>
-                    </div>
-                    <div className={styles.card__third} id={styles.hero_card}>
-                        <div className={styles.card__top}>
-                            <h2 className={styles.no__margin}>title</h2>
-                            <div className={styles.cat__box}>
-                                <p className={styles.category}>category</p>
-                            </div>
-                        </div>
-                        <div className={styles.bottom__third}>
-                            <p>text</p>
-                            <p className={styles.card__date}>date-added</p>
-                            <button className={styles.card__votes} onClick={buttonlogin}>xxx votes</button>
-                        </div>
-                    </div>
+                    <HeroCard
+                        title="title"
+                        category="category"
+                        text="text"
+                        dateAdded="date-added"
+                        votes="xxx"
+                        cardClass={styles.card__second}
+                        bottomClass={styles.bottom__second}
+                        onButtonClick={buttonlogin}
+                    />
+                    <HeroCard
+                        title="title"
+                        category="category"
+                        text="text"
+                        dateAdded="date-added"
+                        votes="xxx"
+                        cardClass={styles.card__first}
+                        bottomClass={styles.bottom__first}
+                        onButtonClick={buttonlogin}
+                    />
+                    <HeroCard
+                        title="title"
+                        category="category"
+                        text="text"
+                        dateAdded="date-added"
+                        votes="xxx"
+                        cardClass={styles.card__third}
+                        bottomClass={styles.bottom__third}
+                        onButtonClick={buttonlogin}
+                    />
                 </div>
-
             </div>
 
             <div className={styles.info__section}>
@@ -154,13 +149,18 @@ export default function HomePage() {
                                     <h2>Title</h2>
                                     <p>Nam quis nulla. Integer malesuada. In in enim a arcu imperdiet malesuada. Sed
                                         vel lectus. Donec odio urna, tempus molestie, porttitor ut, iaculis quis, sem.
-                                        Phasellus rhoncus. Aenean id metus id velit ullamcorper pulvinar. Vestibulum fermentum
-                                        tortor id mi. Pellentesque ipsum. Nulla non arcu lacinia neque faucibus fringilla.
+                                        Phasellus rhoncus. Aenean id metus id velit ullamcorper pulvinar. Vestibulum
+                                        fermentum
+                                        tortor id mi. Pellentesque ipsum. Nulla non arcu lacinia neque faucibus
+                                        fringilla.
                                         Nulla non lectus sed nisl molestie malesuada. Proin in tellus sit amet nibh
-                                        dignissim sagittis. Vivamus luctus egestas leo. Maecenas sollicitudin. Nullam rhoncus
-                                        aliquam metus. Etiam egestas wisi a erat. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam feugiat, turpis
+                                        dignissim sagittis. Vivamus luctus egestas leo. Maecenas sollicitudin. Nullam
+                                        rhoncus
+                                        aliquam metus. Etiam egestas wisi a erat. Lorem ipsum dolor sit amet,
+                                        consectetuer adipiscing elit. Nullam feugiat, turpis
                                         at pulvinar vulputate, erat libero tristique tellus, nec bibendum odio risus
-                                        sit amet ante. Aliquam erat volutpat. Nunc auctor. Mauris pretium quam et urna. Fusce nibh.</p>
+                                        sit amet ante. Aliquam erat volutpat. Nunc auctor. Mauris pretium quam et urna.
+                                        Fusce nibh.</p>
                                 </div>
                                 <div className={styles.card__info}>
                                     <button>Read More</button>
