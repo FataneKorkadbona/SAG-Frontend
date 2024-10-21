@@ -1,10 +1,12 @@
 import {useState} from 'react';
 import styles from './home.module.scss';
+import {useNavigate} from "react-router-dom";
 
 
 export default function HomePage() {
 
     const [isCategoryWindowVisible, setCategoryWindowVisible] = useState(false);
+    const navigate = useNavigate();
 
     const toggleCategoryWindow = () => {
         setCategoryWindowVisible(!isCategoryWindowVisible);
@@ -13,6 +15,10 @@ export default function HomePage() {
     const hideCategoryWindow = () => {
         setCategoryWindowVisible(false);
     };
+
+    const buttonlogin = () => {
+        navigate("/login");
+    }
 
     return (
         <>
@@ -25,9 +31,9 @@ export default function HomePage() {
 
                             <h2 className={styles.no__margin}>title</h2>
                             <div className={styles.cat__box}>
-                                <p className={styles.category}>123456789012345</p>
-                                <p className={styles.category}>Bonmussadsdadsd</p>
-                                <p className={styles.category}>BraBardsadsdadd</p>
+                                <p className={styles.category}>BraBardsad</p>
+                                <p className={styles.category}>BraBardsad</p>
+                                <p className={styles.category}>BraBardsad</p>
                             </div>
                         </div>
                         <div className={styles.bottom__second}>
@@ -37,16 +43,16 @@ export default function HomePage() {
                                 commodo massa. Duis congue eleifend porta. Praesent vitae elementum tortor. Ut at
                                 neque ac nibh pharetra convallis id porta ligula. Sed maximus iaculis auctor.</p>
                             <p className={styles.card__date}>date-added</p>
-                            <button className={styles.card__votes}>xxx votes</button>
+                            <button className={styles.card__votes} onClick={buttonlogin}>xxx votes</button>
                         </div>
                     </div>
                     <div className={styles.card__first} id={styles.hero_card}>
                         <div className={styles.card__top}>
                             <h2 className={styles.no__margin}>title</h2>
                             <div className={styles.cat__box}>
-                                <p className={styles.category}>123456789012345</p>
-                                <p className={styles.category}>BraBardsadsdadd</p>
-                                <p className={styles.category}>BraBardsadsdadd</p>
+                                <p className={styles.category}>BraBardsad</p>
+                                <p className={styles.category}>BraBardsad</p>
+                                <p className={styles.category}>BraBardsad</p>
                             </div>
                         </div>
                         <div className={styles.bottom__first}>
@@ -57,16 +63,16 @@ export default function HomePage() {
                                 massa. Duis congue eleifend porta. Praesent vitae elementum tortor. Ut at neque ac
                                 nibh pharetra convallis id porta ligula. Sed maximus iaculis auctor.</p>
                             <p className={styles.card__date}>date-added</p>
-                            <button className={styles.card__votes}>xxx votes</button>
+                            <button className={styles.card__votes} onClick={buttonlogin}>xxx votes</button>
                         </div>
                     </div>
                     <div className={styles.card__third} id={styles.hero_card}>
                         <div className={styles.card__top}>
                             <h2 className={styles.no__margin}>title</h2>
                             <div className={styles.cat__box}>
-                                <p className={styles.category}>BraBardsadsdadd</p>
-                                <p className={styles.category}>BraBardsadsdadd</p>
-                                <p className={styles.category}>BraBardsadsdadd</p>
+                                <p className={styles.category}>BraBardsad</p>
+                                <p className={styles.category}>BraBardsad</p>
+                                <p className={styles.category}>BraBardsad</p>
                             </div>
                         </div>
                         <div className={styles.bottom__third}>
@@ -76,7 +82,7 @@ export default function HomePage() {
                                 commodo massa. Duis congue eleifend porta. Praesent vitae elementum tortor. Ut at
                                 neque ac nibh pharetra convallis id porta ligula. Sed maximus iaculis auctor.</p>
                             <p className={styles.card__date}>date-added</p>
-                            <button className={styles.card__votes}>xxx votes</button>
+                            <button className={styles.card__votes} onClick={buttonlogin}>xxx votes</button>
                         </div>
                     </div>
                 </div>
@@ -157,7 +163,7 @@ export default function HomePage() {
                                 <p>Category</p>
                             </div>
                             <div className={styles.fullcard__info}>
-                                <button><p>antal</p>Votes</button>
+                                <button onClick={buttonlogin}><p>antal</p>Votes</button>
                                 <p>budget</p>
                             </div>
                         </div>

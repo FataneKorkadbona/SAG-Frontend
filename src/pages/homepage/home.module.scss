@@ -1,3 +1,4 @@
+/* Kom ihåg att fixa så att den automatisk anpassar sig till större skärmar också, aka. em? istället för pixlar :) */
 h1 {
   color: #000;
   text-decoration-line: underline;
@@ -13,7 +14,7 @@ h2 {
 
 p {
   color: #000;
-  font-size: 16px;
+  font-size: 20px;
   padding: 0 10px 0 10px;
 }
 
@@ -69,11 +70,11 @@ p {
   width: fit-content;
   margin: 0 5px 5px;
   background-color: #FFF7D7;
-  font-size: 0.7em;
+  font-size: 1.1rem;
 }
 
 .bottom__first {
-  height: 550px;
+  height: 575px;
   padding-top: 10px;
   background-color: #FFF;
 
@@ -84,7 +85,7 @@ p {
 }
 
 .bottom__second {
-  height: 500px;
+  height: 525px;
   padding-top: 10px;
   background-color: #FFF;
 
@@ -95,7 +96,7 @@ p {
 }
 
 .bottom__third {
-  height: 450px;
+  height: 475px;
   padding-top: 10px;
   background-color: #FFF;
 
@@ -112,6 +113,7 @@ p {
 
 .card__votes {
   margin: 15px;
+  font-size: 20px;
   background-color: #E84E0D;
 }
 
@@ -121,7 +123,7 @@ p {
   justify-content: left;
   padding-top: 50px;
   position: relative;
-  background-color: #fff1b6;
+  background-color: #FFF7D7;
 
   button {
     margin-left: 20px;
@@ -140,7 +142,7 @@ p {
   position: absolute; /* Position right below info__categories */
   top: 80px; /* Adjust this value to move it below info__categories */
   left: 0; /* Adjust as needed */
-  background-color: #fff1b6;
+  background-color: #FFF7D7;
 
   h2 {
     margin-bottom: 0;
@@ -221,6 +223,7 @@ p {
   p {
     max-height: 75px;
     overflow: hidden;
+    font-size: 16px;
 
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -240,10 +243,14 @@ p {
     background-color: #fff;
     color: #000;
     z-index: 2;
+    font-size: 16px;
 
     &:hover {
       border-color: #E84E0D;
     }
+  }
+  p {
+    font-size: 16px;
   }
 }
 
@@ -257,6 +264,10 @@ p {
 
   margin: 0 20px 20px 20px;
   padding: 10px;
+
+  p {
+    font-size: 16px;
+  }
 }
 
 .fullcard__text {
@@ -407,8 +418,11 @@ p {
     display: none;
   }
 
-  .info__categories {
-    width: 100%;
+  .info__section {
+    width: 100vw;
+    padding: 0;
+    margin: 0;
+    background-color: #fff1b6;
   }
 
   .info__cards {
@@ -417,6 +431,8 @@ p {
     justify-content: center;
     align-items: center;
     width: 100vw;
+    padding: 0;
+    margin: 0;
   }
   .info__fullcard {
     display: none;
@@ -425,6 +441,8 @@ p {
   .card__list {
     display: flex;
     flex-direction: column;
+    padding: 0;
+    margin: 0;
 
     max-height: fit-content;
   }

@@ -58,7 +58,7 @@ export default function NavBar() {
                                 <Link to="/suggestions" className="navbar__links"> Suggestions </Link>
                             </li>
                             <li className="navbar__item">
-                                <button onClick={handleLogout} className="navbar__links"> Log Out </button>
+                                <button onClick={handleLogout} className="navbar__links" id="navbar__button"> Log Out </button>
                             </li>
                         </>
                     )}
