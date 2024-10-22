@@ -10,11 +10,12 @@ interface HeroCardProps {
     cardClass: string;
     bottomClass: string;
     onButtonClick: () => void;
+    topID?: string;
 }
 
-export const HeroCard: React.FC<HeroCardProps> = ({ title, category, text, dateAdded, votes, cardClass, bottomClass, onButtonClick }) => (
+export const HeroCard: React.FC<HeroCardProps> = ({ title, category, text, dateAdded, votes, cardClass, bottomClass, topID, onButtonClick }) => (
     <div className={cardClass} id={styles.hero_card}>
-        <div className={styles.card__top}>
+        <div className={styles.card__top} id={topID}>
             <h2 className={styles.no__margin}>{title}</h2>
             <div className={styles.cat__box}>
                 <p className={styles.category}>{category}</p>

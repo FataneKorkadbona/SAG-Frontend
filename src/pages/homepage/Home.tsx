@@ -40,6 +40,7 @@ export default function HomePage() {
                         votes="xxx"
                         cardClass={styles.card__second}
                         bottomClass={styles.bottom__second}
+                        topID={styles.top__second}
                         onButtonClick={buttonlogin}
                     />
                     <HeroCard
@@ -50,6 +51,7 @@ export default function HomePage() {
                         votes="xxx"
                         cardClass={styles.card__first}
                         bottomClass={styles.bottom__first}
+                        topID={styles.top__first}
                         onButtonClick={buttonlogin}
                     />
                     <HeroCard
@@ -60,6 +62,7 @@ export default function HomePage() {
                         votes="xxx"
                         cardClass={styles.card__third}
                         bottomClass={styles.bottom__third}
+                        topID={styles.top__third}
                         onButtonClick={buttonlogin}
                     />
                 </div>
