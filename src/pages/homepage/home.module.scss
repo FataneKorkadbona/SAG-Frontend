@@ -238,17 +238,17 @@ p {
   margin-top: 40px;
 
   .card__list {
-    width: 50%;
+    width: 50vw;
   }
 
   .info__fullcard {
-    width: 50%;
+    width: 50vw;
   }
 }
 
 .card__list {
   display: flex;
-  flex-direction: column;
+  flex-direction: column !important;
 
   max-height: 875px;
   overflow: auto;
@@ -283,6 +283,7 @@ p {
     max-height: 75px;
     overflow: hidden;
     font-size: 16px;
+    word-wrap: break-word;
 
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -339,6 +340,9 @@ p {
   flex-direction: column;
   width: 100%;
   text-align: left;
+  white-space: normal;
+  word-wrap: break-word;
+
 
   h2 {
     margin-top: -5px;
