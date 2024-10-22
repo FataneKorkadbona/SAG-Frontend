@@ -1,16 +1,29 @@
-import  {useState, useContext} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import styles from './home.module.scss';
 import {useNavigate} from "react-router-dom";
-import { HeroCard } from './card.tsx';
-import { UserContext } from '../../providers.tsx';
+import {HeroCard} from './card.tsx';
+import {UserContext} from '../../providers.tsx';
+import {SuggBigCard} from './suggBigCard.tsx';
+import {SuggSmallCard} from "./suggSmallCard.tsx";
+import axios from "axios";
 
+interface Suggestion {
+    title: string;
+    suggestion: string;
+    category: string;
+    price: number;
+    status: string;
+    id: string;
+    votes: number;
+    createdAt: string;
+}
 
 export default function HomePage() {
-
     const [isCategoryWindowVisible, setCategoryWindowVisible] = useState(false);
+    const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
     const user = useContext(UserContext); // Define user using useContext
-
 
     const toggleCategoryWindow = () => {
         setCategoryWindowVisible(!isCategoryWindowVisible);
@@ -26,9 +39,30 @@ export default function HomePage() {
         }
     }
 
+    const fetchSuggestions = async () => {
+        try {
+            const response = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/suggestions`);
+            const activeSuggestions = response.data.filter((suggestion: Suggestion) => suggestion.status === 'active');
+            setSuggestions(activeSuggestions);
+            console.log('Active suggestions fetched:', activeSuggestions);
+        } catch (error) {
+            console.error('Error fetching suggestions:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchSuggestions();
+    }, []);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <>
-            {/* JSX content */}
+        {/* JSX content */}
             <div className={styles.hero__section}>
                 <h1>category-name</h1>
                 <div className={styles.hero__cards}>
@@ -79,101 +113,36 @@ export default function HomePage() {
                 <div className={styles.info__container}>
                     <h2>Category</h2>
                     <div className={styles.info__cards}>
-                        <div className={styles.info__fullcard}>
-                            <div className={styles.fullcard__text}>
-                                <h2>Title</h2>
-                                <p>Nam quis nulla. Integer malesuada. In in enim a arcu imperdiet malesuada. Sed
-                                    vel
-                                    lectus. Donec odio urna, tempus molestie, porttitor ut, iaculis quis, sem.
-                                    Phasellus
-                                    rhoncus. Aenean id metus id velit ullamcorper pulvinar. Vestibulum fermentum
-                                    tortor
-                                    id mi. Pellentesque ipsum. Nulla non arcu lacinia neque faucibus fringilla.
-                                    Nulla
-                                    non lectus sed nisl molestie malesuada. Proin in tellus sit amet nibh dignissim
-                                    sagittis. Vivamus luctus egestas leo. Maecenas sollicitudin. Nullam rhoncus
-                                    aliquam
-                                    metus. Etiam egestas wisi a erat.
-                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam feugiat, turpis
-                                    at
-                                    pulvinar vulputate, erat libero tristique tellus, nec bibendum odio risus sit
-                                    amet
-                                    ante. Aliquam erat volutpat. Nunc auctor. Mauris pretium quam et urna. Fusce
-                                    nibh.
-                                    Duis risus. Curabitur sagittis hendrerit ante. Aliquam erat volutpat. Vestibulum
-                                    erat nulla, ullamcorper nec, rutrum non, nonummy ac, erat. Duis condimentum
-                                    augue id
-                                    magna semper rutrum. Nullam justo enim, consectetuer nec, ullamcorper ac,
-                                    vestibulum
-                                    in, elit. Proin pede metus, vulputate nec, fermentum fringilla, vehicula vitae,
-                                    justo. Fusce consectetuer risus a nunc. Aliquam ornare wisi eu metus. Integer
-                                    pellentesque quam vel velit. Duis pulvinar.
-                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi gravida libero
-                                    nec
-                                    velit. Morbi scelerisque luctus velit. Etiam dui sem, fermentum vitae, sagittis
-                                    id,
-                                    malesuada in, quam. Proin mattis lacinia justo. Vestibulum facilisis auctor
-                                    urna.
-                                    Aliquam in lorem sit amet leo accumsan lacinia. Integer rutrum, orci vestibulum
-                                    ullamcorper ultricies, lacus quam ultricies odio, vitae placerat pede sem sit
-                                    amet
-                                    enim. Phasellus et lorem id felis nonummy placerat. Fusce dui leo, imperdiet in,
-                                    aliquam sit amet, feugiat eu, orci. Aenean vel massa quis mauris vehicula
-                                    lacinia.
-                                    Quisque tincidunt scelerisque libero. Maecenas libero. Etiam dictum tincidunt
-                                    diam.
-                                    Donec ipsum massa, ullamcorper in, auctor et, scelerisque sed, est. Suspendisse
-                                    nisl. Sed convallis magna eu sem. Cras pede libero, dapibus nec, pretium sit
-                                    amet,
-                                    tempor quis, urna.
-                                    Etiam posuere quam ac quam. Maecenas aliquet accumsan leo. Nullam dapibus
-                                    fermentum
-                                    ipsum. Etiam quis quam. Integer lacinia. Nulla est. Nulla turpis magna, cursus
-                                    sit
-                                    amet, suscipit a, interdum id, felis. Integer vulputate sem a nibh rutrum
-                                    consequat.
-                                    Maecenas lorem. Pellentesque pretium lectus id turpis. Etiam sapien elit,
-                                    consequat
-                                    eget, tristique non, venenatis quis, ante. Fusce wisi. Phasellus faucibus
-                                    molestie
-                                    ni</p>
-                            </div>
-                            <div className={styles.fullcard__categories}>
-                                <p>Category</p>
-                            </div>
-                            <div className={styles.fullcard__info}>
-                                <button onClick={buttonlogin}><p>antal</p>Votes</button>
-                                <p>budget</p>
-                            </div>
-                        </div>
-                        <div className={styles.card__list}>
-                            <div className={styles.info__card}>
-                                <div className={styles.card__text}>
-                                    <h2>Title</h2>
-                                    <p>Nam quis nulla. Integer malesuada. In in enim a arcu imperdiet malesuada. Sed
-                                        vel lectus. Donec odio urna, tempus molestie, porttitor ut, iaculis quis, sem.
-                                        Phasellus rhoncus. Aenean id metus id velit ullamcorper pulvinar. Vestibulum
-                                        fermentum
-                                        tortor id mi. Pellentesque ipsum. Nulla non arcu lacinia neque faucibus
-                                        fringilla.
-                                        Nulla non lectus sed nisl molestie malesuada. Proin in tellus sit amet nibh
-                                        dignissim sagittis. Vivamus luctus egestas leo. Maecenas sollicitudin. Nullam
-                                        rhoncus
-                                        aliquam metus. Etiam egestas wisi a erat. Lorem ipsum dolor sit amet,
-                                        consectetuer adipiscing elit. Nullam feugiat, turpis
-                                        at pulvinar vulputate, erat libero tristique tellus, nec bibendum odio risus
-                                        sit amet ante. Aliquam erat volutpat. Nunc auctor. Mauris pretium quam et urna.
-                                        Fusce nibh.</p>
-                                </div>
-                                <div className={styles.card__info}>
-                                    <button>Read More</button>
-                                    <p>budget</p>
-                                </div>
-                            </div>
-                        </div>
+                        {suggestions.length > 0 && (
+                            <>
+                                <SuggBigCard
+                                    title={suggestions[0].title}
+                                    text={suggestions[0].suggestion}
+                                    category={suggestions[0].category}
+                                    budget={suggestions[0].price}
+                                    votes={suggestions[0].votes}
+                                    cardClass={styles.info__fullcard}
+                                    textClass={styles.fullcard__text}
+                                    categoryClass={styles.fullcard__categories}
+                                    bottomClass={styles.fullcard__info}
+                                />
+                                {suggestions.slice(1).map((suggestion) => (
+                                    <div key={suggestion.id} className={styles.card__list}>
+                                        <SuggSmallCard
+                                            title={suggestion.title}
+                                            text={suggestion.suggestion}
+                                            budget={suggestion.price}
+                                            textClass={styles.card__text}
+                                            cardClass={styles.info__card}
+                                            bottomClass={styles.card__info}
+                                        />
+                                    </div>
+                                ))}
+                            </>
+                        )}
                     </div>
                 </div>
             </div>
         </>
-    )
+    );
 }

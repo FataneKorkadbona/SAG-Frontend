@@ -22,6 +22,10 @@ p {
   padding: 5px 30px 0 30px;
   background-color: #fff;
   justify-content: center;
+
+  h1 {
+    padding-bottom: 25px;
+  }
 }
 
 .hero__cards {
@@ -49,8 +53,6 @@ p {
   flex-direction: column;
   margin: 5px 10px 30px 10px;
   padding: 2px;
-  background-color: #FFF9DE;
-  border: solid 2px #F1E1A0;
   border-radius: 5px;
 }
 
@@ -60,11 +62,12 @@ p {
                   #ecab18 0%,
                   #efb93e 10%,
                   #f2c45c 25%,
-                  #f5d182 50%,
+                  #ffe293 50%,
                   #f2c45c 65%,
                   #efb93e 80%,
                   #ecab18 100%
   );
+  border: 2px solid #ecab18;
 }
 
 
@@ -79,6 +82,7 @@ p {
                   #ccc 80%,
                   #aaa 100%
   );
+  border: 2px solid #bbb;
 }
 
 #top__third {
@@ -87,11 +91,12 @@ p {
                   #d67f3f 0%,
                   #d78445 10%,
                   #de9a67 25%,
-                  #e1a375 50%,
+                  #f2b486 50%,
                   #de9a67 65%,
                   #d78445 80%,
                   #d67f3f 100%
   );
+  border: 2px solid #d67f3f;
 }
 
 
