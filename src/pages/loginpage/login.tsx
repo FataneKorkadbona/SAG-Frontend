@@ -1,6 +1,5 @@
 import { useState, FormEvent, useContext } from 'react';
-import styles from '../homepage/Home.module.scss';
-import ReactModal from 'react-modal';
+import styles from '../homepage/home.module.scss';
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +7,6 @@ import { UserContext } from "../../providers";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
-    const [modalIsOpen, setModalIsOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
     const userContext = useContext(UserContext);
@@ -38,14 +36,6 @@ export default function LoginPage() {
         }
         setErrorMessage(""); // Clear any previous error messages
         loginRequest.mutate();
-    }
-
-    function openModal() {
-        setModalIsOpen(true);
-    }
-
-    function closeModal() {
-        setModalIsOpen(false);
     }
 
     return (
