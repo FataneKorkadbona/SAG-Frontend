@@ -15,7 +15,7 @@ export default function Suggestion() {
 
     const [charCount, setCharCount] = useState<CharLimits>({
         suggestion: 2500,
-        title: 50,
+        title: 25,
         price: 6
     });
 
@@ -39,7 +39,7 @@ export default function Suggestion() {
 
         const limits: CharLimits = {
             suggestion: 2500,
-            title: 50,
+            title: 25,
             price: 6
         };
         const maxLength = limits[id as keyof CharLimits];
@@ -77,7 +77,7 @@ export default function Suggestion() {
             });
             setCharCount({
                 suggestion: 2500,
-                title: 50,
+                title: 25,
                 price: 6
             });
             console.log('Suggestion submitted successfully:', response.data);
@@ -139,12 +139,12 @@ export default function Suggestion() {
                                     <option value="category5">Category5</option>
                                 </select>
                                 <button type="submit">Submit</button>
-                                {errorMessage && <p className={styles.error}>{errorMessage}</p>}
-                                {successMessage && <p className={styles.success}>{successMessage}</p>}
                             </div>
                         </div>
                     </form>
                 </div>
+                {errorMessage && <p className={styles.error}>{errorMessage}</p>}
+                {successMessage && <p className={styles.success}>{successMessage}</p>}
             </div>
         </>
     );

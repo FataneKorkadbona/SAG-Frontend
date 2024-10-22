@@ -18,7 +18,7 @@ export const AccCard: React.FC<accCardProps> = ({title, text, budget, cardClass,
         </div>
         <div className={bottomClass} id={styles.bottomClass}>
             <button>Read More</button>
-            <p>{budget}</p>
+            <p>{budget} kr</p>
         </div>
     </div>
 );

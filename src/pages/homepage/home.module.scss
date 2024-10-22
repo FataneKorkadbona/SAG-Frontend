@@ -20,7 +20,7 @@ p {
 
 .hero__section {
   padding: 5px 30px 0 30px;
-  background-image: linear-gradient(#FFFFFF, #FFF7D7);
+  background-color: #fff;
   justify-content: center;
 }
 
@@ -54,20 +54,46 @@ p {
   border-radius: 5px;
 }
 
+#top__first {
+  background: linear-gradient(
+                  45deg,
+                  #ecab18 0%,
+                  #efb93e 10%,
+                  #f2c45c 25%,
+                  #f5d182 50%,
+                  #f2c45c 65%,
+                  #efb93e 80%,
+                  #ecab18 100%
+  );
+}
 
 
 #top__second {
   background: linear-gradient(
                   45deg,
                   #bbb 0%,
-                  #eee 10%,
-                  #ccc 25%,
-                  #ddd 50%,
-                  #ccc 65%,
-                  #eee 80%,
+                  #ccc 10%,
+                  #ddd 25%,
+                  #eee 50%,
+                  #ddd 65%,
+                  #ccc 80%,
                   #aaa 100%
   );
 }
+
+#top__third {
+  background: linear-gradient(
+                  45deg,
+                  #d67f3f 0%,
+                  #d78445 10%,
+                  #de9a67 25%,
+                  #e1a375 50%,
+                  #de9a67 65%,
+                  #d78445 80%,
+                  #d67f3f 100%
+  );
+}
+
 
 .no__margin {
   margin: 0;
@@ -84,15 +110,15 @@ p {
   max-width: 100px;
   width: fit-content;
   margin: 0 5px 5px;
-  background-color: #FFF7D7;
+  background-color: rgba(255, 247, 215, 0.25);
   font-size: 1.1rem;
 }
 
 .bottom__first {
   height: 575px;
   padding-top: 10px;
-  background-color: #FFD700;
-  border: solid 2px #F1E1A0;
+  background-color: #FFF7D7;
+  border: 1px solid #F1E1A0;
 
   display: flex;
   flex-direction: column;
@@ -103,15 +129,8 @@ p {
 .bottom__second {
   height: 525px;
   padding-top: 10px;
-  border: solid 2px #F1E1A0;
-
-  p {
-    background-color: #F1E1A0;
-  }
-
-  .card__date {
-    background: none;
-  }
+  background-color: #FFF7D7;
+  border: 1px solid #F1E1A0;
 
   display: flex;
   flex-direction: column;
@@ -122,8 +141,8 @@ p {
 .bottom__third {
   height: 475px;
   padding-top: 10px;
-  background-color: #ce8946;
-  border: solid 2px #F1E1A0;
+  background-color: #FFF7D7;
+  border: 1px solid #F1E1A0;
 
   display: flex;
   flex-direction: column;
@@ -216,6 +235,7 @@ p {
   .card__list {
     width: 50%;
   }
+
   .info__fullcard {
     width: 50%;
   }
@@ -271,6 +291,7 @@ p {
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  height: 50px;
   margin-top: -10px;
 
   button {
@@ -278,11 +299,13 @@ p {
     color: #000;
     z-index: 2;
     font-size: 16px;
+    height: 40px;
 
     &:hover {
       border-color: #E84E0D;
     }
   }
+
   p {
     font-size: 16px;
   }
@@ -337,11 +360,12 @@ p {
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  height: 60px;
 
   button {
     width: 30%;
+    height: 50px;
     margin-left: 10px;
-    padding-top: 15px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -456,9 +480,8 @@ p {
 
   .info__section {
     width: 100vw;
-    padding: 0;
-    margin: 0;
-    background-color: #fff1b6;
+    height: 60vh;
+    background-color: #FFF7D7;
   }
 
   .info__cards {
@@ -469,6 +492,10 @@ p {
     width: 100vw;
     padding: 0;
     margin: 0;
+
+    .card__list {
+      width: 100%;
+    }
   }
   .info__fullcard {
     display: none;

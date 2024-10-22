@@ -65,6 +65,7 @@ export default function AcceptingPage() {
                         text={suggestions[0].suggestion}
                         category={suggestions[0].category}
                         budget={suggestions[0].price}
+                        cardContainer={styles.fullcard__container}
                         cardClass={styles.info__fullcard}
                         textClass={styles.fullcard__text}
                         categoryClass={styles.fullcard__categories}

@@ -9,7 +9,10 @@ h1 {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 90vw;
+  align-items: center;
+  width: 100vw;
+  padding-top: 15px;
+  padding-bottom: 50px;
   background-color: #F1E1A0;
 
   label {
@@ -19,6 +22,7 @@ h1 {
 
   textarea {
     resize: none;
+    width: 80%;
     background-color: #fff;
     color: #000;
     font-size: 1rem;
@@ -38,12 +42,11 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 40%;
+  width: 50%;
 
   color: #000;
 
   textarea {
-    width: 500px;
     height: 400px;
   }
 }
@@ -54,25 +57,23 @@ h1 {
   justify-content: center;
   align-items: center;
   width: 45%;
-  margin-bottom: 30px;
 
   color: #000;
 
 
   label {
     text-align: left;
-    width: 500px;
+    width: 80%;
     margin-top: 30px;
   }
 
   textarea {
-    width: 500px;
     height: 50px;
     margin-top: 5px;
   }
 
   select {
-    width: 500px;
+    width: 80%;
     height: 50px;
     margin-top: 5px;
     background-color: #fff;
@@ -87,7 +88,7 @@ h1 {
   }
 
   button {
-    width: 500px;
+    width: 80%;
     height: 50px;
     font-size: 1.5rem;
     text-align: center;
@@ -98,7 +99,7 @@ h1 {
 
 .countdown {
   text-align: left;
-  width: 33vw;
+  width: 80%;
   margin-top: 5px;
   font-size: 0.9rem;
   color: #000;
@@ -106,4 +107,18 @@ h1 {
 
 .hidden {
   display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .suggestions__container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .suggestions__left {
+    width: 100%;
+  }
+  .suggestions__right {
+    width: 100%;
+  }
 }

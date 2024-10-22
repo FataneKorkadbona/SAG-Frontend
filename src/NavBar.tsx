@@ -45,7 +45,7 @@ export default function NavBar() {
         <nav className="navbar">
             <div className="navbar__container">
                 <li className="navbar__item" id="kommun_logo">
-                    <img src="/karlstad__standin.png" alt="Logo"/>
+                    <img onClick={() => navigate("/")} src="/karlstad__standin.png" alt="Logo"/>
                     <Link to="/accepting" className="navbar__links"> Karlstad Kommun </Link>
                 </li>
                 <ul className="navbar__menu">
