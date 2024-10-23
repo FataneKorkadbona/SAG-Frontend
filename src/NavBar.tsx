@@ -30,6 +30,8 @@ export default function NavBar() {
 
     // Debugging: Log the user object
     console.log("User context:", userContext);
+    console.log("isAuthenticated:", userContext?.user?.isAuthenticated);
+    console.log("isAdmin:", userContext?.user?.isAdmin);
 
     // Hide the navbar only on the home screen and when scrolled to the top
     if (location.pathname === '/' && isAtTop && windowWidth >= 1475) {
@@ -45,20 +47,26 @@ export default function NavBar() {
         <nav className="navbar">
             <div className="navbar__container">
                 <li className="navbar__item" id="kommun_logo">
-                    <img onClick={() => navigate("/")} src="/karlstad__standin.png" alt="Logo"/>
-                    <Link to="/accepting" className="navbar__links"> Karlstad Kommun </Link>
+                    <img onClick={() => navigate("/accepting")} src="/karlstad__standin.png" alt="Logo"/>
+                    <Link to="/" className="navbar__links"> Karlstad Kommun </Link>
                 </li>
                 <ul className="navbar__menu">
                     <li className="navbar__item">
                         <Link to="/" className="navbar__links"> Home </Link>
                     </li>
+                    {userContext?.user?.isAuthenticated && userContext?.user?.isAdmin && (
+                        <li className="navbar__item">
+                            <Link to="/accepting" className="navbar__links"> Accepting </Link>
+                        </li>
+                    )}
                     {userContext?.user?.isAuthenticated && (
                         <>
                             <li className="navbar__item">
                                 <Link to="/suggestions" className="navbar__links"> Suggestions </Link>
                             </li>
                             <li className="navbar__item">
-                                <button onClick={handleLogout} className="navbar__links" id="navbar__button"> Log Out </button>
+                                <button onClick={handleLogout} className="navbar__links" id="navbar__button"> Log Out
+                                </button>
                             </li>
                         </>
                     )}

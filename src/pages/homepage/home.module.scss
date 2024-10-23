@@ -107,6 +107,7 @@ p {
 .cat__box {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 .category {
@@ -195,6 +196,7 @@ p {
 
   h2 {
     margin-bottom: 0;
+    font-size: 52px;
   }
 }
 
@@ -236,21 +238,26 @@ p {
   display: flex;
   flex-direction: row;
   margin-top: 40px;
+  width: 100vw;
 
   .card__list {
-    width: 50vw;
+    width: 45vw;
   }
 
   .info__fullcard {
-    width: 50vw;
+    width: 45vw;
+  }
+
+  h2 {
+    font-size: 32px;
   }
 }
 
 .card__list {
   display: flex;
-  flex-direction: column !important;
+  flex-direction: column;
 
-  max-height: 875px;
+  max-height: 900px;
   overflow: auto;
 }
 
@@ -372,7 +379,7 @@ p {
   height: 60px;
 
   button {
-    width: 30%;
+    width: 15rem;
     height: 50px;
     margin-left: 10px;
     display: flex;

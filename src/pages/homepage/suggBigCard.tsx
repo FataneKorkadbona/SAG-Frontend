@@ -25,7 +25,7 @@ export const SuggBigCard: React.FC<suggBigCardProps> = ({title, text, category, 
             </div>
             <div className={bottomClass} id={styles.bottomClass}>
                 <div className={buttonClass} id={styles.buttonClass}>
-                    <button>{votes}: votes</button>
+                    <button>{votes} : votes</button>
                 </div>
                 <p>{budget} kr</p>
             </div>

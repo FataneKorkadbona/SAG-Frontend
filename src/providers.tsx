@@ -1,15 +1,22 @@
 // Assuming you have a context file, e.g., `src/providers/UserContext.tsx`
 import { createContext, useContext, useState, ReactNode } from 'react';
-import { User } from './user';
 
-type UserContextType = {
+interface User {
+    id: string;
+    name: string;
+    email: string;
+    isAuthenticated: boolean;
+    isAdmin: boolean;
+}
+
+interface UserContextType {
     user: User | null;
-    setUser: (user: User) => void;
-};
+    setUser: React.Dispatch<React.SetStateAction<User | null>>;
+}
 
 export const UserContext = createContext<UserContextType | undefined>(undefined);
 
-export const UserProvider = ({ children }: { children: ReactNode }) => {
+export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
 
     return (

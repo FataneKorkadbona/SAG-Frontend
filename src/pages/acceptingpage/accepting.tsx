@@ -15,6 +15,7 @@ interface Suggestion {
 
 export default function AcceptingPage() {
     const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+    const [selectedSuggestion, setSelectedSuggestion] = useState<Suggestion | null>(null);
     const [loading, setLoading] = useState(true);
 
     const fetchSuggestions = async () => {
@@ -61,21 +62,21 @@ export default function AcceptingPage() {
             {suggestions.length > 0 && (
                 <div className={styles.info__cards}>
                     <AccBigCard
-                        title={suggestions[0].title}
-                        text={suggestions[0].suggestion}
-                        category={suggestions[0].category}
-                        budget={suggestions[0].price}
+                        title={selectedSuggestion ? selectedSuggestion.title : suggestions[0].title}
+                        text={selectedSuggestion ? selectedSuggestion.suggestion : suggestions[0].suggestion}
+                        category={selectedSuggestion ? selectedSuggestion.category : suggestions[0].category}
+                        budget={selectedSuggestion ? selectedSuggestion.price : suggestions[0].price}
                         cardContainer={styles.fullcard__container}
                         cardClass={styles.info__fullcard}
                         textClass={styles.fullcard__text}
                         categoryClass={styles.fullcard__categories}
                         bottomClass={styles.fullcard__info}
                         buttonClass={styles.fullcard__button}
-                        onAccept={() => handleAccept(suggestions[0].id)}
-                        onDeny={() => handleDeny(suggestions[0].id)}
+                        onAccept={() => handleAccept(selectedSuggestion ? selectedSuggestion.id : suggestions[0].id)}
+                        onDeny={() => handleDeny(selectedSuggestion ? selectedSuggestion.id : suggestions[0].id)}
                     />
                     <div className={styles.card__list}>
-                        {suggestions.slice(1).map((suggestion, index) => (
+                        {suggestions.slice(0).map((suggestion, index) => (
                             <AccCard
                                 key={index}
                                 title={suggestion.title}
@@ -84,6 +85,7 @@ export default function AcceptingPage() {
                                 textClass={styles.card__text}
                                 cardClass={styles.info__card}
                                 bottomClass={styles.card__info}
+                                onReadMore={() => setSelectedSuggestion(suggestion)}
                             />
                         ))}
                     </div>
