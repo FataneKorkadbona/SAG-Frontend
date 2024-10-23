@@ -2,6 +2,7 @@ import { useState, FormEvent } from 'react';
 import styles from './suggestion.module.scss';
 import axios from 'axios';
 import { useUser } from '../../providers';
+import {categories} from "../categories.ts";
 
 type CharLimits = {
     suggestion: number;
@@ -132,11 +133,9 @@ export default function Suggestion() {
                                     value={formData.category}
                                     onChange={handleChange}
                                 >
-                                    <option value="category" className={styles.hiddenOption}>None</option>
-                                    <option value="category2">Category2</option>
-                                    <option value="category3">Category3</option>
-                                    <option value="category4">Category4</option>
-                                    <option value="category5">Category5</option>
+                                    {categories.map((category, index) => (
+                                        <button key={index}>{category}</button>
+                                    ))}
                                 </select>
                                 <button type="submit">Submit</button>
                             </div>
