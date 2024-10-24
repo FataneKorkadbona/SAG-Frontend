@@ -1,5 +1,6 @@
 import Router from './router.tsx'
 import NavBar from "./NavBar.tsx";
+import Footer from "./Footer.tsx";
 
 import './App.scss'
 
@@ -9,6 +10,7 @@ function App() {
         <>
             <NavBar/>
             <Router/>
+            <Footer/>
         </>
     )
 }
