@@ -29,6 +29,7 @@ export default function Suggestion() {
 
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    const [isModalVisible, setModalVisible] = useState(false);
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLSelectElement | HTMLInputElement>) => {
         const { id, value } = event.target;
@@ -94,6 +95,14 @@ export default function Suggestion() {
         }
     };
 
+    const showModal = () => {
+        setModalVisible(true);
+    };
+
+    const hideModal = () => {
+        setModalVisible(false);
+    };
+
     return (
         <>
             <div className={styles.card__container}>
@@ -153,6 +162,43 @@ export default function Suggestion() {
                 {errorMessage && <p className={styles.error}>{errorMessage}</p>}
                 {successMessage && <p className={styles.success}>{successMessage}</p>}
             </div>
+
+            <p onClick={showModal} className={styles.showModal__text}>What information is needed for a suggestion?</p>
+            {isModalVisible && (
+                <div className={styles.modal}>
+                    <div className={styles.modalContent}>
+                        <div className={styles.modal__top}>
+                            <h1>What information is needed for a suggestion?</h1>
+                            <button onClick={hideModal}>X</button>
+                        </div>
+                        <p>When submitting a suggestion, it is important to provide as much information as possible.
+                            This includes:</p>
+                        <ul>
+                            <li>title</li>
+                            <p>
+                                The title should give a clear indication of what the suggestion is about.
+                            </p>
+                            <li>Detailed description of the suggestion</li>
+                            <p>
+                                The description should provide a detailed explanation of what the suggestion is about.
+                                This should include any relevant information that is needed to understand the suggestion
+                                as well as information about how the budget will be used and how much each part of the
+                                suggestion will cost.
+                            </p>
+                            <li>Estimated price</li>
+                            <p>
+                                The estimated price should give an indication of how much the suggestion will cost. This
+                                should include the total cost of the suggestion.
+                            </p>
+                            <li>Category</li>
+                            <p>
+                                The category should give an indication of what the suggestion is about. This should be
+                                chosen from the list of categories provided.
+                            </p>
+                        </ul>
+                    </div>
+                </div>
+            )}
         </>
     );
 }
