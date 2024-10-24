@@ -2,7 +2,7 @@ import { useState, FormEvent } from 'react';
 import styles from './suggestion.module.scss';
 import axios from 'axios';
 import { useUser } from '../../providers';
-import {categories} from "../categories.ts";
+import { categories } from '../categories.ts';
 
 type CharLimits = {
     suggestion: number;
@@ -63,6 +63,13 @@ export default function Suggestion() {
         event.preventDefault();
         setErrorMessage('');
         setSuccessMessage('');
+
+        // Validation logic
+        if (!formData.suggestion || !formData.title || !formData.price || formData.category === 'category') {
+            setErrorMessage('All fields are required.');
+            return;
+        }
+
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/suggestions`, { ...formData, email: userEmail }, {
                 headers: {
@@ -133,8 +140,9 @@ export default function Suggestion() {
                                     value={formData.category}
                                     onChange={handleChange}
                                 >
+                                    <option value="category" disabled>none</option>
                                     {categories.map((category, index) => (
-                                        <button key={index}>{category}</button>
+                                        <option key={index} value={category}>{category}</option>
                                     ))}
                                 </select>
                                 <button type="submit">Submit</button>

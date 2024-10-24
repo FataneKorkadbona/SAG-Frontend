@@ -79,7 +79,7 @@ export default function HomePage() {
             <div className={styles.hero__section}>
                 <h1>category-name</h1>
                 <div className={styles.hero__cards}>
-                    {filteredSuggestions.slice(1, 2).map((suggestion) => (
+                    {suggestions.slice(1, 2).map((suggestion) => (
                         <div key={suggestion.id}>
                             <HeroCard
                                 title={suggestion.title}
@@ -94,7 +94,7 @@ export default function HomePage() {
                             />
                         </div>
                     ))}
-                    {filteredSuggestions.slice(0, 1).map((suggestion) => (
+                    {suggestions.slice(0, 1).map((suggestion) => (
                         <div key={suggestion.id}>
                             <HeroCard
                                 title={suggestion.title}
@@ -109,7 +109,7 @@ export default function HomePage() {
                             />
                         </div>
                     ))}
-                    {filteredSuggestions.slice(2, 3).map((suggestion) => (
+                    {suggestions.slice(2, 3).map((suggestion) => (
                         <div key={suggestion.id}>
                             <HeroCard
                                 title={suggestion.title}
