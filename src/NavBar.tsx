@@ -52,20 +52,20 @@ export default function NavBar() {
                 </li>
                 <ul className="navbar__menu">
                     <li className="navbar__item">
-                        <Link to="/" className="navbar__links"> Home </Link>
+                        <Link to="/" className="navbar__links"> Hem </Link>
                     </li>
                     {userContext?.user?.isAuthenticated && userContext?.user?.isAdmin && (
                         <li className="navbar__item">
-                            <Link to="/accepting" className="navbar__links"> Accepting </Link>
+                            <Link to="/accepting" className="navbar__links"> Acceptera </Link>
                         </li>
                     )}
                     {userContext?.user?.isAuthenticated && (
                         <>
                             <li className="navbar__item">
-                                <Link to="/suggestions" className="navbar__links"> Suggestions </Link>
+                                <Link to="/suggestions" className="navbar__links"> Förslag </Link>
                             </li>
                             <li className="navbar__item">
-                                <button onClick={handleLogout} className="navbar__links" id="navbar__button"> Log Out
+                                <button onClick={handleLogout} className="navbar__links" id="navbar__button"> Logga ut
                                 </button>
                             </li>
                         </>
@@ -73,7 +73,7 @@ export default function NavBar() {
                     {!userContext?.user?.isAuthenticated && (
                         <li className="navbar__item">
                             <img src="/karlstad__standin.png" alt="Logo"/>
-                            <Link to="/login" className="navbar__links"> Log In </Link>
+                            <Link to="/login" className="navbar__links"> Logga in </Link>
                         </li>
                     )}
                 </ul>

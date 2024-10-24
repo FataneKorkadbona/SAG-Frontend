@@ -18,7 +18,7 @@ export const SuggSmallCard: React.FC<suggSmallCardProps> = ({title, text, budget
             <p>{text}</p>
         </div>
         <div className={bottomClass} id={styles.bottomClass}>
-            <button onClick={onReadMore}>Read More</button>
+            <button onClick={onReadMore}>Läs mer</button>
             <p>{budget} kr</p>
         </div>
     </div>

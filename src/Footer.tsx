@@ -8,22 +8,22 @@ const Footer: React.FC = () => {
     return (
         <footer className="footer">
             <div className="footer__container">
-                <div className="footer__left">
-                    <h3>Company Name</h3>
-                    <p>1234 Street Name, city</p>
-                    <p>Phone: (123) 456-7890</p>
+                <div className="footer__box">
+                    <h3>Företagsnamn</h3>
+                    <p>1234 Gatunamn, stad</p>
+                    <p>Telefon: (123) 456-7890</p>
                 </div>
-                <div className="footer__middle">
-                    <h3>In charge of suggestions</h3>
-                    <p>names and contact info of the people in charge of accepting and denying the suggestions</p>
+                <div className="footer__box">
+                    <h3>Ansvarig för förslag</h3>
+                    <p>namn och kontaktinformation för de personer som ansvarar för att acceptera och neka förslag</p>
                 </div>
-                <div className="footer__right">
-                    <h3>Made by</h3>
+                <div className="footer__box">
+                    <h3>Skapad av</h3>
                     <p>NätNinjorna</p>
                     <p>NatNinjorna.se</p>
                 </div>
             </div>
-            <p>&copy; {year} Your Company. All rights reserved.</p>
+            <p>&copy; {year} Ditt Företag. Alla rättigheter förbehållna.</p>
         </footer>
     );
 };

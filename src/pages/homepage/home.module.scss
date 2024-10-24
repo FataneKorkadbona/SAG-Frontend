@@ -206,7 +206,6 @@ p {
   flex-direction: column;
   justify-content: left;
   padding-top: 50px;
-  position: relative;
   background-color: #FFF7D7;
 
   button {
@@ -226,7 +225,7 @@ p {
   z-index: 5;
 
   input {
-    margin-right: 25px;
+    margin-right: 35px;
     padding: 0;
     font-size: 20px;
     width: 20rem;
@@ -238,19 +237,12 @@ p {
 
   button {
     height: 50px;
+    width: 10rem;
   }
 }
 
-.info__categories {
-  position: relative;
-}
-
 .info__container {
-  position: absolute; /* Position right below info__categories */
-  top: 80px; /* Adjust this value to move it below info__categories */
-  left: 0; /* Adjust as needed */
   background-color: #FFF7D7;
-
   padding-bottom: 50px;
 
   h2 {
@@ -263,8 +255,8 @@ p {
   display: none; /* Hide by default */
   flex-direction: column;
   justify-content: left;
-  margin: 0 20px 20px 20px;
-  width: 90vw;
+  margin: 0 0 0 20px;
+  width: 96vw;
   position: relative;
   z-index: 100; /* Ensure it is above other elements */
   background-color: #fff1b6;
@@ -306,7 +298,6 @@ p {
   display: flex;
   flex-direction: row;
   margin-top: 40px;
-  width: 100vw;
 
   .card__list {
     width: 45vw;
@@ -567,7 +558,7 @@ p {
 
   .info__section {
     width: 100vw;
-    height: 60vh;
+    padding-top: 80px;
     background-color: #FFF7D7;
   }
 

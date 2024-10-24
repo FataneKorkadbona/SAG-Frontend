@@ -24,14 +24,14 @@ export default function LoginPage() {
             navigate("/");
         },
         onError: () => {
-            setErrorMessage("Email is not verified. Please verify your email.");
+            setErrorMessage("E-post är inte verifierad. Vänligen verifiera din e-post.");
         }
     });
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         if (email.trim() === "") {
-            setErrorMessage("Email is required");
+            setErrorMessage("E-post krävs");
             return;
         }
         setErrorMessage(""); // Clear any previous error messages
@@ -42,9 +42,9 @@ export default function LoginPage() {
         <>
             <div className={styles.login__container}>
                 <div className={styles.login__content}>
-                    <h1>Log In</h1>
+                    <h1>Logga In</h1>
                     <form onSubmit={handleSubmit}>
-                        <label htmlFor="enter_email">Enter your school email</label>
+                        <label htmlFor="enter_email">Skriv in din skol E-post</label>
                         <input
                             type="email"
                             value={email}
@@ -55,7 +55,7 @@ export default function LoginPage() {
                             type="submit"
                             disabled={loginRequest.isPending}
                         >
-                            Log in
+                            Logga in
                         </button>
                         {errorMessage && <p className={styles.error}>{errorMessage}</p>}
                     </form>

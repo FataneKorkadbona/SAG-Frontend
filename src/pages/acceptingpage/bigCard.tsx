@@ -28,8 +28,8 @@ export const AccBigCard: React.FC<accBigCardProps> = ({title, text, category, bu
             </div>
             <div className={bottomClass} id={styles.bottomClass}>
                 <div className={buttonClass} id={styles.buttonClass}>
-                    <button onClick={onAccept}>Accept</button>
-                    <button onClick={onDeny}>Deny</button>
+                    <button onClick={onAccept}>Acceptera</button>
+                    <button onClick={onDeny}>Neka</button>
                 </div>
                 <p>{budget} kr</p>
             </div>

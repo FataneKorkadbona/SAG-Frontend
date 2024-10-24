@@ -1,8 +1,8 @@
-import { useState, FormEvent } from 'react';
+import {useState, FormEvent} from 'react';
 import styles from './suggestion.module.scss';
 import axios from 'axios';
-import { useUser } from '../../providers';
-import { categories } from '../categories.ts';
+import {useUser} from '../../providers';
+import {categories} from '../categories.ts';
 
 type CharLimits = {
     suggestion: number;
@@ -11,7 +11,7 @@ type CharLimits = {
 };
 
 export default function Suggestion() {
-    const { user } = useUser();
+    const {user} = useUser();
     const userEmail = user?.email || '';
 
     const [charCount, setCharCount] = useState<CharLimits>({
@@ -32,7 +32,7 @@ export default function Suggestion() {
     const [isModalVisible, setModalVisible] = useState(false);
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLSelectElement | HTMLInputElement>) => {
-        const { id, value } = event.target;
+        const {id, value} = event.target;
         let newValue = value;
 
         if (id === 'price') {
@@ -72,7 +72,10 @@ export default function Suggestion() {
         }
 
         try {
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/suggestions`, { ...formData, email: userEmail }, {
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/suggestions`, {
+                ...formData,
+                email: userEmail
+            }, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -107,22 +110,22 @@ export default function Suggestion() {
         <>
             <div className={styles.card__container}>
                 <div className={styles.card}>
-                    <h1>Submit a suggestion</h1>
+                    <h1>Lämna ett förslag</h1>
                     <form onSubmit={handleSubmit}>
                         <div className={styles.suggestions__container}>
                             <div className={styles.suggestions__left}>
-                                <label htmlFor="suggestion">Suggestion</label>
+                                <label htmlFor="suggestion">Förslag</label>
                                 <textarea
                                     name="suggestion"
                                     id="suggestion"
-                                    placeholder="Write a description of the suggestion here"
+                                    placeholder="Skriv en beskrivning av ditt förslag här"
                                     value={formData.suggestion}
                                     onChange={handleChange}
                                 />
-                                <div className={styles.countdown}>{charCount.suggestion} characters left</div>
+                                <div className={styles.countdown}>{charCount.suggestion} tecken kvar</div>
                             </div>
                             <div className={styles.suggestions__right}>
-                                <label htmlFor="title">Title</label>
+                                <label htmlFor="title">Titel</label>
                                 <textarea
                                     name="title"
                                     id="title"
@@ -131,30 +134,30 @@ export default function Suggestion() {
                                     value={formData.title}
                                     onChange={handleChange}
                                 />
-                                <div className={styles.countdown}>{charCount.title} characters left</div>
-                                <label htmlFor="price">Estimated Price</label>
+                                <div className={styles.countdown}>{charCount.title} tecken kvar</div>
+                                <label htmlFor="price">Ungefärlig kostnad</label>
                                 <textarea
                                     name="price"
                                     id="price"
                                     rows={1}
-                                    placeholder="Price: kr"
+                                    placeholder="Pris: kr"
                                     value={formData.price}
                                     onChange={handleChange}
                                 />
                                 <div className={styles.countdown}>{charCount.price} characters left</div>
-                                <label htmlFor="category">Choose a category:</label>
+                                <label htmlFor="category">Välj en kategori:</label>
                                 <select
                                     name="category"
                                     id="category"
                                     value={formData.category}
                                     onChange={handleChange}
                                 >
-                                    <option value="category" disabled>none</option>
+                                    <option value="category" disabled>Ingen</option>
                                     {categories.map((category, index) => (
                                         <option key={index} value={category}>{category}</option>
                                     ))}
                                 </select>
-                                <button type="submit">Submit</button>
+                                <button type="submit">Skicka in</button>
                             </div>
                         </div>
                     </form>
@@ -163,37 +166,38 @@ export default function Suggestion() {
                 {successMessage && <p className={styles.success}>{successMessage}</p>}
             </div>
 
-            <p onClick={showModal} className={styles.showModal__text}>What information is needed for a suggestion?</p>
+            <p onClick={showModal} className={styles.showModal__text}>Vilken information behövs för ett förslag?</p>
             {isModalVisible && (
                 <div className={styles.modal}>
                     <div className={styles.modalContent}>
                         <div className={styles.modal__top}>
-                            <h1>What information is needed for a suggestion?</h1>
+                            <h1>Vilken information behövs för ett förslag?</h1>
                             <button onClick={hideModal}>X</button>
                         </div>
-                        <p>When submitting a suggestion, it is important to provide as much information as possible.
-                            This includes:</p>
+                        <p>När du lämnar ett förslag är det viktigt att ge så mycket information som möjligt.
+                            Detta inkluderar:</p>
                         <ul>
-                            <li>title</li>
+                            <li>Titel</li>
                             <p>
-                                The title should give a clear indication of what the suggestion is about.
+                                Titeln ska ge en tydlig indikation på vad förslaget handlar om.
                             </p>
-                            <li>Detailed description of the suggestion</li>
+                            <li>Detaljerad beskrivning av förslaget</li>
                             <p>
-                                The description should provide a detailed explanation of what the suggestion is about.
-                                This should include any relevant information that is needed to understand the suggestion
-                                as well as information about how the budget will be used and how much each part of the
-                                suggestion will cost.
+                                Beskrivningen ska ge en detaljerad förklaring av vad förslaget handlar om.
+                                Detta bör inkludera all relevant information som behövs för att förstå förslaget
+                                samt information om hur budgeten kommer att användas och hur mycket varje del av
+                                förslaget kommer att kosta.
                             </p>
-                            <li>Estimated price</li>
+                            <li>Uppskattat pris</li>
                             <p>
-                                The estimated price should give an indication of how much the suggestion will cost. This
-                                should include the total cost of the suggestion.
+                                Det uppskattade priset ska ge en indikation på hur mycket förslaget kommer att kosta.
+                                Detta
+                                bör inkludera den totala kostnaden för förslaget.
                             </p>
-                            <li>Category</li>
+                            <li>Kategori</li>
                             <p>
-                                The category should give an indication of what the suggestion is about. This should be
-                                chosen from the list of categories provided.
+                                Kategorin ska ge en indikation på vad förslaget handlar om. Detta bör väljas från listan
+                                över tillhandahållna kategorier.
                             </p>
                         </ul>
                     </div>

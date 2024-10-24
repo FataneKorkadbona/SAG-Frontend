@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styles from './home.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { HeroCard } from './card.tsx';
@@ -90,7 +90,7 @@ export default function HomePage() {
     return (
         <>
             <div className={styles.hero__section}>
-                <h1>category-name</h1>
+                <h1>Senast Inlagt</h1>
                 <div className={styles.hero__cards}>
                     {suggestions.slice(1, 2).map((suggestion) => (
                         <div key={suggestion.id}>
@@ -142,7 +142,7 @@ export default function HomePage() {
 
             <div className={styles.info__section}>
                 <div className={styles.info__searching}>
-                    <button className={styles.info__categories} onClick={toggleCategoryWindow}>Categories</button>
+                    <button className={styles.info__categories} onClick={toggleCategoryWindow}>Kategorier</button>
                     <input
                         type="text"
                         className={styles.info__searchbutton}
@@ -164,10 +164,10 @@ export default function HomePage() {
                             </button>
                         ))}
                     </div>
-                    <button onClick={applyFilters}>Search</button>
+                    <button onClick={applyFilters}>Sök</button>
                 </div>
                 <div className={styles.info__container}>
-                    <h2>Category</h2>
+                    <h2>Senast Inlagt</h2>
                     <div className={styles.info__cards}>
                         {filteredSuggestions.length > 0 && (
                             <>

@@ -24,7 +24,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({ title, category, text, dateA
         <div className={bottomClass}>
             <p>{text}</p>
             <p className={styles.card__date}>{dateAdded}</p>
-            <button className={styles.card__votes} onClick={onButtonClick}>{votes} votes</button>
+            <button className={styles.card__votes} onClick={onButtonClick}>{votes} Röster</button>
         </div>
     </div>
 );
