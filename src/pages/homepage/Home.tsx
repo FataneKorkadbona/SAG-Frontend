@@ -25,6 +25,8 @@ export default function HomePage() {
     const [selectedSuggestion, setSelectedSuggestion] = useState<Suggestion | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [tempSearchQuery, setTempSearchQuery] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const [tempCategory, setTempCategory] = useState<string | null>(null);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const user = useContext(UserContext);
@@ -66,8 +68,19 @@ export default function HomePage() {
         }
     };
 
+    const handleCategoryClick = (category: string) => {
+        setTempCategory(prevCategory => prevCategory === category ? null : category);
+    };
+
+    const applyFilters = () => {
+        setSearchQuery(tempSearchQuery);
+        setSelectedCategory(tempCategory);
+        hideCategoryWindow();
+    };
+
     const filteredSuggestions = suggestions.filter(suggestion =>
-        suggestion.title.toLowerCase().includes(searchQuery.toLowerCase())
+        suggestion.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
+        (selectedCategory ? suggestion.category === selectedCategory : true)
     );
 
     if (loading) {
@@ -142,10 +155,16 @@ export default function HomePage() {
                 <div className={`${styles.category__window} ${isCategoryWindowVisible ? styles.visible : ''}`}>
                     <div className={styles.window__list}>
                         {categories.map((category, index) => (
-                            <button key={index}>{category}</button>
+                            <button
+                                key={index}
+                                onClick={() => handleCategoryClick(category)}
+                                className={tempCategory === category ? styles.selected : ''}
+                            >
+                                {category}
+                            </button>
                         ))}
                     </div>
-                    <button onClick={hideCategoryWindow}>Search</button>
+                    <button onClick={applyFilters}>Search</button>
                 </div>
                 <div className={styles.info__container}>
                     <h2>Category</h2>

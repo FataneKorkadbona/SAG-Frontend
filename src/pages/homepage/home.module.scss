@@ -288,6 +288,15 @@ p {
     color: #000;
     border: 1px solid BLACK;
     background-color: #FFF7D7;
+
+    &:active {
+      background-color: #b5201f;
+    }
+  }
+
+  .selected {
+    background-color: #b5201f;
+    color: #fff;
   }
 }
 
