@@ -23,6 +23,8 @@ p {
   background-color: #fff;
   justify-content: center;
 
+  min-height: 500px;
+
   h1 {
     padding-bottom: 25px;
   }
@@ -208,6 +210,8 @@ p {
   padding-top: 50px;
   background-color: #FFF7D7;
 
+  min-height: 400px;
+
   button {
     margin-left: 20px;
     margin-bottom: 5px;
@@ -225,7 +229,7 @@ p {
   z-index: 5;
 
   input {
-    margin-right: 35px;
+    margin-right: 20px;
     padding: 0;
     font-size: 20px;
     width: 20rem;
@@ -255,8 +259,7 @@ p {
   display: none; /* Hide by default */
   flex-direction: column;
   justify-content: left;
-  margin: 0 0 0 20px;
-  width: 96vw;
+  margin: 0 20px 0 20px;
   position: relative;
   z-index: 100; /* Ensure it is above other elements */
   background-color: #fff1b6;
