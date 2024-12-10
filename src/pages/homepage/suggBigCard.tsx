@@ -10,15 +10,18 @@ interface suggBigCardProps {
     cardClass: string;
     bottomClass: string;
     textClass?: string;
+    pText?: string;
     buttonClass?: string;
     categoryClass?: string;
 }
 
-export const SuggBigCard: React.FC<suggBigCardProps> = ({title, text, category, votes, budget, buttonClass, categoryClass, cardClass, bottomClass, textClass}) => (
+export const SuggBigCard: React.FC<suggBigCardProps> = ({title, text, category, votes, budget, buttonClass, categoryClass, cardClass, bottomClass, textClass, pText}) => (
         <div className={cardClass} id={styles.cardClass}>
             <div className={textClass} id={styles.textClass}>
                 <h2>{title}</h2>
-                <p>{text}</p>
+                <div className={pText}>
+                    <p>{text}</p>
+                </div>
             </div>
             <div className={categoryClass} id={styles.categoryClass}>
                 <p>{category}</p>

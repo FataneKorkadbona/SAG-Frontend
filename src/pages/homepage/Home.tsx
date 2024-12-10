@@ -27,6 +27,8 @@ export default function HomePage() {
     const [tempSearchQuery, setTempSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [tempCategory, setTempCategory] = useState<string | null>(null);
+    const [isOverlayVisible, setOverlayVisible] = useState(false);
+    const [overlaySuggestion, setOverlaySuggestion] = useState<Suggestion | null>(null);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const user = useContext(UserContext);
@@ -76,6 +78,16 @@ export default function HomePage() {
         setSearchQuery(tempSearchQuery);
         setSelectedCategory(tempCategory);
         hideCategoryWindow();
+    };
+
+    const showOverlay = (suggestion: Suggestion) => {
+        setOverlaySuggestion(suggestion);
+        setOverlayVisible(true);
+    };
+
+    const hideOverlay = () => {
+        setOverlayVisible(false);
+        setOverlaySuggestion(null);
     };
 
     const filteredSuggestions = suggestions.filter(suggestion =>
@@ -179,6 +191,7 @@ export default function HomePage() {
                                     votes={selectedSuggestion ? selectedSuggestion.votes : filteredSuggestions[0].votes}
                                     cardClass={styles.info__fullcard}
                                     textClass={styles.fullcard__text}
+                                    pText={styles.fullcard__p}
                                     categoryClass={styles.fullcard__categories}
                                     bottomClass={styles.fullcard__info}
                                 />
@@ -192,7 +205,14 @@ export default function HomePage() {
                                                 textClass={styles.card__text}
                                                 cardClass={styles.info__card}
                                                 bottomClass={styles.card__info}
-                                                onReadMore={() => setSelectedSuggestion(suggestion)}
+                                                onReadMore={() => {
+                                                    if (window.innerWidth <= 1475) {
+                                                        showOverlay(suggestion);
+                                                    } else {
+                                                        setSelectedSuggestion(suggestion);
+                                                    }
+                                                }
+                                                }
                                             />
                                         </div>
                                     ))}
@@ -202,6 +222,25 @@ export default function HomePage() {
                     </div>
                 </div>
             </div>
+
+            {isOverlayVisible && overlaySuggestion && (
+                <div className={styles.overlay} onClick={hideOverlay}>
+                    <div className={styles.suggOverlay__container} onClick={(e) => e.stopPropagation()}>
+                        <button className={styles.closeBtn} onClick={hideOverlay}>x</button>
+                        <SuggBigCard
+                            title={overlaySuggestion.title}
+                            text={overlaySuggestion.suggestion}
+                            category={overlaySuggestion.category}
+                            budget={overlaySuggestion.price}
+                            votes={overlaySuggestion.votes}
+                            cardClass={styles.info__fullcard}
+                            textClass={styles.fullcard__text}
+                            categoryClass={styles.fullcard__categories}
+                            bottomClass={styles.fullcard__info}
+                        />
+                    </div>
+                </div>
+            )}
         </>
     );
 }

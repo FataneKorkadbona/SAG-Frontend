@@ -578,13 +578,10 @@ p {
       width: 100%;
     }
   }
-  .info__fullcard {
-    display: none;
-  }
-
   .card__list {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     padding: 0;
     margin: 0;
 
@@ -592,5 +589,68 @@ p {
   }
   .info__card {
     width: 90vw;
+  }
+  .info__fullcard {
+    display: none;
+  }
+
+  .overlay {
+    .suggOverlay__container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #FFF7D8;
+      border: 1px solid #000;
+      border-radius: 5px;
+      width: fit-content;
+      height: fit-content;
+      max-height: 60vh;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1001;
+    }
+
+    .closeBtn {
+      background-color: #FFF7D8;
+      color: #000;
+      border: none;
+      z-index: 2;
+      font-size: 26px;
+      height: 40px;
+      padding: 0;
+      margin: 5px 0 10px 0;
+
+      text-align: end;
+      width: 95%;
+
+        &:hover {
+          border: none;
+        }
+        &:focus {
+          border: none;
+          outline: none;
+        }
+    }
+
+    .info__fullcard {
+      display: flex;
+      width: 90vw;
+      max-height: 55vh;
+
+      .fullcard__text {
+        max-height: 30vh;
+        overflow: scroll;
+        margin-bottom: 15px;
+
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+    }
   }
 }
