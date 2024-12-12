@@ -41,7 +41,7 @@ export const SuggBigCard: React.FC<suggBigCardProps> = ({ title, text, category,
                 }
             });
             console.log('Response Data:', response.data);
-
+            alert('Voting successful!'); // Alert the user that the voting was successful
             // Fetch updated suggestions
             onSuggestionsUpdate(); // Call the callback function to update suggestions
         } catch (error: unknown) {
