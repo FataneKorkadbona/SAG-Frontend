@@ -1,7 +1,7 @@
 import {useState, FormEvent} from 'react';
 import styles from './suggestion.module.scss';
 import axios from 'axios';
-import {useUser} from '../../providers';
+import { useAuth } from '../../context/AuthContext';
 import {categories} from '../categories.ts';
 
 type CharLimits = {
@@ -11,7 +11,7 @@ type CharLimits = {
 };
 
 export default function Suggestion() {
-    const {user} = useUser();
+    const {user} = useAuth();
     const userEmail = user?.email || '';
 
     const [charCount, setCharCount] = useState<CharLimits>({

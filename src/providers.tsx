@@ -1,20 +1,16 @@
-// Assuming you have a context file, e.g., `src/providers/UserContext.tsx`
-import { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useState, ReactNode, useContext } from 'react';
 
 interface User {
-    id: string;
-    name: string;
-    email: string;
     isAuthenticated: boolean;
-    isAdmin: boolean;
+    email: string;
 }
 
-interface UserContextType {
+interface UserContextProps {
     user: User | null;
-    setUser: React.Dispatch<React.SetStateAction<User | null>>;
+    setUser: (user: User | null) => void;
 }
 
-export const UserContext = createContext<UserContextType | undefined>(undefined);
+export const UserContext = createContext<UserContextProps | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
@@ -26,10 +22,10 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     );
 };
 
-export const useUser = () => {
+export const useUserContext = () => {
     const context = useContext(UserContext);
     if (!context) {
-        throw new Error('useUser must be used within a UserProvider');
+        throw new Error('useUserContext must be used within a UserProvider');
     }
     return context;
 };

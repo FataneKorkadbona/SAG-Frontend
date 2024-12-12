@@ -1,15 +1,14 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { UserContext } from './providers.tsx';
+import { useAuth } from './context/AuthContext';
 import './App.scss';
 
 export default function NavBar() {
+    const {isLoggedIn, logout, isAdmin, user} = useAuth();
     const [isAtTop, setIsAtTop] = useState(true);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const location = useLocation();
     const navigate = useNavigate();
-    const userContext = useContext(UserContext);
-
     useEffect(() => {
         const handleScroll = () => {
             setIsAtTop(window.scrollY === 0);
@@ -29,17 +28,17 @@ export default function NavBar() {
     }, []);
 
     // Debugging: Log the user object
-    console.log("User context:", userContext);
-    console.log("isAuthenticated:", userContext?.user?.isAuthenticated);
-    console.log("isAdmin:", userContext?.user?.isAdmin);
+    console.log("User context:", user);
+    console.log("isAuthenticated:", isLoggedIn);
+    console.log("isAdmin:", isAdmin);
 
     // Hide the navbar only on the home screen and when scrolled to the top
     if (location.pathname === '/' && isAtTop && windowWidth >= 1475) {
         return null;
     }
 
-    const handleLogout = () => {
-        userContext?.setUser(null);
+    const handleLogout = async () => {
+        await logout();
         navigate('/');
     };
 
@@ -47,19 +46,24 @@ export default function NavBar() {
         <nav className="navbar">
             <div className="navbar__container">
                 <li className="navbar__item" id="kommun_logo">
-                    <img onClick={() => navigate("/accepting")} src="/karlstad__standin.png" alt="Logo"/>
+                    <img src="/karlstad__standin.png" alt="Logo"/>
                     <Link to="/" className="navbar__links"> Karlstad Kommun </Link>
                 </li>
                 <ul className="navbar__menu">
                     <li className="navbar__item">
                         <Link to="/" className="navbar__links"> Hem </Link>
                     </li>
-                    {userContext?.user?.isAuthenticated && userContext?.user?.isAdmin && (
+                    {isLoggedIn && isAdmin && (
                         <li className="navbar__item">
                             <Link to="/accepting" className="navbar__links"> Acceptera </Link>
                         </li>
                     )}
-                    {userContext?.user?.isAuthenticated && (
+                    {isLoggedIn && isAdmin && (
+                        <li className="navbar__item">
+                            <Link to="/admin" className="navbar__links"> Admin </Link>
+                        </li>
+                    )}
+                    {isLoggedIn && (
                         <>
                             <li className="navbar__item">
                                 <Link to="/suggestions" className="navbar__links"> Förslag </Link>
@@ -70,7 +74,7 @@ export default function NavBar() {
                             </li>
                         </>
                     )}
-                    {!userContext?.user?.isAuthenticated && (
+                    {!isLoggedIn && (
                         <li className="navbar__item">
                             <img src="/karlstad__standin.png" alt="Logo"/>
                             <Link to="/login" className="navbar__links"> Logga in </Link>

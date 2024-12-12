@@ -1,16 +1,16 @@
 // src/components/ProtectedRoute.tsx
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../context/AuthContext';
 
 const ProtRoute: React.FC = () => {
-    const { loading, is_Admin } = useAuth();
+    const { loading, isAdmin } = useAuth();
 
     if (loading) {
         return <div>Loading...</div>;
     }
 
-    return is_Admin ? <Outlet /> : <Navigate to="/unauthorized" />;
+    return isAdmin ? <Outlet /> : <Navigate to="/unauthorized" />;
 };
 
 export default ProtRoute;

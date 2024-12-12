@@ -1,20 +1,22 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './home.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { HeroCard } from './card.tsx';
-import { UserContext } from '../../providers.tsx';
 import { SuggBigCard } from './suggBigCard.tsx';
 import { SuggSmallCard } from './suggSmallCard.tsx';
 import axios from 'axios';
 import { categories } from '../categories.ts';
+import { useAuth } from '../../context/AuthContext';
+import Suggestion from "../suggestionspage/suggestion.tsx";
 
 interface Suggestion {
+    id: string;
     title: string;
     suggestion: string;
     category: string;
     price: number;
     status: string;
-    id: string;
+    suggestionId: string;
     votes: number;
     createdAt: string;
 }
@@ -31,7 +33,7 @@ export default function HomePage() {
     const [overlaySuggestion, setOverlaySuggestion] = useState<Suggestion | null>(null);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
-    const user = useContext(UserContext);
+    const { isLoggedIn } = useAuth();
 
     const toggleCategoryWindow = () => {
         setCategoryWindowVisible(!isCategoryWindowVisible);
@@ -42,7 +44,7 @@ export default function HomePage() {
     };
 
     const buttonlogin = () => {
-        if (!user) {
+        if (!isLoggedIn) {
             navigate('/login');
         }
     };
@@ -62,6 +64,8 @@ export default function HomePage() {
 
     useEffect(() => {
         fetchSuggestions();
+        const intervalId = setInterval(fetchSuggestions, 5000); // Fetch suggestions every 5 seconds
+        return () => clearInterval(intervalId); // Clear interval on component unmount
     }, []);
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -194,6 +198,9 @@ export default function HomePage() {
                                     pText={styles.fullcard__p}
                                     categoryClass={styles.fullcard__categories}
                                     bottomClass={styles.fullcard__info}
+                                    buttonClass={styles.fullcard__button}
+                                    suggestionId={selectedSuggestion ? selectedSuggestion.id : filteredSuggestions[0].id} // Provide default value
+                                    onSuggestionsUpdate={fetchSuggestions} // Pass the function to update suggestions
                                 />
                                 <div className={styles.card__list}>
                                     {filteredSuggestions.slice(0).map((suggestion) => (
@@ -237,6 +244,8 @@ export default function HomePage() {
                             textClass={styles.fullcard__text}
                             categoryClass={styles.fullcard__categories}
                             bottomClass={styles.fullcard__info}
+                            suggestionId={overlaySuggestion.id}
+                            onSuggestionsUpdate={fetchSuggestions}
                         />
                     </div>
                 </div>
