@@ -10,6 +10,7 @@ import ProtRoute from './components/ProtectedRoute.tsx';
 import {AuthProvider} from './context/AuthContext';
 import NavBar from "./NavBar.tsx";
 import Footer from "./Footer.tsx";
+import Admin from "./pages/adminpage/admin.tsx";
 import './App.scss';
 
 export default function Router() {
@@ -27,6 +28,7 @@ export default function Router() {
                     <Route path="/suggestions" element={<Suggestion/>}/>
                     <Route element={<ProtRoute/>}>
                         <Route path="/accepting" element={<Accepting/>}/>
+                        <Route path="/admin" element={<Admin/>}/>
                     </Route>
                 </Route>
             </Routes>

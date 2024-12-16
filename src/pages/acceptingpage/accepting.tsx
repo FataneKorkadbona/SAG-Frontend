@@ -59,7 +59,7 @@ export default function AcceptingPage() {
 
     return (
         <div className={styles.info__container}>
-            {suggestions.length > 0 && (
+            {suggestions.length > 0 ? (
                 <div className={styles.info__cards}>
                     <AccBigCard
                         title={selectedSuggestion ? selectedSuggestion.title : suggestions[0].title}
@@ -90,6 +90,8 @@ export default function AcceptingPage() {
                         ))}
                     </div>
                 </div>
+            ) : (
+                <div>No new suggestions, come back later</div>
             )}
         </div>
     );

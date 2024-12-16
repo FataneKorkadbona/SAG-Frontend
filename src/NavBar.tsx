@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from './context/AuthContext';
+import {useState, useEffect} from 'react';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
+import {useAuth} from './context/AuthContext';
 import './App.scss';
 
 export default function NavBar() {
@@ -54,14 +54,14 @@ export default function NavBar() {
                         <Link to="/" className="navbar__links"> Hem </Link>
                     </li>
                     {isLoggedIn && isAdmin && (
-                        <li className="navbar__item">
-                            <Link to="/accepting" className="navbar__links"> Acceptera </Link>
-                        </li>
-                    )}
-                    {isLoggedIn && isAdmin && (
-                        <li className="navbar__item">
-                            <Link to="/admin" className="navbar__links"> Admin </Link>
-                        </li>
+                        <>
+                            <li className="navbar__item">
+                                <Link to="/accepting" className="navbar__links"> Acceptera </Link>
+                            </li>
+                            <li className="navbar__item">
+                                <Link to="/admin" className="navbar__links"> Admin </Link>
+                            </li>
+                        </>
                     )}
                     {isLoggedIn && (
                         <>
