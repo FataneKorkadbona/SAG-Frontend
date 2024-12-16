@@ -53,8 +53,9 @@ export default function HomePage() {
         try {
             const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/suggestions`);
             const activeSuggestions = response.data.filter((suggestion: Suggestion) => suggestion.status === 'active');
+            activeSuggestions.sort((a: Suggestion, b: Suggestion) => b.votes - a.votes); // Sort by votes in descending order
             setSuggestions(activeSuggestions);
-            console.log('Active suggestions fetched:', activeSuggestions);
+            console.log('Active suggestions fetched and sorted by votes:', activeSuggestions);
         } catch (error) {
             console.error('Error fetching suggestions:', error);
         } finally {
@@ -106,7 +107,7 @@ export default function HomePage() {
     return (
         <>
             <div className={styles.hero__section}>
-                <h1>Senast Inlagt</h1>
+                <h1>Mest Populära</h1>
                 <div className={styles.hero__cards}>
                     {suggestions.slice(1, 2).map((suggestion) => (
                         <div key={suggestion.id}>
@@ -183,7 +184,7 @@ export default function HomePage() {
                     <button onClick={applyFilters}>Sök</button>
                 </div>
                 <div className={styles.info__container}>
-                    <h2>Senast Inlagt</h2>
+                    <h2>{selectedCategory ? selectedCategory : 'Mest Populära Förslag'}</h2>
                     <div className={styles.info__cards}>
                         {filteredSuggestions.length > 0 && (
                             <>
@@ -199,8 +200,8 @@ export default function HomePage() {
                                     categoryClass={styles.fullcard__categories}
                                     bottomClass={styles.fullcard__info}
                                     buttonClass={styles.fullcard__button}
-                                    suggestionId={selectedSuggestion ? selectedSuggestion.id : filteredSuggestions[0].id} // Provide default value
-                                    onSuggestionsUpdate={fetchSuggestions} // Pass the function to update suggestions
+                                    suggestionId={selectedSuggestion ? selectedSuggestion.id : filteredSuggestions[0].id}
+                                    onSuggestionsUpdate={fetchSuggestions}
                                 />
                                 <div className={styles.card__list}>
                                     {filteredSuggestions.slice(0).map((suggestion) => (
@@ -218,8 +219,7 @@ export default function HomePage() {
                                                     } else {
                                                         setSelectedSuggestion(suggestion);
                                                     }
-                                                }
-                                                }
+                                                }}
                                             />
                                         </div>
                                     ))}
