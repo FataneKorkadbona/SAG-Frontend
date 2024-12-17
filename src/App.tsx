@@ -11,6 +11,10 @@ import {AuthProvider} from './context/AuthContext';
 import NavBar from "./NavBar.tsx";
 import Footer from "./Footer.tsx";
 import Admin from "./pages/adminpage/admin.tsx";
+import HandleUsers from "./pages/adminpage/handleusers.tsx";
+import HandleSuggestions from "./pages/adminpage/handlesuggestions.tsx";
+import RemoveAddUsers from "./pages/adminpage/removeaddusers.tsx";
+import {FooterProvider} from "./context/FooterContext.tsx";
 import './App.scss';
 
 export default function Router() {
@@ -18,21 +22,26 @@ export default function Router() {
     const hideFooterPaths = ['/login'];
     return (
         <AuthProvider>
-            <NavBar/>
-            <Routes>
-                <Route path="/" element={<HomePage/>}/>
-                <Route path="/login" element={<LoginPage/>}/>
-                <Route path="/verify/:token" element={<Verify/>}/>
-                <Route path="/unauthorized" element={<Unathorized/>}/>
-                <Route element={<ProtectedRoute/>}>
-                    <Route path="/suggestions" element={<Suggestion/>}/>
-                    <Route element={<ProtRoute/>}>
-                        <Route path="/accepting" element={<Accepting/>}/>
-                        <Route path="/admin" element={<Admin/>}/>
+            <FooterProvider>
+                <NavBar/>
+                <Routes>
+                    <Route path="/" element={<HomePage/>}/>
+                    <Route path="/login" element={<LoginPage/>}/>
+                    <Route path="/verify/:token" element={<Verify/>}/>
+                    <Route path="/unauthorized" element={<Unathorized/>}/>
+                    <Route element={<ProtectedRoute/>}>
+                        <Route path="/suggestions" element={<Suggestion/>}/>
+                        <Route element={<ProtRoute/>}>
+                            <Route path="/accepting" element={<Accepting/>}/>
+                            <Route path="/admin" element={<Admin/>}/>
+                            <Route path="/admin/handleusers" element={<HandleUsers/>}/>
+                            <Route path="/admin/suggestions" element={<HandleSuggestions/>}/>
+                            <Route path="/admin/dangerzone" element={<RemoveAddUsers/>}/>
+                        </Route>
                     </Route>
-                </Route>
-            </Routes>
-            {!hideFooterPaths.includes(location.pathname) && <Footer />}
+                </Routes>
+                {!hideFooterPaths.includes(location.pathname) && <Footer/>}
+            </FooterProvider>
         </AuthProvider>
     );
 }
