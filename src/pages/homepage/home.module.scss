@@ -1,32 +1,57 @@
 /* Kom ihåg att fixa så att den automatisk anpassar sig till större skärmar också, aka. em? istället för pixlar :) */
+
+body {
+  background-color: rgba(248, 243, 221, 0.29);
+}
+
 h1 {
   color: #000;
   text-decoration-line: underline;
   text-decoration-color: #E84E0D;
   font-size: 64px;
+  font-family: "Roboto" ,Arial, sans-serif;
 }
 
 h2 {
   color: #000;
   font-size: 36px;
   margin-bottom: -20px;
+  font-family: 'Roboto', Arial, sans-serif;
 }
 
 p {
   color: #000;
   font-size: 20px;
   padding: 0 10px 0 10px;
+  font-family: 'Roboto', Arial, sans-serif;
+}
+
+a {
+  font-family: 'Roboto', Arial, sans-serif;
 }
 
 .hero__section {
-  padding: 5px 30px 0 30px;
-  background-color: #fff;
-  justify-content: center;
+  height: 100vh;
 
-  min-height: 500px;
+  padding: 5px 30px 0 30px;
+  margin-bottom: 10px;
+
+
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  //overflow: hidden;
+
 
   h1 {
-    padding-bottom: 25px;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    padding-bottom: 5vh;
+    font-size: 5em;
+
+    text-decoration: none;
+    color: #3c4043;
   }
 }
 
@@ -34,6 +59,8 @@ p {
   display: flex;
   flex-direction: row;
   justify-content: center;
+
+  align-items: flex-end;
 }
 
 #hero_card {
@@ -43,11 +70,11 @@ p {
 }
 
 .card__second {
-  padding-top: 50px;
+
 }
 
 .card__third {
-  padding-top: 100px;
+
 }
 
 .card__top {
@@ -74,6 +101,7 @@ p {
                   #ecab18 100%
   );
   border: 2px solid #ecab18;
+  box-shadow: 2px 0 15px rgba(246, 237, 195, 0.64);
 }
 
 
@@ -89,6 +117,7 @@ p {
                   #aaa 100%
   );
   border: 2px solid #bbb;
+  box-shadow: 2px 0 15px rgba(246, 237, 195, 0.64);
 }
 
 #top__third {
@@ -103,6 +132,7 @@ p {
                   #d67f3f 100%
   );
   border: 2px solid #d67f3f;
+  box-shadow: 2px 0 15px rgba(246, 237, 195, 0.64);
 }
 
 
@@ -124,18 +154,21 @@ p {
   margin: 0 5px 5px;
   background-color: rgba(255, 247, 215, 0.25);
   font-size: 1.1rem;
+  box-shadow: 1px 0 5px rgba(154, 154, 154, 0.58);
 }
 
 .bottom__first {
-  height: 575px;
+  height: 400px;
   padding-top: 10px;
   background-color: #FFF7D7;
   border: 1px solid #F1E1A0;
 
+  box-shadow: 2px 0 15px rgba(246, 237, 195, 0.64);
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-radius: 2px 2px 0 0;
+  border-radius: 8px;
 
   p {
     overflow: hidden;
@@ -149,15 +182,18 @@ p {
 }
 
 .bottom__second {
-  height: 525px;
+  height: 375px;
   padding-top: 10px;
   background-color: #FFF7D7;
   border: 1px solid #F1E1A0;
 
+
+  box-shadow: 2px 0 15px rgba(246, 237, 195, 0.64);
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-radius: 2px 2px 0 0;
+  border-radius: 8px;
 
   p {
     overflow: hidden;
@@ -171,7 +207,7 @@ p {
 }
 
 .bottom__third {
-  height: 475px;
+  height: 350px;
   padding-top: 10px;
   background-color: #FFF7D7;
   border: 1px solid #F1E1A0;
@@ -179,7 +215,9 @@ p {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-radius: 2px 2px 0 0;
+  border-radius: 8px;
+
+  box-shadow: 2px 0 15px rgba(246, 237, 195, 0.64);
 
   p {
     overflow: hidden;
@@ -210,10 +248,14 @@ p {
   padding-top: 50px;
   background-color: #FFF7D7;
 
+  border-style: double hidden hidden;
+  border-width: thick;
+  border-color: #F1E1A0;
+
   min-height: 400px;
 
   button {
-    margin-left: 20px;
+    margin-left: 1vw;
     margin-bottom: 5px;
     width: fit-content;
     background-color: #E84E0D;
@@ -228,20 +270,33 @@ p {
   justify-content: space-between;
   z-index: 5;
 
+  input:focus {
+    border-radius: 6px;
+    background-color: #fff;
+  }
+
   input {
-    margin-right: 20px;
+    margin-right: 5vw;
     padding: 0;
     font-size: 20px;
-    width: 20rem;
+    width: 45vw;
+    max-width: 300px;
     height: 50px;
 
-    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 2px 0 15px rgba(209, 201, 168, 0.64);
+
+    background-color: #f3f3f2;
     color: #000;
+
   }
 
   button {
     height: 50px;
     width: 10rem;
+
+    box-shadow: 2px 0 15px rgba(209, 201, 168, 0.64);
+
   }
 }
 
@@ -252,6 +307,16 @@ p {
   h2 {
     margin-bottom: 0;
     font-size: 52px;
+  }
+
+  h1 {
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    padding-bottom: 5vh;
+    font-size: 3em;
+
+    text-decoration: none;
+    color: #3c4043;
   }
 }
 
@@ -319,6 +384,9 @@ p {
   display: flex;
   flex-direction: column;
 
+  background-color: rgba(209, 201, 168, 0.25);
+  box-shadow: 2px 0 15px rgba(209, 201, 168, 0.64);
+
   max-height: 900px;
   overflow: auto;
 }
@@ -332,8 +400,10 @@ p {
   border-radius: 5px;
   height: fit-content;
 
-  margin: 0 20px 20px 20px;
+  margin: 0 2px 20px 2px;
   padding: 10px;
+
+
 }
 
 .card__text {
@@ -402,6 +472,8 @@ p {
   margin: 0 20px 20px 20px;
   padding: 10px;
 
+  box-shadow: 2px 0 15px rgba(209, 201, 168, 0.64);
+
   p {
     font-size: 16px;
   }
@@ -441,10 +513,12 @@ p {
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  max-width: 100%;
   height: 60px;
+  overflow: hidden;
 
   button {
-    width: 15rem;
+    width: 50vw;
     height: 50px;
     margin-left: 10px;
     display: flex;
@@ -454,9 +528,11 @@ p {
 
     &:hover {
       border-color: #b5201f;
+      border-width: medium;
     }
 
     p {
+
       color: #fff;
       margin: 0;
       padding: 0 5px 0 0;
@@ -606,6 +682,7 @@ p {
       width: fit-content;
       height: fit-content;
       max-height: 60vh;
+      max-width: 95vw;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -637,7 +714,7 @@ p {
 
     .info__fullcard {
       display: flex;
-      width: 90vw;
+      width: 90%;
       max-height: 55vh;
 
       .fullcard__text {

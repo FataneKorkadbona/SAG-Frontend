@@ -6,6 +6,7 @@
   text-align: center;
 
   overflow-x: clip;
+
 }
 
 .navbar {
@@ -84,6 +85,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
   }
 }
 
@@ -91,10 +93,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #FFF7D7;
-  color: #000;
+  background-color: #3c4043;
+  color: #F6EDC3FF;
   padding: 20px 0;
   text-align: center;
+
+  border-style: solid hidden hidden;
+  border-color: #000;
+
+
 
   .footer__container {
     display: flex;
@@ -103,12 +110,15 @@
     width: 100%;
     margin: 0 auto;
     gap: 10%;
-    border: 1px solid #F1E1A0;
+    border-style: hidden hidden solid;
+    border-color: #000;
+
 
     .footer__box {
       width: 25%;
       p {
         font-size: 16px;
+
       }
     }
   }
@@ -116,6 +126,7 @@
   p {
     margin: 10px 0 0 0;
     font-size: 12px;
+    color: #F6EDC3FF;
   }
 }
 

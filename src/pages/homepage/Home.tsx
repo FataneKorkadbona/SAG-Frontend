@@ -163,7 +163,7 @@ export default function HomePage() {
                     <input
                         type="text"
                         className={styles.info__searchbutton}
-                        placeholder="Search"
+                        placeholder="Sök"
                         value={tempSearchQuery}
                         onChange={(e) => setTempSearchQuery(e.target.value)}
                         onKeyDown={handleKeyDown}
@@ -184,7 +184,7 @@ export default function HomePage() {
                     <button onClick={applyFilters}>Sök</button>
                 </div>
                 <div className={styles.info__container}>
-                    <h2>{selectedCategory ? selectedCategory : 'Mest Populära Förslag'}</h2>
+                    <h1>{selectedCategory ? selectedCategory : 'Mest Populära Förslag'}</h1>
                     <div className={styles.info__cards}>
                         {filteredSuggestions.length > 0 && (
                             <>
