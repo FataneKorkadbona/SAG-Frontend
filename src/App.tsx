@@ -15,6 +15,7 @@ import HandleUsers from "./pages/adminpage/handleusers.tsx";
 import HandleSuggestions from "./pages/adminpage/handlesuggestions.tsx";
 import RemoveAddUsers from "./pages/adminpage/removeaddusers.tsx";
 import {FooterProvider} from "./context/FooterContext.tsx";
+import IntroductionPage from './pages/Introductionpage/Introduction.tsx';
 import './App.scss';
 
 export default function Router() {
@@ -25,7 +26,8 @@ export default function Router() {
             <FooterProvider>
                 <NavBar/>
                 <Routes>
-                    <Route path="/" element={<HomePage/>}/>
+                    <Route path="/" element={<IntroductionPage/>}/>
+                    <Route path="/home" element={<HomePage/>}/>
                     <Route path="/login" element={<LoginPage/>}/>
                     <Route path="/verify/:token" element={<Verify/>}/>
                     <Route path="/unauthorized" element={<Unathorized/>}/>
