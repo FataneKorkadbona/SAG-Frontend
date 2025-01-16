@@ -93,8 +93,12 @@ export default function Suggestion() {
                 price: 6
             });
             console.log('Suggestion submitted successfully:', response.data);
-        } catch {
-            setErrorMessage('Failed to submit suggestion. Please try again.');
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                setErrorMessage(error.response.data.message || 'An error occurred.');
+            } else {
+                setErrorMessage('An error occurred.');
+            }
         }
     };
 

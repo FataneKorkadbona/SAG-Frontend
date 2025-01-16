@@ -49,6 +49,9 @@ export default function Admin() {
     const handleNavigateToHandleRemoveAddUsers = () => {
         navigate('/admin/dangerzone');
     };
+    const handleNavigateToHandleMoney = () => {
+        navigate('/admin/money');
+    };
 
     return (
         <>
@@ -112,6 +115,7 @@ export default function Admin() {
 
             <div className={styles.buttonContainer}>
                 <button onClick={openModal} className={styles.button}>Update Footer</button>
+                <button onClick={handleNavigateToHandleMoney} className={styles.button}>Update Money</button>
                 <button onClick={handleNavigateToHandleUsers} className={styles.button}>Manage Users</button>
                 <button onClick={handleNavigateToHandleSuggestions} className={styles.button}>Manage suggestions
                 </button>

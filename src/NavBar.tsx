@@ -7,6 +7,7 @@ export default function NavBar() {
     const {isLoggedIn, logout, isAdmin, user} = useAuth();
     const [isAtTop, setIsAtTop] = useState(true);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
     useEffect(() => {
@@ -42,6 +43,10 @@ export default function NavBar() {
         navigate('/');
     };
 
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
+
     return (
         <nav className="navbar">
             <div className="navbar__container">
@@ -49,9 +54,14 @@ export default function NavBar() {
                     <img src="/karlstad__standin.png" alt="Logo"/>
                     <Link to="/" className="navbar__links"> Karlstad Kommun </Link>
                 </li>
-                <ul className="navbar__menu">
+                <button className={`navbar__hamburger ${isMobileMenuOpen ? 'open' : ''}`} onClick={toggleMobileMenu}>
+                    <span className="bar"></span>
+                    <span className="bar"></span>
+                    <span className="bar"></span>
+                </button>
+                <ul className={`navbar__menu ${isMobileMenuOpen ? 'navbar__menu--open' : ''}`}>
                     <li className="navbar__item">
-                        <Link to="/" className="navbar__links"> Hem </Link>
+                        <Link to="/home" className="navbar__links"> Hem </Link>
                     </li>
                     {isLoggedIn && isAdmin && (
                         <>

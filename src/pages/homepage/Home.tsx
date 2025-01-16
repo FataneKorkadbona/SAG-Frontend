@@ -116,11 +116,13 @@ export default function HomePage() {
                                 text={suggestion.suggestion}
                                 category={suggestion.category}
                                 dateAdded={suggestion.createdAt}
-                                votes={suggestion.votes.toString()}
+                                votes={suggestion.votes}
                                 cardClass={styles.card__second}
                                 bottomClass={styles.bottom__second}
                                 topID={styles.top__second}
                                 onButtonClick={buttonlogin}
+                                suggestionId={suggestion.id}
+                                onSuggestionsUpdate={fetchSuggestions}
                             />
                         </div>
                     ))}
@@ -131,11 +133,13 @@ export default function HomePage() {
                                 text={suggestion.suggestion}
                                 category={suggestion.category}
                                 dateAdded={suggestion.createdAt}
-                                votes={suggestion.votes.toString()}
+                                votes={suggestion.votes}
                                 cardClass={styles.card__first}
                                 bottomClass={styles.bottom__first}
                                 topID={styles.top__first}
                                 onButtonClick={buttonlogin}
+                                suggestionId={suggestion.id}
+                                onSuggestionsUpdate={fetchSuggestions}
                             />
                         </div>
                     ))}
@@ -146,11 +150,13 @@ export default function HomePage() {
                                 text={suggestion.suggestion}
                                 category={suggestion.category}
                                 dateAdded={suggestion.createdAt}
-                                votes={suggestion.votes.toString()}
+                                votes={suggestion.votes}
                                 cardClass={styles.card__third}
                                 bottomClass={styles.bottom__third}
                                 topID={styles.top__third}
                                 onButtonClick={buttonlogin}
+                                suggestionId={suggestion.id}
+                                onSuggestionsUpdate={fetchSuggestions}
                             />
                         </div>
                     ))}

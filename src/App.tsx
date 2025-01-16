@@ -16,11 +16,12 @@ import HandleSuggestions from "./pages/adminpage/handlesuggestions.tsx";
 import RemoveAddUsers from "./pages/adminpage/removeaddusers.tsx";
 import {FooterProvider} from "./context/FooterContext.tsx";
 import IntroductionPage from './pages/Introductionpage/Introduction.tsx';
+import HandleMoney from './pages/adminpage/handlemoney.tsx';
 import './App.scss';
 
 export default function Router() {
     const location = useLocation();
-    const hideFooterPaths = ['/login'];
+    const hideFooterPaths = ['/login', '/verify', '/unauthorized', '/', '/admin', '/admin/money', '/admin/handleusers', '/admin/suggestions', '/admin/dangerzone'];
     return (
         <AuthProvider>
             <FooterProvider>
@@ -39,6 +40,7 @@ export default function Router() {
                             <Route path="/admin/handleusers" element={<HandleUsers/>}/>
                             <Route path="/admin/suggestions" element={<HandleSuggestions/>}/>
                             <Route path="/admin/dangerzone" element={<RemoveAddUsers/>}/>
+                            <Route path="/admin/money" element={<HandleMoney/>}/>
                         </Route>
                     </Route>
                 </Routes>
