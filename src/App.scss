@@ -67,7 +67,6 @@
 .navbar__links {
   text-align: center;
   width: 100%;
-  margin-right: 20px;
   color: #fff;
 }
 
@@ -181,13 +180,12 @@
 }
 
 .navbar__menu {
-  display: none !important;
+  display: flex;
   list-style: none;
   transition: max-height 0.3s ease;
 }
 
 .navbar__menu--open {
-    display: flex !important;
   max-height: 500px; /* Adjust as needed */
 }
 
@@ -226,5 +224,25 @@
   #navbar__button {
     width: 100%;
     text-align: center;
+  }
+}
+
+@media (min-width: 769px) {
+  .navbar__menu {
+    display: flex;
+    flex-direction: row;
+    position: static;
+    background-color: transparent;
+    max-height: none;
+    padding: 0;
+  }
+
+  .navbar__item {
+    margin: 0 1rem;
+  }
+
+  #navbar__button {
+    width: auto;
+    text-align: left;
   }
 }

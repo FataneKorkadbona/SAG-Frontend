@@ -17,6 +17,7 @@ import RemoveAddUsers from "./pages/adminpage/removeaddusers.tsx";
 import {FooterProvider} from "./context/FooterContext.tsx";
 import IntroductionPage from './pages/Introductionpage/Introduction.tsx';
 import HandleMoney from './pages/adminpage/handlemoney.tsx';
+import HandleEditableStuff from "./pages/adminpage/handleeditablestuff.tsx";
 import './App.scss';
 
 export default function Router() {
@@ -41,6 +42,7 @@ export default function Router() {
                             <Route path="/admin/suggestions" element={<HandleSuggestions/>}/>
                             <Route path="/admin/dangerzone" element={<RemoveAddUsers/>}/>
                             <Route path="/admin/money" element={<HandleMoney/>}/>
+                            <Route path="/admin/editablestuff" element={<HandleEditableStuff/>}/>
                         </Route>
                     </Route>
                 </Routes>
