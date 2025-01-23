@@ -1,23 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './introduction.module.scss';
+import axios from 'axios';
 
 const IntroductionPage: React.FC = () => {
     const navigate = useNavigate();
     const [money, setMoney] = useState(0);
-    const title = 'Welcome to the Karlstad Kommun';
-    const text = 'This is a demo application for the Karlstad Kommun.';
-    const text1 = 'Please press the button below to continue to the home page.';
+    const [title, setTitle] = useState('');
+    const [text, setText] = useState('');
+    const [text1, setText1] = useState('');
 
     useEffect(() => {
-        // Fetch the initial money value from an API or set a default value
-        const fetchMoney = async () => {
-            // Example API call to fetch money value
-            // const response = await axios.get('/api/getMoney');
-            // setMoney(response.data.money);
-            setMoney(1000); // Set a default value for demonstration
+        const fetchIntroPageInfo = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/getIntropage`);
+                const introPageInfo = response.data;
+                setTitle(introPageInfo.title);
+                setText(introPageInfo.row1);
+                setText1(introPageInfo.row2);
+            } catch (error) {
+                console.error('Error fetching intropage information:', error);
+            }
         };
+        const fetchMoney = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/getMoney`);
+                setMoney(response.data.amount);
+            } catch (error) {
+                console.error('Error fetching money:', error);
+            }
+        }
 
+        fetchIntroPageInfo();
         fetchMoney();
     }, []);
 

@@ -2,12 +2,15 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import './App.scss';
+import axios from 'axios';
 
 export default function NavBar() {
-    const { isLoggedIn, logout, isAdmin, user } = useAuth();
+    const { isLoggedIn, logout, isAdmin } = useAuth();
     const [isAtTop, setIsAtTop] = useState(true);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [navbarIcon, setNavbarIcon] = useState('');
+    const [companyName, setCompanyName] = useState('');
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -20,6 +23,29 @@ export default function NavBar() {
             setWindowWidth(window.innerWidth);
         };
 
+        const fetchNavbarIcon = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/getIcon`, { responseType: 'arraybuffer' });
+                const base64Image = btoa(
+                    new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), '')
+                );
+                setNavbarIcon(`data:image/png;base64,${base64Image}`);
+            } catch (error) {
+                console.error('Error fetching navbar icon:', error);
+            }
+        };
+
+        const fetchCompanyName = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/getFooter`);
+                setCompanyName(response.data.companyName || '');
+            } catch (error) {
+                console.error('Error fetching company name:', error);
+            }
+        };
+
+        fetchNavbarIcon();
+        fetchCompanyName();
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', handleResize);
 
@@ -38,7 +64,6 @@ export default function NavBar() {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
-    // Hide the navbar only on the home screen and when scrolled to the top
     if (location.pathname === '/' && isAtTop && windowWidth >= 1475) {
         return null;
     }
@@ -47,8 +72,8 @@ export default function NavBar() {
         <nav className="navbar">
             <div className="navbar__container">
                 <li className="navbar__item" id="kommun_logo">
-                    <img src="/karlstad__standin.png" alt="Logo" />
-                    <Link to="/" className="navbar__links"> Karlstad Kommun </Link>
+                    <img src={navbarIcon} alt="Logo" />
+                    <Link to="/" className="navbar__links"> {companyName} </Link>
                 </li>
                 <button className={`navbar__hamburger ${isMobileMenuOpen ? 'open' : ''}`} onClick={toggleMobileMenu}>
                     <span className="bar"></span>
@@ -81,7 +106,7 @@ export default function NavBar() {
                     )}
                     {!isLoggedIn && (
                         <li className="navbar__item">
-                            <img src="/karlstad__standin.png" alt="Logo" />
+                            <img src={navbarIcon} alt="Logo" />
                             <Link to="/login" className="navbar__links"> Logga in </Link>
                         </li>
                     )}

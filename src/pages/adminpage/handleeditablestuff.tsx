@@ -8,10 +8,11 @@ export default function HandleEditableStuff() {
     const [phone, setPhone] = useState('');
     const [responsiblePerson, setResponsiblePerson] = useState('');
     const [contactInfo, setContactInfo] = useState('');
-    const [currentIcon, setCurrentIcon] = useState('/karlstad__standin.png');
+    const [currentIcon, setCurrentIcon] = useState('');
     const [uploadMessage, setUploadMessage] = useState('');
     const [introTitle, setIntroTitle] = useState('');
-    const [introContent, setIntroContent] = useState('');
+    const [introContent1, setIntroContent1] = useState('');
+    const [introContent2, setIntroContent2] = useState('');
 
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_API_URL}/api/getFooter`).then((response) => {
@@ -23,10 +24,21 @@ export default function HandleEditableStuff() {
             setContactInfo(footerInfo.contactInfo || '');
         });
 
-        axios.get(`${import.meta.env.VITE_API_URL}/api/getIntroduction`).then((response) => {
+        axios.get(`${import.meta.env.VITE_API_URL}/api/getIntropage`).then((response) => {
             const introInfo = response.data;
+            console.log(response.data);
             setIntroTitle(introInfo.title || '');
-            setIntroContent(introInfo.content || '');
+            setIntroContent1(introInfo.row1 || '');
+            setIntroContent2(introInfo.row2 || '');
+        });
+
+        axios.get(`${import.meta.env.VITE_API_URL}/getIcon`, { responseType: 'arraybuffer' }).then((response) => {
+            const base64Image = btoa(
+                new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), '')
+            );
+            setCurrentIcon(`data:image/png;base64,${base64Image}`);
+        }).catch((error) => {
+            console.error('Error fetching current icon:', error);
         });
     }, []);
 
@@ -39,20 +51,47 @@ export default function HandleEditableStuff() {
             responsiblePerson,
             contactInfo,
         };
-        await axios.post(`${import.meta.env.VITE_API_URL}/api/saveFooter`, footerInfo);
-
-        const introInfo = {
-            title: introTitle,
-            content: introContent,
-        };
-        await axios.post(`${import.meta.env.VITE_API_URL}/api/saveIntroduction`, introInfo);
+        console.log('Submitting footer info:', footerInfo);
+        try {
+            await axios.post(`${import.meta.env.VITE_API_URL}/api/saveFooter`, footerInfo);
+        } catch (error) {
+            console.error('Error submitting footer info:', error);
+        }
     };
 
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleIntroPage = async (event: React.FormEvent) => {
+        event.preventDefault();
+        const introInfo = {
+            title: introTitle,
+            row1: introContent1,
+            row2: introContent2,
+        };
+        console.log('Submitting intro info:', introInfo);
+        try {
+            await axios.post(`${import.meta.env.VITE_API_URL}/api/saveIntropage`, introInfo);
+        } catch (error) {
+            console.error('Error submitting intro info:', error);
+        }
+    };
+
+    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
-            setCurrentIcon(URL.createObjectURL(file));
-            setUploadMessage('Icon uploaded successfully!');
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                await axios.post(`${import.meta.env.VITE_API_URL}/uploadIcon`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+                setCurrentIcon(URL.createObjectURL(file));
+                setUploadMessage('Icon uploaded successfully!');
+            } catch (error) {
+                console.error('Error uploading icon:', error);
+                setUploadMessage('Failed to upload icon.');
+            }
         }
     };
 
@@ -110,12 +149,13 @@ export default function HandleEditableStuff() {
                         onChange={(e) => setContactInfo(e.target.value)}
                     />
                 </div>
+                <button type="submit">Submit</button>
                 <hr/>
                 <div>
                     <h2>Current Icon</h2>
-                    <img src={currentIcon} alt="Current Icon" width="100" />
+                    <img src={currentIcon} alt="Current Icon" width="100"/>
                     <div className={styles.dropZone}>
-                        <input type="file" onChange={handleFileChange} />
+                        <input type="file" onChange={handleFileChange}/>
                     </div>
                     {uploadMessage && <p>{uploadMessage}</p>}
                 </div>
@@ -133,16 +173,25 @@ export default function HandleEditableStuff() {
                         />
                     </div>
                     <div>
-                        <label htmlFor="introContent">Content:</label>
+                        <label htmlFor="introContent1">Intro Row 1</label>
                         <textarea
-                            id="introContent"
-                            name="introContent"
-                            value={introContent}
-                            onChange={(e) => setIntroContent(e.target.value)}
+                            id="introContent1"
+                            name="introContent1"
+                            value={introContent1}
+                            onChange={(e) => setIntroContent1(e.target.value)}
                         />
                     </div>
+                    <div>
+                        <label htmlFor="introContent2">Intro Row 2</label>
+                        <textarea
+                            id="introContent2"
+                            name="introContent2"
+                            value={introContent2}
+                            onChange={(e) => setIntroContent2(e.target.value)}
+                        />
+                    </div>
+                    <button type="submit" onClick={handleIntroPage}>Submit</button>
                 </div>
-                <button type="submit">Submit</button>
             </form>
         </div>
     );
