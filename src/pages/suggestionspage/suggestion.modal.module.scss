@@ -1,0 +1,165 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 566px; /* Set max width to 566px */
+  max-height: 1000px;
+  overflow-y: auto;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+  word-wrap: break-word; /* Ensure text wraps within the modal */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modalContent h2 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.modalContent ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.modalContent ul li {
+  margin-bottom: 15px;
+  font-size: 1rem;
+  color: #555;
+  display: flex;
+  align-items: center;
+}
+
+.modalContent ul li input {
+  margin-right: 10px;
+}
+
+.modalContent ul li label {
+  flex: 1;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  max-width: 500px; /* Set max width to 566px */
+  max-height: 150px;
+  overflow: scroll;
+  word-wrap: break-word; /* Ensure text wraps within the label */
+}
+
+.modalContent button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+  margin: 5px;
+}
+
+.modalContent button:hover {
+  background-color: #45a049;
+}
+
+.modalContent .goBackButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #f44336; /* Red color */
+  color: white;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+  margin: 5px;
+}
+
+.modalContent .goBackButton:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+}
+
+.modalContent button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.modal__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.modal__top h1 {
+  font-size: 1.5rem;
+  color: #333;
+  margin: 0;
+}
+
+.modal__top button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+}
+
+.modal__top button:hover {
+  color: #000;
+}
+
+.modalContent ul li input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #4CAF50;
+  border-radius: 4px;
+  margin-right: 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+.modalContent ul li input[type="checkbox"]:checked {
+  background-color: #4CAF50;
+}
+
+.modalContent ul li input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+}

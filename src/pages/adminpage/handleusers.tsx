@@ -15,6 +15,8 @@ export default function HandleUsers() {
     const [searchQuery, setSearchQuery] = useState('');
     const [message, setMessage] = useState<string | null>(null);
     const [messageType, setMessageType] = useState<'success' | 'error' | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const usersPerPage = 10;
 
     const fetchUsers = async () => {
@@ -30,21 +32,32 @@ export default function HandleUsers() {
         fetchUsers();
     }, []);
 
-    const toggleAdminStatus = async (userId: number, isAdmin: number) => {
-        try {
-            await axios.post(`${import.meta.env.VITE_API_URL}/api/updateAdminStatus`, { userId, isAdmin });
-            setMessage('Admin status updated successfully.');
-            setMessageType('success');
-            fetchUsers(); // Refetch users to refresh the table
-        } catch (error) {
-            console.error('Error updating admin status:', error);
-            setMessage('Failed to update admin status.');
-            setMessageType('error');
+    const toggleAdminStatus = (user: User) => {
+        setSelectedUser(user);
+        setIsModalOpen(true);
+    };
+
+    const handleConfirm = async () => {
+        if (selectedUser) {
+            try {
+                await axios.post(`${import.meta.env.VITE_API_URL}/api/updateAdminStatus`, { userId: selectedUser.id, isAdmin: selectedUser.isAdmin === 1 ? 0 : 1 });
+                setMessage('Admin status updated successfully.');
+                setMessageType('success');
+                fetchUsers(); // Refetch users to refresh the table
+            } catch (error) {
+                console.error('Error updating admin status:', error);
+                setMessage('Failed to update admin status.');
+                setMessageType('error');
+            } finally {
+                setIsModalOpen(false);
+                setSelectedUser(null);
+            }
         }
-        setTimeout(() => {
-            setMessage(null);
-            setMessageType(null);
-        }, 3000);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+        setSelectedUser(null);
     };
 
     const handlePageChange = (pageNumber: number) => {
@@ -118,7 +131,7 @@ export default function HandleUsers() {
                         <td>{user.school}</td>
                         <td>{user.isAdmin === 1 ? 'Yes' : 'No'}</td>
                         <td>
-                            <button onClick={() => toggleAdminStatus(user.id, user.isAdmin === 1 ? 0 : 1)}>
+                            <button onClick={() => toggleAdminStatus(user)}>
                                 {user.isAdmin === 1 ? 'Remove Admin' : 'Make Admin'}
                             </button>
                         </td>
@@ -141,6 +154,17 @@ export default function HandleUsers() {
                 <button onClick={handleNextPage} disabled={currentPage === totalPages} className="next">{'>'}</button>
                 <button onClick={handleLastPage} disabled={currentPage === totalPages} className="last">{'>>'}</button>
             </div>
+
+            {isModalOpen && (
+                <div className={styles.modal}>
+                    <div className={styles.modalContent}>
+                        <h3>Confirm Update</h3>
+                        <p>Are you sure you want to <span>{selectedUser?.isAdmin === 1 ? 'remove' : 'add'}</span> admin permissions for <span>{selectedUser?.email}</span>?</p>
+                        <button onClick={handleConfirm}>Confirm</button>
+                        <button onClick={handleCancel}>Cancel</button>
+                    </div>
+                </div>
+            )}
         </>
     );
 }

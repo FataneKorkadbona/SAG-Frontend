@@ -1,20 +1,15 @@
-import {useState, FormEvent} from 'react';
-import styles from './suggestion.module.scss';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
+import styles from './suggestion.module.scss';
+import modalStyles from './suggestion.modal.module.scss';
 import { useAuth } from '../../context/AuthContext';
-import {categories} from '../categories.ts';
-
-type CharLimits = {
-    suggestion: number;
-    title: number;
-    price: number;
-};
+import { categories } from '../categories.ts';
 
 export default function Suggestion() {
-    const {user} = useAuth();
+    const { user } = useAuth();
     const userEmail = user?.email || '';
 
-    const [charCount, setCharCount] = useState<CharLimits>({
+    const [charCount, setCharCount] = useState({
         suggestion: 2500,
         title: 25,
         price: 6
@@ -30,21 +25,43 @@ export default function Suggestion() {
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [isModalVisible, setModalVisible] = useState(false);
+    const [isConfirmVisible, setConfirmVisible] = useState(false);
+    const [checkboxes, setCheckboxes] = useState({
+        suggestion: false,
+        title: false,
+        price: false,
+        category: false
+    });
+
+    const [budget, setBudget] = useState<number | null>(null);
+
+    useEffect(() => {
+        const fetchBudget = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/getMoney`);
+                setBudget(response.data.amount);
+            } catch (error) {
+                console.error('Error fetching budget:', error);
+            }
+        };
+
+        fetchBudget();
+    }, []);
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLSelectElement | HTMLInputElement>) => {
-        const {id, value} = event.target;
+        const { id, value } = event.target;
         let newValue = value;
 
         if (id === 'price') {
             newValue = value.replace(/[^0-9]/g, '');
         }
 
-        const limits: CharLimits = {
+        const limits = {
             suggestion: 2500,
             title: 25,
             price: 6
         };
-        const maxLength = limits[id as keyof CharLimits];
+        const maxLength = limits[id as keyof typeof limits];
         if (newValue.length > maxLength) {
             newValue = newValue.slice(0, maxLength);
         }
@@ -60,17 +77,21 @@ export default function Suggestion() {
         }));
     };
 
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    const handleInitialSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setErrorMessage('');
         setSuccessMessage('');
 
-        // Validation logic
         if (!formData.suggestion || !formData.title || !formData.price || formData.category === 'category') {
             setErrorMessage('All fields are required.');
             return;
         }
 
+        setConfirmVisible(true);
+    };
+
+    const handleFinalSubmit = async () => {
+        setConfirmVisible(false);
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/suggestions`, {
                 ...formData,
@@ -102,6 +123,14 @@ export default function Suggestion() {
         }
     };
 
+    const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { id, checked } = event.target;
+        setCheckboxes(prevCheckboxes => ({
+            ...prevCheckboxes,
+            [id]: checked
+        }));
+    };
+
     const showModal = () => {
         setModalVisible(true);
     };
@@ -110,12 +139,15 @@ export default function Suggestion() {
         setModalVisible(false);
     };
 
+    const allCheckboxesChecked = Object.values(checkboxes).every(Boolean);
+
     return (
         <>
             <div className={styles.card__container}>
                 <div className={styles.card}>
                     <h1>Lämna ett förslag</h1>
-                    <form onSubmit={handleSubmit}>
+                    <h2>Budget: {budget !== null ? `${budget} kr` : 'Loading...'}</h2>
+                    <form onSubmit={handleInitialSubmit}>
                         <div className={styles.suggestions__container}>
                             <div className={styles.suggestions__left}>
                                 <label htmlFor="suggestion">Förslag</label>
@@ -169,6 +201,34 @@ export default function Suggestion() {
                 {errorMessage && <p className={styles.error}>{errorMessage}</p>}
                 {successMessage && <p className={styles.success}>{successMessage}</p>}
             </div>
+
+            {isConfirmVisible && (
+                <div className={modalStyles.modal}>
+                    <div className={modalStyles.modalContent}>
+                        <h2>Confirm Your Entries</h2>
+                        <ul>
+                            <li>
+                                <input type="checkbox" id="title" checked={checkboxes.title} onChange={handleCheckboxChange} />
+                                <label htmlFor="title">Titel: {formData.title}</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="suggestion" checked={checkboxes.suggestion} onChange={handleCheckboxChange} />
+                                <label htmlFor="suggestion">Förslag: {formData.suggestion}</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="price" checked={checkboxes.price} onChange={handleCheckboxChange} />
+                                <label htmlFor="price">Ungefärlig kostnad: {formData.price} kr</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="category" checked={checkboxes.category} onChange={handleCheckboxChange} />
+                                <label htmlFor="category">Kategori: {formData.category}</label>
+                            </li>
+                        </ul>
+                        <button onClick={handleFinalSubmit} disabled={!allCheckboxesChecked}>Confirm and Submit</button>
+                        <button className={modalStyles.goBackButton} onClick={() => setConfirmVisible(false)}>Go Back and Edit</button>
+                    </div>
+                </div>
+            )}
 
             <p onClick={showModal} className={styles.showModal__text}>Vilken information behövs för ett förslag?</p>
             {isModalVisible && (

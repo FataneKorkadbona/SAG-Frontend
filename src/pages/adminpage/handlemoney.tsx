@@ -4,6 +4,7 @@ import styles from './admin.module.scss';
 
 export default function HandleMoney() {
     const [money, setMoney] = useState(0);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_API_URL}/api/getMoney`).then((response) => {
@@ -14,15 +15,25 @@ export default function HandleMoney() {
         });
     }, []);
 
-    const handleSubmit = async (event: React.FormEvent) => {
+    const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
+        setIsModalOpen(true);
+    };
+
+    const handleConfirm = async () => {
         const moneyInfo = { amount: money };
         try {
             await axios.post(`${import.meta.env.VITE_API_URL}/api/updateMoney`, moneyInfo);
             await axios.delete(`${import.meta.env.VITE_API_URL}/api/removeSuggestionsAboveMoney/${money}`);
         } catch (error) {
             console.error('Error submitting money information:', error);
+        } finally {
+            setIsModalOpen(false);
         }
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
     };
 
     return (
@@ -41,6 +52,17 @@ export default function HandleMoney() {
                 </div>
                 <button type="submit">Submit</button>
             </form>
+
+            {isModalOpen && (
+                <div className={styles.modal}>
+                    <div className={styles.modalContent}>
+                        <h3>Confirm Update</h3>
+                        <p>Are you sure you want to update the money to {money} kr?</p>
+                        <button onClick={handleConfirm}>Confirm</button>
+                        <button onClick={handleCancel}>Cancel</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

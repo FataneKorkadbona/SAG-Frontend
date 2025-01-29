@@ -107,7 +107,7 @@ export default function HomePage() {
     return (
         <>
             <div className={styles.hero__section}>
-                <h1>Mest Populära</h1>
+                <h1 className={styles.hero__title}>Mest Populära</h1>
                 <div className={styles.hero__cards}>
                     {suggestions.slice(1, 2).map((suggestion) => (
                         <div key={suggestion.id}>
