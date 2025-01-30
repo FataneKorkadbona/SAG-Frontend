@@ -20,6 +20,7 @@ export default function HandleSuggestions() {
     const [filterCategory, setFilterCategory] = useState<string>('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedSuggestion, setSelectedSuggestion] = useState<Suggestion | null>(null);
+    const [denyReason, setDenyReason] = useState<string>('');
 
     const fetchSuggestions = useCallback(async () => {
         try {
@@ -47,17 +48,21 @@ export default function HandleSuggestions() {
     const handleConfirm = async () => {
         if (selectedSuggestion !== null) {
             try {
-                await axios.delete(`${import.meta.env.VITE_API_URL}/suggestions/${selectedSuggestion.id}`);
+                await axios.patch(`${import.meta.env.VITE_API_URL}/suggestions/${selectedSuggestion.id}`, {
+                    status: 'denied',
+                    denyReason
+                });
                 setSuggestions(suggestions.filter(suggestion => suggestion.id !== selectedSuggestion.id));
-                setMessage('Suggestion deleted successfully.');
+                setMessage('Suggestion denied successfully.');
                 setMessageType('success');
             } catch (error) {
-                console.error('Error deleting suggestion:', error);
-                setMessage('Failed to delete suggestion.');
+                console.error('Error denying suggestion:', error);
+                setMessage('Failed to deny suggestion.');
                 setMessageType('error');
             } finally {
                 setIsModalOpen(false);
                 setSelectedSuggestion(null);
+                setDenyReason('');
             }
         }
     };
@@ -65,6 +70,7 @@ export default function HandleSuggestions() {
     const handleCancel = () => {
         setIsModalOpen(false);
         setSelectedSuggestion(null);
+        setDenyReason('');
     };
 
     return (
@@ -111,7 +117,7 @@ export default function HandleSuggestions() {
                         <td>{suggestion.category}</td>
                         <td>
                             <button onClick={() => confirmDeleteSuggestion(suggestion)}>
-                                Delete
+                                Deny
                             </button>
                         </td>
                     </tr>
@@ -122,9 +128,15 @@ export default function HandleSuggestions() {
             {isModalOpen && selectedSuggestion && (
                 <div className={styles.modal}>
                     <div className={styles.modalContent}>
-                        <h3>Confirm Delete</h3>
-                        <p>Are you sure you want to <span>delete</span> suggestion with title <span>"{selectedSuggestion.title}"</span> and ID <span>{selectedSuggestion.id}</span> by <span>{selectedSuggestion.email}</span>?</p>
-                        <button onClick={handleConfirm}>Confirm</button>
+                        <h3>Confirm Denial</h3>
+                        <p>Are you sure you want to deny suggestion with title "{selectedSuggestion.title}" and ID {selectedSuggestion.id} by {selectedSuggestion.email}?</p>
+                        <textarea
+                            required
+                            placeholder="Enter reason for denial"
+                            value={denyReason}
+                            onChange={(e) => setDenyReason(e.target.value)}
+                        />
+                        <button onClick={handleConfirm} disabled={!denyReason.trim()}>Confirm</button>
                         <button onClick={handleCancel}>Cancel</button>
                     </div>
                 </div>

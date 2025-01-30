@@ -17,6 +17,9 @@ export default function AcceptingPage() {
     const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
     const [selectedSuggestion, setSelectedSuggestion] = useState<Suggestion | null>(null);
     const [loading, setLoading] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [denyReason, setDenyReason] = useState('');
+    const [suggestionToDeny, setSuggestionToDeny] = useState<string | null>(null);
 
     const fetchSuggestions = async () => {
         try {
@@ -37,20 +40,36 @@ export default function AcceptingPage() {
 
     const handleAccept = async (id: string) => {
         try {
-            await axios.patch(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/suggestions/${id}`, { status: 'accepted' });
+            await axios.patch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/suggestions/${id}`, { status: 'accepted' });
             setSuggestions(suggestions.filter(suggestion => suggestion.id !== id));
         } catch (error) {
             console.error('Error accepting suggestion:', error);
         }
     };
 
-    const handleDeny = async (id: string) => {
-        try {
-            await axios.delete(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/suggestions/${id}`);
-            setSuggestions(suggestions.filter(suggestion => suggestion.id !== id));
-        } catch (error) {
-            console.error('Error denying suggestion:', error);
+    const confirmDenySuggestion = (id: string) => {
+        setSuggestionToDeny(id);
+        setIsModalOpen(true);
+    };
+
+    const handleDeny = async () => {
+        if (suggestionToDeny) {
+            try {
+                await axios.patch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/suggestions/${suggestionToDeny}`, { status: 'denied', denyReason });
+                setSuggestions(suggestions.filter(suggestion => suggestion.id !== suggestionToDeny));
+                setDenyReason('');
+                setSuggestionToDeny(null);
+                setIsModalOpen(false);
+            } catch (error) {
+                console.error('Error denying suggestion:', error);
+            }
         }
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+        setDenyReason('');
+        setSuggestionToDeny(null);
     };
 
     if (loading) {
@@ -73,7 +92,7 @@ export default function AcceptingPage() {
                         bottomClass={styles.fullcard__info}
                         buttonClass={styles.fullcard__button}
                         onAccept={() => handleAccept(selectedSuggestion ? selectedSuggestion.id : suggestions[0].id)}
-                        onDeny={() => handleDeny(selectedSuggestion ? selectedSuggestion.id : suggestions[0].id)}
+                        onDeny={() => confirmDenySuggestion(selectedSuggestion ? selectedSuggestion.id : suggestions[0].id)}
                     />
                     <div className={styles.card__list}>
                         {suggestions.slice(0).map((suggestion, index) => (
@@ -92,6 +111,21 @@ export default function AcceptingPage() {
                 </div>
             ) : (
                 <div>No new suggestions, come back later</div>
+            )}
+
+            {isModalOpen && (
+                <div className={styles.modal}>
+                    <div className={styles.modalContent}>
+                        <h3>Confirm Denial</h3>
+                        <textarea
+                            placeholder="Enter reason for denial"
+                            value={denyReason}
+                            onChange={(e) => setDenyReason(e.target.value)}
+                        />
+                        <button onClick={handleDeny} disabled={!denyReason.trim()}>Confirm</button>
+                        <button onClick={handleCancel}>Cancel</button>
+                    </div>
+                </div>
             )}
         </div>
     );

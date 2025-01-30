@@ -51,8 +51,8 @@ export default function HomePage() {
 
     const fetchSuggestions = async () => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/suggestions`);
-            const activeSuggestions = response.data.filter((suggestion: Suggestion) => suggestion.status === 'active');
+            const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/suggestions`);
+            const activeSuggestions = response.data.filter((suggestion: Suggestion) => suggestion.status === 'accepted');
             activeSuggestions.sort((a: Suggestion, b: Suggestion) => b.votes - a.votes); // Sort by votes in descending order
             setSuggestions(activeSuggestions);
             console.log('Active suggestions fetched and sorted by votes:', activeSuggestions);
@@ -109,7 +109,7 @@ export default function HomePage() {
             <div className={styles.hero__section}>
                 <h1 className={styles.hero__title}>Mest Populära</h1>
                 <div className={styles.hero__cards}>
-                    {suggestions.slice(1, 2).map((suggestion) => (
+                    {filteredSuggestions.slice(1, 2).map((suggestion) => (
                         <div key={suggestion.id}>
                             <HeroCard
                                 title={suggestion.title}
@@ -126,7 +126,7 @@ export default function HomePage() {
                             />
                         </div>
                     ))}
-                    {suggestions.slice(0, 1).map((suggestion) => (
+                    {filteredSuggestions.slice(0, 1).map((suggestion) => (
                         <div key={suggestion.id}>
                             <HeroCard
                                 title={suggestion.title}
@@ -143,7 +143,7 @@ export default function HomePage() {
                             />
                         </div>
                     ))}
-                    {suggestions.slice(2, 3).map((suggestion) => (
+                    {filteredSuggestions.slice(2, 3).map((suggestion) => (
                         <div key={suggestion.id}>
                             <HeroCard
                                 title={suggestion.title}
@@ -192,7 +192,7 @@ export default function HomePage() {
                 <div className={styles.info__container}>
                     <h1>{selectedCategory ? selectedCategory : 'Mest Populära Förslag'}</h1>
                     <div className={styles.info__cards}>
-                        {filteredSuggestions.length > 0 && (
+                        {filteredSuggestions.length > 0 ? (
                             <>
                                 <SuggBigCard
                                     title={selectedSuggestion ? selectedSuggestion.title : filteredSuggestions[0].title}
@@ -210,7 +210,7 @@ export default function HomePage() {
                                     onSuggestionsUpdate={fetchSuggestions}
                                 />
                                 <div className={styles.card__list}>
-                                    {filteredSuggestions.slice(0).map((suggestion) => (
+                                    {filteredSuggestions.slice(1).map((suggestion) => (
                                         <div key={suggestion.id}>
                                             <SuggSmallCard
                                                 title={suggestion.title}
@@ -231,6 +231,8 @@ export default function HomePage() {
                                     ))}
                                 </div>
                             </>
+                        ) : (
+                            <div>No suggestions found</div>
                         )}
                     </div>
                 </div>

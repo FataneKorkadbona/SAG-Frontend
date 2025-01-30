@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import axios from 'axios';
 import styles from './suggestion.module.scss';
 import modalStyles from './suggestion.modal.module.scss';
-import { useAuth } from '../../context/AuthContext';
-import { categories } from '../categories.ts';
+import {useAuth} from '../../context/AuthContext';
+import {categories} from '../categories.ts';
 
 export default function Suggestion() {
-    const { user } = useAuth();
+    const {user} = useAuth();
     const userEmail = user?.email || '';
 
     const [charCount, setCharCount] = useState({
@@ -19,7 +19,8 @@ export default function Suggestion() {
         suggestion: '',
         title: '',
         price: '',
-        category: 'category'
+        category: 'category',
+        participate: false
     });
 
     const [errorMessage, setErrorMessage] = useState('');
@@ -49,12 +50,8 @@ export default function Suggestion() {
     }, []);
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLSelectElement | HTMLInputElement>) => {
-        const { id, value } = event.target;
-        let newValue = value;
-
-        if (id === 'price') {
-            newValue = value.replace(/[^0-9]/g, '');
-        }
+        const {id, value, type, checked} = event.target;
+        let newValue = type === 'checkbox' ? checked : value;
 
         const limits = {
             suggestion: 2500,
@@ -62,7 +59,7 @@ export default function Suggestion() {
             price: 6
         };
         const maxLength = limits[id as keyof typeof limits];
-        if (newValue.length > maxLength) {
+        if (type !== 'checkbox' && newValue.length > maxLength) {
             newValue = newValue.slice(0, maxLength);
         }
 
@@ -71,10 +68,12 @@ export default function Suggestion() {
             [id]: newValue
         }));
 
-        setCharCount(prevCount => ({
-            ...prevCount,
-            [id]: maxLength - newValue.length
-        }));
+        if (type !== 'checkbox') {
+            setCharCount(prevCount => ({
+                ...prevCount,
+                [id]: maxLength - newValue.length
+            }));
+        }
     };
 
     const handleInitialSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -95,7 +94,8 @@ export default function Suggestion() {
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/suggestions`, {
                 ...formData,
-                email: userEmail
+                email: userEmail,
+                participate: formData.participate
             }, {
                 headers: {
                     'Content-Type': 'application/json'
@@ -106,7 +106,8 @@ export default function Suggestion() {
                 suggestion: '',
                 title: '',
                 price: '',
-                category: 'category'
+                category: 'category',
+                participate: false
             });
             setCharCount({
                 suggestion: 2500,
@@ -124,7 +125,7 @@ export default function Suggestion() {
     };
 
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { id, checked } = event.target;
+        const {id, checked} = event.target;
         setCheckboxes(prevCheckboxes => ({
             ...prevCheckboxes,
             [id]: checked
@@ -178,7 +179,12 @@ export default function Suggestion() {
                                     rows={1}
                                     placeholder="Pris: kr"
                                     value={formData.price}
-                                    onChange={handleChange}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        if (/^\d*$/.test(value)) {
+                                            handleChange(e);
+                                        }
+                                    }}
                                 />
                                 <div className={styles.countdown}>{charCount.price} characters left</div>
                                 <label htmlFor="category">Välj en kategori:</label>
@@ -193,6 +199,15 @@ export default function Suggestion() {
                                         <option key={index} value={category}>{category}</option>
                                     ))}
                                 </select>
+                                <div>
+                                    <input
+                                        type="checkbox"
+                                        id="participate"
+                                        checked={formData.participate}
+                                        onChange={handleChange}
+                                    />
+                                    <label htmlFor="participate">Vill du vara med och genomföra detta förslag?</label>
+                                </div>
                                 <button type="submit">Skicka in</button>
                             </div>
                         </div>
@@ -208,24 +223,30 @@ export default function Suggestion() {
                         <h2>Confirm Your Entries</h2>
                         <ul>
                             <li>
-                                <input type="checkbox" id="title" checked={checkboxes.title} onChange={handleCheckboxChange} />
+                                <input type="checkbox" id="title" checked={checkboxes.title}
+                                       onChange={handleCheckboxChange}/>
                                 <label htmlFor="title">Titel: {formData.title}</label>
                             </li>
                             <li>
-                                <input type="checkbox" id="suggestion" checked={checkboxes.suggestion} onChange={handleCheckboxChange} />
+                                <input type="checkbox" id="suggestion" checked={checkboxes.suggestion}
+                                       onChange={handleCheckboxChange}/>
                                 <label htmlFor="suggestion">Förslag: {formData.suggestion}</label>
                             </li>
                             <li>
-                                <input type="checkbox" id="price" checked={checkboxes.price} onChange={handleCheckboxChange} />
+                                <input type="checkbox" id="price" checked={checkboxes.price}
+                                       onChange={handleCheckboxChange}/>
                                 <label htmlFor="price">Ungefärlig kostnad: {formData.price} kr</label>
                             </li>
                             <li>
-                                <input type="checkbox" id="category" checked={checkboxes.category} onChange={handleCheckboxChange} />
+                                <input type="checkbox" id="category" checked={checkboxes.category}
+                                       onChange={handleCheckboxChange}/>
                                 <label htmlFor="category">Kategori: {formData.category}</label>
                             </li>
                         </ul>
                         <button onClick={handleFinalSubmit} disabled={!allCheckboxesChecked}>Confirm and Submit</button>
-                        <button className={modalStyles.goBackButton} onClick={() => setConfirmVisible(false)}>Go Back and Edit</button>
+                        <button className={modalStyles.goBackButton} onClick={() => setConfirmVisible(false)}>Go Back
+                            and Edit
+                        </button>
                     </div>
                 </div>
             )}
