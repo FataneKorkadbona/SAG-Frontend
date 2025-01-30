@@ -40,6 +40,7 @@
   justify-content: space-between;
   align-items: center;
   margin-right: 1rem;
+
 }
 
 #kommun_logo {
@@ -80,7 +81,7 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1300px) {
   .navbar__menu {
     display: none;
   }
@@ -106,6 +107,7 @@
 
 
 
+
   .footer__container {
     display: flex;
     flex-direction: row;
@@ -115,6 +117,8 @@
     gap: 10%;
     border-style: hidden hidden solid;
     border-color: #000;
+    padding-bottom: 4vh;
+    margin-bottom: 2vh;
 
 
     .footer__box {
@@ -189,13 +193,13 @@
   max-height: 500px; /* Adjust as needed */
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1100px) {
   .navbar__hamburger {
     display: flex;
   }
 
   .navbar__menu {
-    display: flex;
+    display: none;
     flex-direction: column;
     max-height: 0;
     overflow: hidden;
@@ -209,6 +213,7 @@
 
   .navbar__menu--open {
     max-height: 500px; /* Adjust as needed */
+    display: flex;
   }
 
   .navbar__item {
@@ -227,7 +232,7 @@
   }
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1101px) {
   .navbar__menu {
     display: flex;
     flex-direction: row;

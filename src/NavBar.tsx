@@ -69,7 +69,7 @@ export default function NavBar() {
     }
 
     return (
-        <nav className="navbar">
+        <nav id={"navbar"} className="navbar">
             <div className="navbar__container">
                 <li className="navbar__item" id="kommun_logo">
                     <img src={navbarIcon} alt="Logo" />
