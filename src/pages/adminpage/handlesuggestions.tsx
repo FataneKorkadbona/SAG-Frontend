@@ -75,7 +75,7 @@ export default function HandleSuggestions() {
 
     return (
         <>
-            <h2>Manage Suggestions</h2>
+            <h2 className={styles.manage__suggestions}>Manage Suggestions</h2>
             {message && <div className={`${styles.message} ${messageType === 'success' ? styles.success : styles.error}`}>{message}</div>}
             <div className={styles.filters}>
                 <input

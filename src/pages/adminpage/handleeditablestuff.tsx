@@ -99,55 +99,57 @@ export default function HandleEditableStuff() {
         <div className={styles.editableFooter}>
             <h2>Update Footer</h2>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="companyName">Company Name:</label>
-                    <input
-                        type="text"
-                        id="companyName"
-                        name="companyName"
-                        value={companyName}
-                        onChange={(e) => setCompanyName(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="address">Address:</label>
-                    <input
-                        type="text"
-                        id="address"
-                        name="address"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="phone">Phone:</label>
-                    <input
-                        type="text"
-                        id="phone"
-                        name="phone"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="responsiblePerson">Responsible Person:</label>
-                    <input
-                        type="text"
-                        id="responsiblePerson"
-                        name="responsiblePerson"
-                        value={responsiblePerson}
-                        onChange={(e) => setResponsiblePerson(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="contactInfo">Contact Info:</label>
-                    <input
-                        type="text"
-                        id="contactInfo"
-                        name="contactInfo"
-                        value={contactInfo}
-                        onChange={(e) => setContactInfo(e.target.value)}
-                    />
+                <div className={styles.adminInputFields}>
+                    <div>
+                        <label htmlFor="companyName">Company Name:</label>
+                        <input
+                            type="text"
+                            id="companyName"
+                            name="companyName"
+                            value={companyName}
+                            onChange={(e) => setCompanyName(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="address">Address:</label>
+                        <input
+                            type="text"
+                            id="address"
+                            name="address"
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="phone">Phone:</label>
+                        <input
+                            type="text"
+                            id="phone"
+                            name="phone"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="responsiblePerson">Responsible Person:</label>
+                        <input
+                            type="text"
+                            id="responsiblePerson"
+                            name="responsiblePerson"
+                            value={responsiblePerson}
+                            onChange={(e) => setResponsiblePerson(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="contactInfo">Contact Info:</label>
+                        <input
+                            type="text"
+                            id="contactInfo"
+                            name="contactInfo"
+                            value={contactInfo}
+                            onChange={(e) => setContactInfo(e.target.value)}
+                        />
+                    </div>
                 </div>
                 <button type="submit">Submit</button>
                 <hr/>

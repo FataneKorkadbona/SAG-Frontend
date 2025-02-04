@@ -104,24 +104,6 @@ export default function HomePage() {
         return <div>Loading...</div>;
     }
 
-    if (scrollY == 0 && window.innerWidth >= 1476){
-        const navbar = document.getElementById("navbar")
-
-        if(navbar){
-            navbar.classList.add("hidden")
-        } else {
-            console.error("navbar not found")
-        }
-    } else {
-        const navbar = document.getElementById("navbar")
-
-        if(navbar){
-            navbar.classList.remove("hidden")
-        } else {
-            console.error("navbar not found")
-        }
-    }
-
     return (
         <>
             <div className={styles.hero__section}>
