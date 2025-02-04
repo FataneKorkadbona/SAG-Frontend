@@ -167,7 +167,7 @@ export default function Suggestion() {
                                     name="title"
                                     id="title"
                                     rows={1}
-                                    placeholder="Title"
+                                    placeholder="Titel"
                                     value={formData.title}
                                     onChange={handleChange}
                                 />
@@ -220,7 +220,7 @@ export default function Suggestion() {
             {isConfirmVisible && (
                 <div className={modalStyles.modal}>
                     <div className={modalStyles.modalContent}>
-                        <h2>Confirm Your Entries</h2>
+                        <h2>Kontrollera om allt är korrekt </h2>
                         <ul>
                             <li>
                                 <input type="checkbox" id="title" checked={checkboxes.title}
@@ -243,9 +243,9 @@ export default function Suggestion() {
                                 <label htmlFor="category">Kategori: {formData.category}</label>
                             </li>
                         </ul>
-                        <button onClick={handleFinalSubmit} disabled={!allCheckboxesChecked}>Confirm and Submit</button>
-                        <button className={modalStyles.goBackButton} onClick={() => setConfirmVisible(false)}>Go Back
-                            and Edit
+                        <button onClick={handleFinalSubmit} disabled={!allCheckboxesChecked}>Bekräfta och Skicka</button>
+                        <button className={modalStyles.goBackButton} onClick={() => setConfirmVisible(false)}>Gå tillbaka
+                            och ändra
                         </button>
                     </div>
                 </div>

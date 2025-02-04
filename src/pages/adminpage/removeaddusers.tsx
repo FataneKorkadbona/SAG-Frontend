@@ -60,23 +60,23 @@ export default function RemoveAddUsers() {
 
     return (
         <>
-            <h2>Remove and Add Users</h2>
+            <h2>Ta bort och lägg till användare</h2>
             <div className={styles.instructions}>
-                <h3>Instructions</h3>
+                <h3>Instruktioner</h3>
                 <ol>
-                    <li>Upload an Excel file containing user data.</li>
-                    <li>Click "Clear Database" to remove all existing users.</li>
-                    <li>Click "Fill Database" to populate the database with the uploaded data.</li>
+                    <li>Ladda upp en Excel-fil med användar data.</li>
+                    <li>Klicka på "Rensa databas" för att ta bort alla användare.</li>
+                    <li>Klicka på "Fyll databas" för att fylla på med användare från Excel-bladet.</li>
                 </ol>
             </div>
             {message && <div className={`${styles.message} ${messageType === 'success' ? styles.success : styles.error}`}>{message}</div>}
             <div className={styles.uploadSection}>
                 <input type="file" onChange={handleFileChange} />
-                <button onClick={handleFileUpload}>Upload File</button>
+                <button onClick={handleFileUpload}>Ladda upp fil</button>
             </div>
             <div className={styles.actionButtons}>
-                <button onClick={handleClearDatabase}>Clear Database</button>
-                <button onClick={handleFillDatabase}>Fill Database</button>
+                <button onClick={handleClearDatabase}>Rensa databas</button>
+                <button onClick={handleFillDatabase}>Fyll databas</button>
             </div>
         </>
     );

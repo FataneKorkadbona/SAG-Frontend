@@ -110,20 +110,20 @@ export default function AcceptingPage() {
                     </div>
                 </div>
             ) : (
-                <div>No new suggestions, come back later</div>
+                <div>Inga nya förslag, kom tillbaka om en stund</div>
             )}
 
             {isModalOpen && (
                 <div className={styles.modal}>
                     <div className={styles.modalContent}>
-                        <h3>Confirm Denial</h3>
+                        <h3>Bekräfta avslag</h3>
                         <textarea
-                            placeholder="Enter reason for denial"
+                            placeholder="Ange anledning till avslag"
                             value={denyReason}
                             onChange={(e) => setDenyReason(e.target.value)}
                         />
-                        <button onClick={handleDeny} disabled={!denyReason.trim()}>Confirm</button>
-                        <button onClick={handleCancel}>Cancel</button>
+                        <button onClick={handleDeny} disabled={!denyReason.trim()}>Bekräfta</button>
+                        <button onClick={handleCancel}>Avbryt</button>
                     </div>
                 </div>
             )}

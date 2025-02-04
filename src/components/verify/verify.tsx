@@ -10,7 +10,7 @@ const Verify = () => {
         console.log("Token:", token); // Debugging line to check the token value
         const verifyAccount = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/confirm/${token}`);
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/confirm/${token}`);
                 alert(response.data);
             } catch (error) {
                 console.error("Verification error:", error);

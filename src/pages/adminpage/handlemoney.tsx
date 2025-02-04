@@ -38,10 +38,10 @@ export default function HandleMoney() {
 
     return (
         <div className={styles.editableMoney}>
-            <h2>Update Money</h2>
+            <h2>Uppdatera budget</h2>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor="money">Money:</label>
+                    <label htmlFor="money">Budget:</label>
                     <input
                         type="number"
                         id="money"
@@ -50,16 +50,16 @@ export default function HandleMoney() {
                         onChange={(e) => setMoney(Number(e.target.value))}
                     />
                 </div>
-                <button type="submit">Submit</button>
+                <button type="submit">Skicka</button>
             </form>
 
             {isModalOpen && (
                 <div className={styles.modal}>
                     <div className={styles.modalContent}>
-                        <h3>Confirm Update</h3>
-                        <p>Are you sure you want to update the money to {money} kr?</p>
-                        <button onClick={handleConfirm}>Confirm</button>
-                        <button onClick={handleCancel}>Cancel</button>
+                        <h3>Bekräfta Uppdateringen</h3>
+                        <p>Är du säker på att du vill uppdatera budgeten till {money} kr?</p>
+                        <button onClick={handleConfirm}>Bekräfta</button>
+                        <button onClick={handleCancel}>Avbryt</button>
                     </div>
                 </div>
             )}

@@ -17,10 +17,12 @@ export default function NavBar() {
     useEffect(() => {
         const handleScroll = () => {
             setIsAtTop(window.scrollY === 0);
+            console.log('Scroll position:', window.scrollY);
         };
 
         const handleResize = () => {
             setWindowWidth(window.innerWidth);
+            console.log('Window width:', window.innerWidth);
         };
 
         const fetchNavbarIcon = async () => {
@@ -57,19 +59,17 @@ export default function NavBar() {
 
     const handleLogout = async () => {
         await logout();
-        navigate('/');
+        navigate('/home');
     };
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
-    if (location.pathname === '/' && isAtTop && windowWidth >= 1475) {
-        return null;
-    }
+    const shouldHideNavbar = location.pathname.startsWith('/home') && isAtTop && windowWidth >= 1024;
 
     return (
-        <nav id={"navbar"} className="navbar">
+        <nav id="navbar" className={`navbar ${shouldHideNavbar ? 'hidden' : ''}`}>
             <div className="navbar__container">
                 <li className="navbar__item" id="kommun_logo">
                     <img src={navbarIcon} alt="Logo" />

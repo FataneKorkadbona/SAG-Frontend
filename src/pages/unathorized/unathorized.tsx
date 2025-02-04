@@ -14,7 +14,7 @@ const Unauthorized: React.FC = () => {
         <div className={styles.container}>
             <h1>Unauthorized Access</h1>
             <p>You do not have permission to view this page.</p>
-            <button onClick={handleGoBack}>Go Back to Home</button>
+            <button onClick={handleGoBack} className={styles.home__button}>Go Back to Home</button>
         </div>
     );
 };

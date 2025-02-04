@@ -97,11 +97,11 @@ export default function HandleEditableStuff() {
 
     return (
         <div className={styles.editableFooter}>
-            <h2>Update Footer</h2>
+            <h2>Uppdatera sidfot</h2>
             <form onSubmit={handleSubmit}>
                 <div className={styles.adminInputFields}>
                     <div>
-                        <label htmlFor="companyName">Company Name:</label>
+                        <label htmlFor="companyName">Företagsnamn:</label>
                         <input
                             type="text"
                             id="companyName"
@@ -111,7 +111,7 @@ export default function HandleEditableStuff() {
                         />
                     </div>
                     <div>
-                        <label htmlFor="address">Address:</label>
+                        <label htmlFor="address">Adress:</label>
                         <input
                             type="text"
                             id="address"
@@ -121,7 +121,7 @@ export default function HandleEditableStuff() {
                         />
                     </div>
                     <div>
-                        <label htmlFor="phone">Phone:</label>
+                        <label htmlFor="phone">Mobilnummer:</label>
                         <input
                             type="text"
                             id="phone"
@@ -131,7 +131,7 @@ export default function HandleEditableStuff() {
                         />
                     </div>
                     <div>
-                        <label htmlFor="responsiblePerson">Responsible Person:</label>
+                        <label htmlFor="responsiblePerson">Ansvarig Person:</label>
                         <input
                             type="text"
                             id="responsiblePerson"
@@ -141,7 +141,7 @@ export default function HandleEditableStuff() {
                         />
                     </div>
                     <div>
-                        <label htmlFor="contactInfo">Contact Info:</label>
+                        <label htmlFor="contactInfo">Kontakt information:</label>
                         <input
                             type="text"
                             id="contactInfo"
@@ -151,10 +151,10 @@ export default function HandleEditableStuff() {
                         />
                     </div>
                 </div>
-                <button type="submit">Submit</button>
+                <button type="submit">Skicka</button>
                 <hr/>
                 <div>
-                    <h2>Current Icon</h2>
+                    <h2>Nuvarande ikon</h2>
                     <img src={currentIcon} alt="Current Icon" width="100"/>
                     <div className={styles.dropZone}>
                         <input type="file" onChange={handleFileChange}/>
@@ -163,9 +163,9 @@ export default function HandleEditableStuff() {
                 </div>
                 <hr/>
                 <div>
-                    <h2>Update Introduction</h2>
+                    <h2>Uppdatera Intro sidan</h2>
                     <div>
-                        <label htmlFor="introTitle">Title:</label>
+                        <label htmlFor="introTitle">Titl:</label>
                         <input
                             type="text"
                             id="introTitle"
@@ -175,7 +175,7 @@ export default function HandleEditableStuff() {
                         />
                     </div>
                     <div>
-                        <label htmlFor="introContent1">Intro Row 1</label>
+                        <label htmlFor="introContent1">Intro Rad 1</label>
                         <textarea
                             id="introContent1"
                             name="introContent1"
@@ -184,7 +184,7 @@ export default function HandleEditableStuff() {
                         />
                     </div>
                     <div>
-                        <label htmlFor="introContent2">Intro Row 2</label>
+                        <label htmlFor="introContent2">Intro Rad 2</label>
                         <textarea
                             id="introContent2"
                             name="introContent2"
@@ -192,7 +192,7 @@ export default function HandleEditableStuff() {
                             onChange={(e) => setIntroContent2(e.target.value)}
                         />
                     </div>
-                    <button type="submit" onClick={handleIntroPage}>Submit</button>
+                    <button type="submit" onClick={handleIntroPage}>Skicka</button>
                 </div>
             </form>
         </div>

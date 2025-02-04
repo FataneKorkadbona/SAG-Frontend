@@ -35,7 +35,7 @@ export default function LoginPage() {
 
         try {
             await login(email);
-            navigate('/');
+            navigate('/home');
         } catch {
             setErrorMessage('E-post är inte verifierad. Vänligen verifiera din e-post. Det kan ta upp till 20 minuter tills du får mejlet. (klicka inte på knappen flera gånger)');
         }

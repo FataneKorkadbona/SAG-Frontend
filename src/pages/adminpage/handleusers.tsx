@@ -106,11 +106,11 @@ export default function HandleUsers() {
 
     return (
         <>
-            <h2>Manage Users</h2>
+            <h2>Hantera användare</h2>
             {message && <div className={`${styles.message} ${messageType === 'success' ? styles.success : styles.error}`}>{message}</div>}
             <input
                 type="text"
-                placeholder="Search users..."
+                placeholder="Sök bland användare..."
                 value={searchQuery}
                 onChange={handleSearch}
                 className={styles.searchBar}
@@ -118,10 +118,10 @@ export default function HandleUsers() {
             <table className={styles.userTable}>
                 <thead>
                 <tr>
-                    <th>Email</th>
-                    <th>School</th>
+                    <th>Mail-adress</th>
+                    <th>Skola</th>
                     <th>Admin</th>
-                    <th>Actions</th>
+                    <th>Åtgärder</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -129,10 +129,10 @@ export default function HandleUsers() {
                     <tr key={user.id}>
                         <td>{user.email}</td>
                         <td>{user.school}</td>
-                        <td>{user.isAdmin === 1 ? 'Yes' : 'No'}</td>
+                        <td>{user.isAdmin === 1 ? 'Ja' : 'Nej'}</td>
                         <td>
                             <button onClick={() => toggleAdminStatus(user)}>
-                                {user.isAdmin === 1 ? 'Remove Admin' : 'Make Admin'}
+                                {user.isAdmin === 1 ? 'Ta bort Administratörs rättigheter' : 'Gör till Administratör'}
                             </button>
                         </td>
                     </tr>

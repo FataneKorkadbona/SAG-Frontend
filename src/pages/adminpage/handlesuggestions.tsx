@@ -10,6 +10,7 @@ interface Suggestion {
     email: string;
     category: string;
     budget: number;
+    participate: number;
 }
 
 export default function HandleSuggestions() {
@@ -53,7 +54,7 @@ export default function HandleSuggestions() {
                     denyReason
                 });
                 setSuggestions(suggestions.filter(suggestion => suggestion.id !== selectedSuggestion.id));
-                setMessage('Suggestion denied successfully.');
+                setMessage('Förlaget har nekats.');
                 setMessageType('success');
             } catch (error) {
                 console.error('Error denying suggestion:', error);
@@ -75,12 +76,12 @@ export default function HandleSuggestions() {
 
     return (
         <>
-            <h2 className={styles.manage__suggestions}>Manage Suggestions</h2>
+            <h2 className={styles.manage__suggestions}>Hantera Förslag</h2>
             {message && <div className={`${styles.message} ${messageType === 'success' ? styles.success : styles.error}`}>{message}</div>}
             <div className={styles.filters}>
                 <input
                     type="text"
-                    placeholder="Search by title, description or email"
+                    placeholder="Sök efter titel, beskrivning eller mail-adress"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -88,7 +89,7 @@ export default function HandleSuggestions() {
                     value={filterCategory}
                     onChange={(e) => setFilterCategory(e.target.value)}
                 >
-                    <option value="">All Categories</option>
+                    <option value="">Alla kategorier</option>
                     {categories.map((category, index) => (
                         <option key={index} value={category}>{category}</option>
                     ))}
@@ -97,11 +98,12 @@ export default function HandleSuggestions() {
             <table className={styles.userTable}>
                 <thead>
                 <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>User</th>
-                    <th>Category</th>
-                    <th>Actions</th>
+                    <th>Titel</th>
+                    <th>Beskrivning</th>
+                    <th>Användare</th>
+                    <th>Kategori</th>
+                    <th>Deltagande</th>
+                    <th>Åtgärder</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -115,9 +117,9 @@ export default function HandleSuggestions() {
                         </td>
                         <td>{suggestion.email}</td>
                         <td>{suggestion.category}</td>
-                        <td>
+                        <td>{suggestion.participate === 1 ? 'Vill delta' : 'Vill inte delta'}</td>                        <td>
                             <button onClick={() => confirmDeleteSuggestion(suggestion)}>
-                                Deny
+                                Neka
                             </button>
                         </td>
                     </tr>
@@ -128,16 +130,15 @@ export default function HandleSuggestions() {
             {isModalOpen && selectedSuggestion && (
                 <div className={styles.modal}>
                     <div className={styles.modalContent}>
-                        <h3>Confirm Denial</h3>
-                        <p>Are you sure you want to deny suggestion with title "{selectedSuggestion.title}" and ID {selectedSuggestion.id} by {selectedSuggestion.email}?</p>
-                        <textarea
+                        <h3>Bekräfta avslag</h3>
+                        <p>Är du säker på att du vill neka förslaget med titeln "{selectedSuggestion.title}" och ID {selectedSuggestion.id} av {selectedSuggestion.email}?</p>                        <textarea
                             required
-                            placeholder="Enter reason for denial"
+                            placeholder="Skriv varför förslaget nekas:"
                             value={denyReason}
                             onChange={(e) => setDenyReason(e.target.value)}
                         />
-                        <button onClick={handleConfirm} disabled={!denyReason.trim()}>Confirm</button>
-                        <button onClick={handleCancel}>Cancel</button>
+                        <button onClick={handleConfirm} disabled={!denyReason.trim()}>Bekräfta</button>
+                        <button onClick={handleCancel}>Avbryt</button>
                     </div>
                 </div>
             )}
