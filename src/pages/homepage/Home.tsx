@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styles from './home.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { HeroCard } from './card.tsx';
@@ -34,6 +34,7 @@ export default function HomePage() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const { isLoggedIn } = useAuth();
+    const infoSectionRef = useRef<HTMLDivElement>(null);
 
     const toggleCategoryWindow = () => {
         setCategoryWindowVisible(!isCategoryWindowVisible);
@@ -93,6 +94,13 @@ export default function HomePage() {
     const hideOverlay = () => {
         setOverlayVisible(false);
         setOverlaySuggestion(null);
+    };
+
+    const handleReadMore = (suggestion: Suggestion) => {
+        setSelectedSuggestion(suggestion);
+        if (infoSectionRef.current) {
+            infoSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
     };
 
     const filteredSuggestions = suggestions.filter(suggestion =>
@@ -163,7 +171,7 @@ export default function HomePage() {
                 </div>
             </div>
 
-            <div className={styles.info__section}>
+            <div ref={infoSectionRef} className={styles.info__section}>
                 <div className={styles.info__searching}>
                     <button className={styles.info__categories} onClick={toggleCategoryWindow}>Kategorier</button>
                     <input
@@ -210,7 +218,7 @@ export default function HomePage() {
                                     onSuggestionsUpdate={fetchSuggestions}
                                 />
                                 <div className={styles.card__list}>
-                                    {filteredSuggestions.slice(1).map((suggestion) => (
+                                    {filteredSuggestions.slice(0).map((suggestion) => (
                                         <div key={suggestion.id}>
                                             <SuggSmallCard
                                                 title={suggestion.title}
@@ -223,7 +231,7 @@ export default function HomePage() {
                                                     if (window.innerWidth <= 1475) {
                                                         showOverlay(suggestion);
                                                     } else {
-                                                        setSelectedSuggestion(suggestion);
+                                                        handleReadMore(suggestion);
                                                     }
                                                 }}
                                             />

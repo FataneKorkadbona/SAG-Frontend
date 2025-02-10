@@ -22,15 +22,13 @@ export default function Admin() {
 
     return (
         <>
-            <h1>Admin Page</h1>
+            <h1>Administration</h1>
             <div className={styles.buttonContainer}>
-                <button onClick={handleNaviagateToEditableStuff} className={styles.button}>Update Editable Stuff</button>
-                <button onClick={handleNavigateToHandleMoney} className={styles.button}>Update Money</button>
-                <button onClick={handleNavigateToHandleUsers} className={styles.button}>Manage Users</button>
-                <button onClick={handleNavigateToHandleSuggestions} className={styles.button}>Manage suggestions
-                </button>
-                <button onClick={handleNavigateToHandleRemoveAddUsers} className={styles.DangerButton}>Remove and Add
-                    users
+                <button onClick={handleNaviagateToEditableStuff} className={styles.button}>Uppdatera text på webbplatsen</button>
+                <button onClick={handleNavigateToHandleMoney} className={styles.button}>Uppdatera Budget</button>
+                <button onClick={handleNavigateToHandleUsers} className={styles.button}>Hantera användare</button>
+                <button onClick={handleNavigateToHandleSuggestions} className={styles.button}>Hantera förslag</button>
+                <button onClick={handleNavigateToHandleRemoveAddUsers} className={styles.DangerButton}>Uppdatera användare
                 </button>
             </div>
         </>
