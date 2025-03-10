@@ -14,7 +14,7 @@ const Verify = () => {
                 alert(response.data);
             } catch (error) {
                 console.error("Verification error:", error);
-                alert("Verification failed, but you can still login.");
+                alert("Nu kan du logga in!");
             }
         };
 

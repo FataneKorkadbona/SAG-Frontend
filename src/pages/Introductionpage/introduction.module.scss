@@ -1,13 +1,20 @@
 .introduction__container{
-  height: 95vh;
+  height: 100vh;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding-top: 5vh;
+  width: 800px;
+  justify-self: center;
+  text-align: left;
   background-color: #FFF7D7;
 
+}
+
+:root{
+  background-color: #FFF7D7 !important;
 }
 
 
@@ -26,7 +33,6 @@ h1 {
 h2 {
   color: #000;
   font-size: 36px;
-  margin-bottom: -20px;
   font-family: 'Roboto', Arial, sans-serif;
 }
 

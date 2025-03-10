@@ -39,4 +39,5 @@ export const categories = [
     'Teater',
     'Underhållning',
     'VR',
+    'Övrigt',
 ];

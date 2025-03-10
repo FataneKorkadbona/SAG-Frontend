@@ -240,7 +240,7 @@ export default function HomePage() {
                                 </div>
                             </>
                         ) : (
-                            <div>No suggestions found</div>
+                            <div>Inga förslag hittades...</div>
                         )}
                     </div>
                 </div>
