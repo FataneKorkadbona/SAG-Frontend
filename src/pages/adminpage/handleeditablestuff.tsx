@@ -116,7 +116,7 @@ export default function HandleEditableStuff() {
 
     return (
         <div className={styles.editableFooter}>
-            <h2>Uppdatera sidfot</h2>
+            <h1>Uppdatera sidfot</h1>
             <form onSubmit={handleSubmit}>
                 <div className={styles.adminInputFields}>
                     <div>
@@ -184,7 +184,7 @@ export default function HandleEditableStuff() {
                 <div>
                     <h2>Uppdatera Intro sidan</h2>
                     <div>
-                        <label htmlFor="introTitle">Titel Högst upp:</label>
+                        <label htmlFor="introTitle">Sido Titel:</label>
                         <input
                             type="text"
                             id="introTitle"
@@ -194,8 +194,9 @@ export default function HandleEditableStuff() {
                         />
                     </div>
                     <div className={styles.introbox}>
+                        <h2>Sektion 1</h2>
                         <div>
-                            <label htmlFor="introTitle">Titel Första raderna:</label>
+                            <label htmlFor="introTitle">Titel Sektion 1:</label>
                             <input
                                 type="text"
                                 id="introTitle"
@@ -233,8 +234,9 @@ export default function HandleEditableStuff() {
                         </div>
                     </div>
                     <div className={styles.introbox}>
+                        <h2>Sektion 2</h2>
                         <div>
-                            <label htmlFor="introTitle">Titel Första raderna:</label>
+                            <label htmlFor="introTitle">Titel Sektion 2:</label>
                             <input
                                 type="text"
                                 id="introTitle"
@@ -244,7 +246,7 @@ export default function HandleEditableStuff() {
                             />
                         </div>
                         <div>
-                            <label htmlFor="introContent1">Intro 1 Rad 1</label>
+                            <label htmlFor="introContent1">Intro 2 Rad 1</label>
                             <textarea
                                 id="introContent1"
                                 name="introContent1"
@@ -253,7 +255,7 @@ export default function HandleEditableStuff() {
                             />
                         </div>
                         <div>
-                            <label htmlFor="introContent1">Intro 1 Rad 2</label>
+                            <label htmlFor="introContent1">Intro 2 Rad 2</label>
                             <textarea
                                 id="introContent1"
                                 name="introContent1"
@@ -262,7 +264,7 @@ export default function HandleEditableStuff() {
                             />
                         </div>
                         <div>
-                            <label htmlFor="introContent1">Intro 1 Rad 3</label>
+                            <label htmlFor="introContent1">Intro 2 Rad 3</label>
                             <textarea
                                 id="introContent1"
                                 name="introContent1"

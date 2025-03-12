@@ -19,6 +19,9 @@ export default function Admin() {
     const handleNaviagateToEditableStuff = () => {
         navigate('/admin/editablestuff');
     }
+    const handleNavigateToHandleLogs = () => {
+        navigate('/admin/monitoring');
+    }
 
     return (
         <>
@@ -28,8 +31,8 @@ export default function Admin() {
                 <button onClick={handleNavigateToHandleMoney} className={styles.button}>Uppdatera Budget</button>
                 <button onClick={handleNavigateToHandleUsers} className={styles.button}>Hantera användare</button>
                 <button onClick={handleNavigateToHandleSuggestions} className={styles.button}>Hantera förslag</button>
-                <button onClick={handleNavigateToHandleRemoveAddUsers} className={styles.DangerButton}>Uppdatera användare
-                </button>
+                <button onClick={handleNavigateToHandleRemoveAddUsers} className={styles.DangerButton}>Uppdatera användare</button>
+                <button onClick={handleNavigateToHandleLogs} className={styles.button}>Monitoring</button>
             </div>
         </>
     );

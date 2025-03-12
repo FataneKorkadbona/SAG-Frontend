@@ -1,74 +1,41 @@
-import { useState, useEffect, FormEvent } from 'react';
-import styles from '../homepage/home.module.scss';
-import { useNavigate } from "react-router-dom";
-import { useAuth } from '../../context/AuthContext.tsx'
+import { useState } from 'react';
+import { useAuth } from '../../context/AuthContext.tsx';
+import { useEmail } from '../../context/EmailContext.tsx';
+import './login.scss';
 
 export default function LoginPage() {
-    const [email, setEmail] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
-    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-    const [remainingTime, setRemainingTime] = useState(0);
-    const navigate = useNavigate();
+    const [message, setMessage] = useState('');
     const { login } = useAuth();
+    const { email, setEmail } = useEmail();
 
-    useEffect(() => {
-        let timer: NodeJS.Timeout;
-        if (isButtonDisabled) {
-            setRemainingTime(120); // 5 minutes in seconds
-            timer = setInterval(() => {
-                setRemainingTime(prev => {
-                    if (prev <= 1) {
-                        clearInterval(timer);
-                        setIsButtonDisabled(false);
-                        return 0;
-                    }
-                    return prev - 1;
-                });
-            }, 1000);
-        }
-        return () => clearInterval(timer);
-    }, [isButtonDisabled]);
-
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setIsButtonDisabled(true);
-
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
         try {
             await login(email);
-            navigate('/home');
-        } catch {
-            setErrorMessage('E-post är inte verifierad. Vänligen verifiera din e-post. Det kan ta upp till 20 minuter tills du får mejlet. (klicka inte på knappen flera gånger)');
+            setMessage('Magic link sent to your email.');
+        } catch (error) {
+            if (error.response && error.response.status === 403) {
+                setMessage('User account is frozen.');
+            } else {
+                setMessage('Error sending magic link. Please try again.');
+            }
         }
-    }
-
-    const formatTime = (seconds: number) => {
-        const minutes = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
-    }
+    };
 
     return (
-        <div className={styles.login__container}>
-            <div className={styles.login__content}>
-                <h1>Logga In</h1>
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor="enter_email">Skriv in din skol E-post</label>
-                    <input
-                        type="email"
-                        value={email}
-                        placeholder={"School email"}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <button
-                        type="submit"
-                        disabled={isButtonDisabled}
-                    >
-                        Logga in
-                    </button>
-                    {isButtonDisabled && <p>Button disabled for: {formatTime(remainingTime)}</p>}
-                    {errorMessage && <p className={styles.error}>{errorMessage}</p>}
-                </form>
-            </div>
+        <div className={"login__content"}>
+            <h2>Logga in</h2>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="email"
+                    placeholder="förnamn.efternamn@edu.karlstad.se"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                />
+                <button type="submit">Logga in</button>
+            </form>
+            {message && <p>{message}</p>}
         </div>
     );
 }

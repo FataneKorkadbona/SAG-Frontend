@@ -4,7 +4,60 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
-  width: 50%;
+  width: 30%;
+  height: 20vh;
   min-width: 250px;
   max-width: 800px;
+  background-color: #FFF7D7;
+  justify-content: center;
+    align-items: center;
+  justify-self: center;
+  border: 1px solid #000;
+}
+
+.login__content h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.login__content form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login__content input[type="email"] {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 300px;
+  font-size: 1rem;
+  border: 1px solid #000;
+  background-color: #fff;
+  color: black;
+}
+
+.login__content button {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  background-color: #ffffff;
+  color: black;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: 1px solid #000;
+}
+
+.login__content button:hover {
+  transition: background-color, color 0.3s ease;
+  background-color: #000000;
+  color: white;
+}
+
+.login__content p {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #333;
 }

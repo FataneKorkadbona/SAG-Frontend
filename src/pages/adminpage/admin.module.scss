@@ -7,6 +7,10 @@ body {
   color: #333;
 }
 
+h1{
+  margin-top: 100px !important;
+}
+
 h2 {
   margin-top: 80px;
   text-align: center;
@@ -32,6 +36,10 @@ h2 {
   &:hover {
     background-color: #555;
   }
+}
+
+.actionButton{
+  margin-right: 10px;
 }
 
 .DangerButton {
@@ -392,5 +400,41 @@ span{
     width: 20vw;
     padding: 2vh;
     font-size: 100%;
+  }
+}
+
+.filterDropdown {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 14px;
+  color: #333;
+  margin-left: 10px;
+
+  &:focus {
+    border-color: #E84E0D;
+    outline: none;
+  }
+
+  option {
+    background-color: #fff;
+    color: #333;
+  }
+}
+
+.logTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+
+  th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f4f4f4;
   }
 }

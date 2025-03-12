@@ -47,6 +47,10 @@ const IntroductionPage: React.FC = () => {
         fetchMoney();
     }, []);
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     const goToHomePage = () => {
         navigate('/home');
     };
