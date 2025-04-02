@@ -22,6 +22,7 @@ import './App.scss';
 import VerifyMagicLink from "./pages/loginpage/login2.tsx";
 import AdminLogin from "./pages/adminpage/AdminLogin.tsx";
 import {EmailProvider} from './context/EmailContext';
+//import Down from "./pages/down/down.tsx";
 
 
 export default function App() {

@@ -56,6 +56,12 @@
   color: white;
 }
 
+.login__content button:disabled {
+  background-color: #ccc;
+  color: #333;
+  cursor: not-allowed;
+}
+
 .login__content p {
   margin-top: 1rem;
   font-size: 1rem;

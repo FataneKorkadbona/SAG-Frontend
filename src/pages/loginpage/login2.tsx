@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext.tsx';
 
@@ -8,30 +8,27 @@ const VerifyMagicLink: React.FC = () => {
     const navigate = useNavigate();
     const { verifyMagicLink } = useAuth();
 
-    useEffect(() => {
-        const verifyToken = async () => {
-            const params = new URLSearchParams(location.search);
-            const token = params.get('token');
+    const verifyToken = async () => {
+        const params = new URLSearchParams(location.search);
+        const token = params.get('token');
 
-            if (token) {
-                try {
-                    await verifyMagicLink(token);
-                    setMessage('Login successful');
-                    navigate('/home');
-                } catch (error) {
-                    setMessage('Invalid or expired token.');
-                }
-            } else {
-                setMessage('Token is required.');
+        if (token) {
+            try {
+                await verifyMagicLink(token);
+                setMessage('Login successful');
+                navigate('/home');
+            } catch (error) {
+                setMessage('Invalid or expired token.');
             }
-        };
-
-        verifyToken();
-    }, [location, navigate, verifyMagicLink]);
+        } else {
+            setMessage('Token is required.');
+        }
+    };
 
     return (
         <div>
             <h2>Verify Magic Link</h2>
+            <button onClick={verifyToken}>Verify Link</button>
             {message && <p>{message}</p>}
         </div>
     );

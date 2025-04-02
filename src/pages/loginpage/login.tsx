@@ -14,14 +14,14 @@ export default function LoginPage() {
         setIsButtonDisabled(true);
         try {
             await login(email);
-            setMessage('Magic link sent to your email.');
+            setMessage('Länk skickad! Kolla din e-post. Om du inte får något mail, kolla skräpposten. Det kan ta upp till 20 minuter innan du får mailet.');
         } catch (error) {
             if (error.response && error.response.status === 403) {
-                setMessage('User account is frozen. Please try again in 20 minutes.');
+                setMessage('Användaren är låst.');
                 setTimeout(() => setIsButtonDisabled(false), 20 * 60 * 1000); // 20 minutes
             } else {
-                setMessage('Error sending magic link. Please try again.');
-                setIsButtonDisabled(false);
+                setMessage('Något gick fel. Försök igen.');
+                setTimeout(() => setIsButtonDisabled(false), 20 * 60 * 1000);
             }
         }
     };
@@ -37,7 +37,7 @@ export default function LoginPage() {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                 />
-                <button type="submit" disabled={isButtonDisabled}>Logga in</button>
+                <button className="Login__button" type="submit" disabled={isButtonDisabled}>Logga in</button>
             </form>
             {message && <p>{message}</p>}
         </div>
