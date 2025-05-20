@@ -14,7 +14,8 @@ const IntroductionPage: React.FC = () => {
     const [text2, setText2] = useState('');
     const [text3, setText3] = useState('');
     const [text4, setText4] = useState('');
-    const [text5, setText5] = useState('');
+    const [text5, setText5] = useState('');const [endDate, setEndDate] = useState<Date | null>(null);
+    const [countdown, setCountdown] = useState('');
 
     useEffect(() => {
         const fetchIntroPageInfo = async () => {
@@ -43,9 +44,43 @@ const IntroductionPage: React.FC = () => {
             }
         }
 
+        const fetchEndDate = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/getEndDate`);
+                setEndDate(new Date(response.data.endDate));
+            } catch (error) {
+                console.error('Error fetching end date:', error);
+            }
+        };
+
         fetchIntroPageInfo();
         fetchMoney();
+        fetchEndDate();
     }, []);
+
+    useEffect(() => {
+        const calculateCountdown = () => {
+            if (!endDate) return;
+
+            const now = new Date().getTime();
+            const distance = endDate.getTime() - now;
+
+            if (distance < 0) {
+                setCountdown('Expired');
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            setCountdown(`${days}d ${hours}h ${minutes}m ${seconds}s`);
+        };
+
+        const interval = setInterval(calculateCountdown, 1000);
+        return () => clearInterval(interval);
+    }, [endDate]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -58,6 +93,7 @@ const IntroductionPage: React.FC = () => {
     return (
         <div className={styles.introduction__container}>
             <h1><strong>{title}</strong></h1>
+            <h2>Tid kvar: {countdown} </h2>
             <h2><strong>{title2}</strong></h2>
             <p>{text}</p>
             <p>{text2}</p>

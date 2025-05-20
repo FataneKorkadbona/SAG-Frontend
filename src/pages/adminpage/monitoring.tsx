@@ -12,37 +12,44 @@ interface LogEntry {
     userEmail: string;
 }
 
+const ENTRIES_PER_PAGE = 50;
+
 export default function Monitoring() {
     const [logs, setLogs] = useState<LogEntry[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+
+    const fetchLogs = async (page: number, query: string) => {
+        try {
+            const response = await axios.get(
+                `${import.meta.env.VITE_API_URL}/api/getLogs`,
+                {
+                    params: {
+                        page,
+                        limit: ENTRIES_PER_PAGE,
+                        search: query
+                    }
+                }
+            );
+            setLogs(response.data.logs);
+            setTotalPages(response.data.totalPages);
+        } catch (error) {
+            console.error('Error fetching logs:', error);
+        }
+    };
 
     useEffect(() => {
-        // Fetch logs from the backend
-        const fetchLogs = async () => {
-            try {
-                const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/getLogs`);
-                setLogs(response.data);
-            } catch (error) {
-                console.error('Error fetching logs:', error);
-            }
-        };
-
-        fetchLogs();
-    }, []);
+        fetchLogs(currentPage, searchQuery);
+    }, [currentPage, searchQuery]);
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(event.target.value);
+        setCurrentPage(1); // Reset to first page on search
     };
 
-    const filteredLogs = logs.filter(log =>
-        log.timestamp.includes(searchQuery) ||
-        log.method.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        log.url.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        log.status.toString().includes(searchQuery) ||
-        log.responseTime.toString().includes(searchQuery) ||
-        log.userId?.toString().includes(searchQuery) ||
-        log.userEmail?.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const handlePrevPage = () => setCurrentPage(prev => Math.max(prev - 1, 1));
+    const handleNextPage = () => setCurrentPage(prev => Math.min(prev + 1, totalPages));
 
     return (
         <>
@@ -67,7 +74,7 @@ export default function Monitoring() {
                 </tr>
                 </thead>
                 <tbody>
-                {filteredLogs.map((log, index) => (
+                {logs.map((log, index) => (
                     <tr key={index}>
                         <td>{log.timestamp}</td>
                         <td>{log.method}</td>
@@ -80,6 +87,17 @@ export default function Monitoring() {
                 ))}
                 </tbody>
             </table>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 16, gap: 16 }}>
+                <button onClick={handlePrevPage} disabled={currentPage === 1}>
+                    Previous
+                </button>
+                <span>
+                    Page {currentPage} of {totalPages}
+                </span>
+                <button onClick={handleNextPage} disabled={currentPage === totalPages || totalPages === 0}>
+                    Next
+                </button>
+            </div>
         </>
     );
 }

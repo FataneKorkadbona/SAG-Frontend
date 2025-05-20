@@ -6,6 +6,7 @@ export default function RemoveAddUsers() {
     const [file, setFile] = useState<File | null>(null);
     const [message, setMessage] = useState<string | null>(null);
     const [messageType, setMessageType] = useState<'success' | 'error' | null>(null);
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
@@ -35,6 +36,7 @@ export default function RemoveAddUsers() {
     };
 
     const handleClearDatabase = async () => {
+        setShowConfirmModal(false);
         try {
             await axios.post(`${import.meta.env.VITE_API_URL}/api/clearDatabase`);
             setMessage('Database cleared successfully.');
@@ -75,9 +77,34 @@ export default function RemoveAddUsers() {
                 <button onClick={handleFileUpload}>Ladda upp fil</button>
             </div>
             <div className={styles.actionButtons}>
-                <button onClick={handleClearDatabase}>Rensa databas</button>
+                <button onClick={() => setShowConfirmModal(true)}>Rensa databas</button>
                 <button onClick={handleFillDatabase}>Fyll databas</button>
             </div>
+            {showConfirmModal && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modalContent}>
+                        <p style={{ color: 'red', fontWeight: 'bold', fontSize: '1.3rem', textAlign: 'center' }}>
+                            VARNING! Detta kommer att TA BORT ALLT! <br />
+                            Alla användare och alla förslag kommer att raderas! <br />
+                            Är du säker på att du vill fortsätta?
+                        </p>
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
+                            <button
+                                style={{ backgroundColor: 'red', color: 'white', fontWeight: 'bold' }}
+                                onClick={handleClearDatabase}
+                            >
+                                Ja, rensa allt
+                            </button>
+                            <button
+                                style={{ backgroundColor: 'gray', color: 'white' }}
+                                onClick={() => setShowConfirmModal(false)}
+                            >
+                                Avbryt
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     );
 }

@@ -5,7 +5,7 @@ export default function Admin() {
     const navigate = useNavigate();
 
     const handleNavigateToHandleUsers = () => {
-        navigate('/admin/handleusers');
+        navigate('/admin/usermanagement');
     };
     const handleNavigateToHandleSuggestions = () => {
         navigate('/admin/suggestions');

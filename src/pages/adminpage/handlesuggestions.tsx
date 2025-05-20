@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import styles from './admin.module.scss';
 import axios from 'axios';
-import { categories } from '../categories.ts';
+import {categories} from '../categories.ts';
 
 interface Suggestion {
     id: number;
@@ -11,6 +11,7 @@ interface Suggestion {
     category: string;
     budget: number;
     participate: number;
+    votes: number;
 }
 
 export default function HandleSuggestions() {
@@ -77,7 +78,8 @@ export default function HandleSuggestions() {
     return (
         <>
             <h2 className={styles.manage__suggestions}>Hantera Förslag</h2>
-            {message && <div className={`${styles.message} ${messageType === 'success' ? styles.success : styles.error}`}>{message}</div>}
+            {message && <div
+                className={`${styles.message} ${messageType === 'success' ? styles.success : styles.error}`}>{message}</div>}
             <div className={styles.filters}>
                 <input
                     type="text"
@@ -95,7 +97,7 @@ export default function HandleSuggestions() {
                     ))}
                 </select>
             </div>
-            <table className={styles.userTable}>
+            <table className={styles.sugTable}>
                 <thead>
                 <tr>
                     <th>Titel</th>
@@ -103,6 +105,7 @@ export default function HandleSuggestions() {
                     <th>Användare</th>
                     <th>Kategori</th>
                     <th>Deltagande</th>
+                    <th>Röster</th>
                     <th>Åtgärder</th>
                 </tr>
                 </thead>
@@ -117,9 +120,17 @@ export default function HandleSuggestions() {
                         </td>
                         <td>{suggestion.email}</td>
                         <td>{suggestion.category}</td>
-                        <td>{suggestion.participate === 1 ? 'Vill delta' : 'Vill inte delta'}</td>                        <td>
+                        <td>
+                            {suggestion.votes > 0 ? (
+                                <span className={styles.voteCount}>{suggestion.votes} röster</span>
+                            ) : (
+                                <span className={styles.noVotes}>Inga röster</span>
+                            )}
+                        </td>
+                        <td>{suggestion.participate === 1 ? 'Vill delta' : 'Vill inte delta'}</td>
+                        <td>
                             <button onClick={() => confirmDeleteSuggestion(suggestion)}>
-                                Neka
+                                Radera
                             </button>
                         </td>
                     </tr>
@@ -131,7 +142,9 @@ export default function HandleSuggestions() {
                 <div className={styles.modal}>
                     <div className={styles.modalContent}>
                         <h3>Bekräfta avslag</h3>
-                        <p>Är du säker på att du vill neka förslaget med titeln "{selectedSuggestion.title}" och ID {selectedSuggestion.id} av {selectedSuggestion.email}?</p>                        <textarea
+                        <p>Är du säker på att du vill neka förslaget med titeln "{selectedSuggestion.title}" och
+                            ID {selectedSuggestion.id} av {selectedSuggestion.email}?</p>
+                        <textarea
                             required
                             placeholder="Skriv varför förslaget nekas:"
                             value={denyReason}

@@ -25,6 +25,7 @@ const Footer: React.FC = () => {
                     <h3>Skapad av</h3>
                     <p>NätNinjorna UF</p>
                     <a href="https://natninjorna.se" target="_blank">NatNinjorna.se</a>
+                    <p>Karlstad Teknikcenter</p>
                 </div>
             </div>
             <p>&copy; {year} {companyName}. Alla rättigheter förbehållna.</p>

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import styles from './admin.module.scss';
+import {useState, useEffect} from 'react';
+import styles from '../admin.module.scss';
 import axios from 'axios';
 
 interface User {
@@ -16,8 +16,10 @@ export default function HandleUsers() {
     const [searchQuery, setSearchQuery] = useState('');
     const [adminFilter, setAdminFilter] = useState<string | null>(null);
     const [schoolFilter, setSchoolFilter] = useState<string | null>(null);
+    const [freezeFilter, setFreezeFilter] = useState<string | null>(null);
     const [message, setMessage] = useState<string | null>(null);
     const [messageType, setMessageType] = useState<'success' | 'error' | null>(null);
+    const [endDate, setEndDate] = useState<string | null>(null); // New state for end date
     const usersPerPage = 10;
 
     const fetchUsers = async () => {
@@ -33,10 +35,29 @@ export default function HandleUsers() {
         fetchUsers();
     }, []);
 
+    const handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setEndDate(event.target.value);
+    };
+
+    const saveEndDate = async () => {
+        try {
+            await axios.post(`${import.meta.env.VITE_API_URL}/api/setEndDate`, { endDate });
+            setMessage('End date set successfully.');
+            setMessageType('success');
+        } catch (error) {
+            console.error('Error setting end date:', error);
+            setMessage('Failed to set end date.');
+            setMessageType('error');
+        }
+    };
+
     const toggleAdminStatus = async (user: User) => {
         if (user.isAdmin === 1) {
             try {
-                await axios.post(`${import.meta.env.VITE_API_URL}/api/updateAdminStatus`, { userId: user.id, isAdmin: 0 });
+                await axios.post(`${import.meta.env.VITE_API_URL}/api/updateAdminStatus`, {
+                    userId: user.id,
+                    isAdmin: 0
+                });
                 setMessage('Admin status removed successfully.');
                 setMessageType('success');
                 fetchUsers();
@@ -54,7 +75,7 @@ export default function HandleUsers() {
     const toggleFreezeStatus = async (user: User) => {
         try {
             const endpoint = user.freeze ? '/api/unfreezeUser' : '/api/freezeUser';
-            await axios.post(`${import.meta.env.VITE_API_URL}${endpoint}`, { userId: user.id });
+            await axios.post(`${import.meta.env.VITE_API_URL}${endpoint}`, {userId: user.id});
             setMessage(user.freeze ? 'User unfrozen successfully.' : 'User frozen successfully.');
             setMessageType('success');
             fetchUsers();
@@ -81,11 +102,16 @@ export default function HandleUsers() {
         setSchoolFilter(event.target.value);
     };
 
+    const handleFreezeFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setFreezeFilter(event.target.value);
+    };
+
     const filteredUsers: User[] = users.filter(user =>
         (user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
             user.school.toLowerCase().includes(searchQuery.toLowerCase())) &&
         (adminFilter === null || adminFilter === '' || (adminFilter === 'Ja' ? user.isAdmin === 1 : user.isAdmin === 0)) &&
-        (schoolFilter === null || schoolFilter === '' || user.school === schoolFilter)
+        (schoolFilter === null || schoolFilter === '' || user.school === schoolFilter) &&
+        (freezeFilter === null || freezeFilter === '' || (freezeFilter === 'Fryst' ? user.freeze === 1 : user.freeze === 0))
     );
 
     const indexOfLastUser = currentPage * usersPerPage;
@@ -114,6 +140,17 @@ export default function HandleUsers() {
                 onChange={handleSearch}
                 className={styles.searchBar}
             />
+            <div className={styles.datePickerContainer}>
+                <label htmlFor="endDate">Set End Date:</label>
+                <input
+                    type="date"
+                    id="endDate"
+                    value={endDate || ''}
+                    onChange={handleEndDateChange}
+                    className={styles.datePicker}
+                />
+                <button onClick={saveEndDate} className={styles.saveButton}>Save</button>
+            </div>
             <table className={styles.userTable}>
                 <thead>
                 <tr>
@@ -135,6 +172,14 @@ export default function HandleUsers() {
                             <option value="Nej">Nej</option>
                         </select>
                     </th>
+                    <th>
+                        Fryst
+                        <select onChange={handleFreezeFilterChange} className={styles.filterDropdown}>
+                            <option value="">Alla</option>
+                            <option value="Fryst">Ja</option>
+                            <option value="Inte fryst">Nej</option>
+                        </select>
+                    </th>
                     <th>Åtgärder</th>
                 </tr>
                 </thead>
@@ -144,6 +189,7 @@ export default function HandleUsers() {
                         <td>{user.email}</td>
                         <td>{user.school}</td>
                         <td>{user.isAdmin === 1 ? 'Ja' : 'Nej'}</td>
+                        <td>{user.freeze === 1 ? 'Fryst' : 'Inte fryst'}</td>
                         <td>
                             <button className={styles.actionButton} onClick={() => toggleAdminStatus(user)}>
                                 {user.isAdmin === 1 ? 'Ta bort Administratörs rättigheter' : 'Gör till Administratör'}

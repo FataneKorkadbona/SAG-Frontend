@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import styles from './home.module.scss';
-import { useNavigate } from 'react-router-dom';
-import { HeroCard } from './card.tsx';
-import { SuggBigCard } from './suggBigCard.tsx';
-import { SuggSmallCard } from './suggSmallCard.tsx';
+import {useNavigate} from 'react-router-dom';
+import {HeroCard} from './card.tsx';
+import {SuggBigCard} from './suggBigCard.tsx';
+import {SuggSmallCard} from './suggSmallCard.tsx';
 import axios from 'axios';
-import { categories } from '../categories.ts';
-import { useAuth } from '../../context/AuthContext';
+import {categories} from '../categories.ts';
+import {useAuth} from '../../context/AuthContext';
 import Suggestion from "../suggestionspage/suggestion.tsx";
 
 interface Suggestion {
@@ -33,7 +33,7 @@ export default function HomePage() {
     const [overlaySuggestion, setOverlaySuggestion] = useState<Suggestion | null>(null);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
-    const { isLoggedIn } = useAuth();
+    const {isLoggedIn} = useAuth();
     const infoSectionRef = useRef<HTMLDivElement>(null);
 
     const toggleCategoryWindow = () => {
@@ -99,9 +99,13 @@ export default function HomePage() {
     const handleReadMore = (suggestion: Suggestion) => {
         setSelectedSuggestion(suggestion);
         if (infoSectionRef.current) {
-            infoSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+            infoSectionRef.current.scrollIntoView({behavior: 'smooth'});
         }
     };
+
+    const heroSuggestions = [...suggestions]
+        .sort((a, b) => b.votes - a.votes) // Sort by votes in descending order
+        .slice(0, 3); // Take the top 3 suggestions for HeroCards
 
     const filteredSuggestions = suggestions.filter(suggestion =>
         suggestion.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
@@ -117,57 +121,43 @@ export default function HomePage() {
             <div className={styles.hero__section}>
                 <h1 className={styles.hero__title}>Mest Populära</h1>
                 <div className={styles.hero__cards}>
-                    {filteredSuggestions.slice(1, 2).map((suggestion) => (
-                        <div key={suggestion.id}>
-                            <HeroCard
-                                title={suggestion.title}
-                                text={suggestion.suggestion}
-                                category={suggestion.category}
-                                dateAdded={suggestion.createdAt}
-                                votes={suggestion.votes}
-                                cardClass={styles.card__second}
-                                bottomClass={styles.bottom__second}
-                                topID={styles.top__second}
-                                onButtonClick={buttonlogin}
-                                suggestionId={suggestion.id}
-                                onSuggestionsUpdate={fetchSuggestions}
-                            />
-                        </div>
-                    ))}
-                    {filteredSuggestions.slice(0, 1).map((suggestion) => (
-                        <div key={suggestion.id}>
-                            <HeroCard
-                                title={suggestion.title}
-                                text={suggestion.suggestion}
-                                category={suggestion.category}
-                                dateAdded={suggestion.createdAt}
-                                votes={suggestion.votes}
-                                cardClass={styles.card__first}
-                                bottomClass={styles.bottom__first}
-                                topID={styles.top__first}
-                                onButtonClick={buttonlogin}
-                                suggestionId={suggestion.id}
-                                onSuggestionsUpdate={fetchSuggestions}
-                            />
-                        </div>
-                    ))}
-                    {filteredSuggestions.slice(2, 3).map((suggestion) => (
-                        <div key={suggestion.id}>
-                            <HeroCard
-                                title={suggestion.title}
-                                text={suggestion.suggestion}
-                                category={suggestion.category}
-                                dateAdded={suggestion.createdAt}
-                                votes={suggestion.votes}
-                                cardClass={styles.card__third}
-                                bottomClass={styles.bottom__third}
-                                topID={styles.top__third}
-                                onButtonClick={buttonlogin}
-                                suggestionId={suggestion.id}
-                                onSuggestionsUpdate={fetchSuggestions}
-                            />
-                        </div>
-                    ))}
+                    {heroSuggestions.map((suggestion, index) => {
+                        let cardClass = '';
+                        let bottomClass = '';
+                        let topID = '';
+
+                        if (index === 1) { // Second most votes (left)
+                            cardClass = styles.card__second;
+                            bottomClass = styles.bottom__second;
+                            topID = styles.top__second;
+                        } else if (index === 0) { // Most votes (middle)
+                            cardClass = styles.card__first;
+                            bottomClass = styles.bottom__first;
+                            topID = styles.top__first;
+                        } else if (index === 2) { // Third most votes (right)
+                            cardClass = styles.card__third;
+                            bottomClass = styles.bottom__third;
+                            topID = styles.top__third;
+                        }
+
+                        return (
+                            <div key={suggestion.id}>
+                                <HeroCard
+                                    title={suggestion.title}
+                                    text={suggestion.suggestion}
+                                    category={suggestion.category}
+                                    dateAdded={suggestion.createdAt}
+                                    votes={suggestion.votes}
+                                    cardClass={cardClass}
+                                    bottomClass={bottomClass}
+                                    topID={topID}
+                                    onButtonClick={buttonlogin}
+                                    suggestionId={suggestion.id}
+                                    onSuggestionsUpdate={fetchSuggestions}
+                                />
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
 
@@ -218,7 +208,7 @@ export default function HomePage() {
                                     onSuggestionsUpdate={fetchSuggestions}
                                 />
                                 <div className={styles.card__list}>
-                                    {filteredSuggestions.slice(0).map((suggestion) => (
+                                    {filteredSuggestions.slice(1).map((suggestion) => (
                                         <div key={suggestion.id}>
                                             <SuggSmallCard
                                                 title={suggestion.title}

@@ -10,7 +10,7 @@ import {AuthProvider} from './context/AuthContext';
 import NavBar from "./NavBar.tsx";
 import Footer from "./Footer.tsx";
 import Admin from "./pages/adminpage/admin.tsx";
-import HandleUsers from "./pages/adminpage/handleusers.tsx";
+import HandleUsers from "./pages/adminpage/userManagement/handleusers.tsx";
 import HandleSuggestions from "./pages/adminpage/handlesuggestions.tsx";
 import RemoveAddUsers from "./pages/adminpage/removeaddusers.tsx";
 import {FooterProvider} from "./context/FooterContext.tsx";
@@ -22,6 +22,8 @@ import './App.scss';
 import VerifyMagicLink from "./pages/loginpage/login2.tsx";
 import AdminLogin from "./pages/adminpage/AdminLogin.tsx";
 import {EmailProvider} from './context/EmailContext';
+import Addusers from "./pages/adminpage/userManagement/addUsers.tsx";
+import UserButtons from "./pages/adminpage/userButtons.tsx";
 //import Down from "./pages/down/down.tsx";
 
 
@@ -37,7 +39,7 @@ export default function App() {
 
 function Router() {
     const location = useLocation();
-    const hideFooterPaths = ['/login', '/verify', '/unauthorized', '/', '/admin', '/admin/money', '/admin/handleusers', '/admin/suggestions', '/admin/dangerzone', "/verify-magic-link"];
+    const hideFooterPaths = ['/login', '/verify', '/unauthorized', '/', '/admin', '/admin/money', '/admin/handleusers', '/admin/suggestions', '/admin/dangerzone', "/verify-magic-link","/admin/usermanagement", "/admin/usermanagement/addusers", "/admin/usermanagement/handleusers" ];
 
     return (
         <FooterProvider>
@@ -54,12 +56,14 @@ function Router() {
                     <Route element={<ProtRoute/>}>
                         <Route path="/accepting" element={<Accepting/>}/>
                         <Route path="/admin" element={<Admin/>}/>
-                        <Route path="/admin/handleusers" element={<HandleUsers/>}/>
+                        <Route path="/admin/usermanagement/handleusers" element={<HandleUsers/>}/>
                         <Route path="/admin/suggestions" element={<HandleSuggestions/>}/>
                         <Route path="/admin/dangerzone" element={<RemoveAddUsers/>}/>
                         <Route path="/admin/money" element={<HandleMoney/>}/>
                         <Route path="/admin/editablestuff" element={<HandleEditableStuff/>}/>
                         <Route path="/admin/monitoring" element={<Monitoring/>}/>
+                        <Route path="/admin/usermanagement/addusers" element={<Addusers/>}/>
+                        <Route path="/admin/usermanagement" element={<UserButtons/>}/>
                     </Route>
                 </Route>
             </Routes>
